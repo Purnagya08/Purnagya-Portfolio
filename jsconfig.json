@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@core/*": ["src/core/*"],
+      "@data/*": ["src/data/*"],
+      "@modules/*": ["src/modules/*"],
+      "@services/*": ["src/services/*"],
+      "@shared/*": ["src/shared/*"],
+      "@three/*": ["src/three/*"]
+    }
+  },
+  "exclude": ["dist", "node_modules"]
+}
