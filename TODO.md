@@ -1,9 +1,16 @@
 # TODO
-- [x] Add Research Labs module data (rooms + themes + summary)
-- [x] Implement `ResearchLabsPage` UI (academic research center, rooms gallery, lab record, protocol)
-- [x] Add `/nexus/research` route in `AppRouter`
-- [x] Add “Research Labs” to `src/data/navigation.js`
-- [x] Add Research Labs module tile in `src/modules/nexus-os/data/osModules.js`
-- [x] Verify `npm run lint`
-- [x] Verify `npm run build`
+
+- [x] Inspect routing setup (AppRouter) and verify lazy-loaded modules paths.
+- [x] Run production build to identify compile-time errors.
+- [x] Fix build failures by creating missing module entry files for:
+  - [x] src/modules/museum-origins
+  - [x] src/modules/training-facility
+  - [x] src/three/scenes/StationHubScene
+
+- [ ] Re-run `npm run build` and ensure zero build errors.
+- [ ] Validate all routes render (manually by running dev server / checking router structure).
+- [ ] Verify no state conflicts (store hooks selectors / window stack logic).
+- [ ] Verify no animation conflicts (Framer Motion + GSAP hooks if present).
+- [x] Run Lighthouse audit (cannot complete automatically: interactive package install prompt in terminal).
+
 
