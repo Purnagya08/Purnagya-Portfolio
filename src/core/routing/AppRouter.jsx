@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { SiteLayout } from '@core/layouts/SiteLayout'
+import { BootSequencePage } from '@modules/boot-sequence'
 
 const AboutPage = lazy(() =>
   import('@modules/about/pages/AboutPage').then((module) => ({
@@ -12,9 +13,9 @@ const ContactPage = lazy(() =>
     default: module.ContactPage,
   })),
 )
-const HomePage = lazy(() =>
-  import('@modules/home/pages/HomePage').then((module) => ({
-    default: module.HomePage,
+const NexusOsPage = lazy(() =>
+  import('@modules/nexus-os/pages/NexusOsPage').then((module) => ({
+    default: module.NexusOsPage,
   })),
 )
 const NotFoundPage = lazy(() =>
@@ -32,13 +33,16 @@ export function AppRouter() {
   return (
     <Suspense fallback={<RouteFallback />}>
       <Routes>
-        <Route element={<SiteLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="projects" element={<ProjectsPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+        <Route index element={<BootSequencePage />} />
+        <Route path="nexus">
+          <Route index element={<NexusOsPage />} />
+          <Route element={<SiteLayout />}>
+            <Route path="about" element={<AboutPage />} />
+            <Route path="projects" element={<ProjectsPage />} />
+            <Route path="contact" element={<ContactPage />} />
+          </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>
   )

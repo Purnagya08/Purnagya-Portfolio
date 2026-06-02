@@ -2,9 +2,15 @@
 
 ## Creative Direction
 
-NEXUS is an interactive sci-fi documentary: a space journey presented through
-an operating system, a digital museum, and a futuristic engineering interface.
-The visual language should feel precise and cinematic rather than decorative.
+NEXUS: The Logbook of an Engineer is a premium engineering documentary told
+through a mission archive. It should feel like a space exploration record, an
+aerospace control room, and a high-end museum exhibit: cinematic, precise,
+quietly technical, and handcrafted.
+
+The interface must avoid common AI-generated sci-fi habits. Do not use neon
+cyan, neon purple, neon pink, neon gradients, cyberpunk styling, Matrix
+textures, generic AI SaaS effects, excessive particles, or glowing borders as a
+default treatment.
 
 Use the system in this order:
 
@@ -16,237 +22,204 @@ Use the system in this order:
 
 ## File Map
 
-| File                                   | Responsibility                                              |
-| -------------------------------------- | ----------------------------------------------------------- |
-| `src/shared/styles/index.css`          | CSS entrypoint and global base rules                        |
-| `src/shared/styles/fonts.css`          | Font delivery                                               |
-| `src/shared/styles/tokens.css`         | Tailwind v4 design tokens and semantic CSS variables        |
-| `src/shared/styles/components.css`     | Reusable glass, card, button, navigation, and label recipes |
-| `src/shared/styles/utilities.css`      | Reusable backgrounds, grids, scanlines, and gradient text   |
-| `src/shared/constants/motion.js`       | Framer Motion durations, easings, and variants              |
-| `src/shared/constants/designTokens.js` | JS colors for Three.js and non-CSS contexts                 |
-| `src/shared/utils/cn.js`               | Shared class-name composition                               |
+| File                                   | Responsibility                                                    |
+| -------------------------------------- | ----------------------------------------------------------------- |
+| `src/shared/styles/index.css`          | CSS entrypoint, base page color, selection, and focus rules       |
+| `src/shared/styles/fonts.css`          | Font delivery                                                     |
+| `src/shared/styles/tokens.css`         | Tailwind v4 theme tokens and semantic CSS variables               |
+| `src/shared/styles/components.css`     | Reusable metal, glass, card, button, navigation, and label recipes |
+| `src/shared/styles/utilities.css`      | Space backgrounds, archival gradients, grids, and scanline texture |
+| `src/shared/constants/motion.js`       | Framer Motion durations, easings, and variants                    |
+| `src/shared/constants/designTokens.js` | JS colors for Three.js and non-CSS contexts                       |
+| `src/shared/utils/cn.js`               | Shared class-name composition                                     |
 
 ## Color Palette
 
-### Environment Neutrals
+### Environment And Materials
 
-| Token           | Value     | Use                        |
-| --------------- | --------- | -------------------------- |
-| `void-950`      | `#02040b` | Deepest page background    |
-| `void-900`      | `#050916` | Primary space background   |
-| `void-850`      | `#081020` | Layered background         |
-| `void-800`      | `#0b1428` | Dark panel foundation      |
-| `hull-700`      | `#13213b` | Raised interface surfaces  |
-| `hull-600`      | `#1d3152` | Borders and hover surfaces |
-| `hull-500`      | `#294469` | Quiet accents              |
-| `starlight-50`  | `#f5fbff` | High-emphasis text         |
-| `starlight-200` | `#c4d9eb` | Body text                  |
-| `starlight-300` | `#91abc2` | Supporting text            |
-| `starlight-400` | `#647f99` | Muted metadata             |
+| Token           | Value     | Use                                         |
+| --------------- | --------- | ------------------------------------------- |
+| `void-950`      | `#050608` | Deepest page background                     |
+| `void-900`      | `#0a0d12` | Primary space background                    |
+| `void-850`      | `#10151d` | Dim atmospheric layer                       |
+| `void-800`      | `#161d27` | Dark panel foundation                       |
+| `hull-700`      | `#202936` | Brushed metal panels                        |
+| `hull-600`      | `#2c3644` | Raised controls and hover surfaces          |
+| `hull-500`      | `#46515f` | Rules, dividers, and low-emphasis metadata  |
+| `starlight-50`  | `#f2efe7` | Off-white high-emphasis text                |
+| `starlight-100` | `#e7e1d6` | Warm UI text and button hover fill          |
+| `starlight-200` | `#cfc8ba` | Body copy                                   |
+| `starlight-300` | `#a9b0b6` | Secondary copy                              |
+| `starlight-400` | `#79828c` | Supporting metadata                         |
+| `starlight-500` | `#58616b` | Quiet labels and disabled text              |
 
-### Interface Signals
+### Instrument Signals
 
-| Token            | Value     | Use                                             |
-| ---------------- | --------- | ----------------------------------------------- |
-| `signal-cyan`    | `#59f3ff` | Primary action, active navigation, system state |
-| `signal-blue`    | `#5b8cff` | Informational state, gradient bridge            |
-| `signal-violet`  | `#a67cff` | Research and AI accents                         |
-| `signal-magenta` | `#ef7dff` | Rare discovery accents                          |
-| `signal-amber`   | `#ffc857` | Caution, achievements, temporal markers         |
-| `signal-green`   | `#63f5ad` | Success and online states                       |
-| `signal-red`     | `#ff667d` | Error and destructive states                    |
+| Token           | Value     | Use                                              |
+| --------------- | --------- | ------------------------------------------------ |
+| `signal-steel`  | `#9aa6ad` | Default status dots, passive module glyphs       |
+| `signal-blue`   | `#7f99ad` | Navigation context, selected data, archive links |
+| `signal-brass`  | `#c4a96b` | Primary action, focus, active navigation         |
+| `signal-sage`   | `#91a082` | Nominal, success, available systems              |
+| `signal-copper` | `#b27a5e` | Historic artifact, warmth, discovery             |
+| `signal-red`    | `#b56a63` | Error, destructive, unavailable state            |
 
-Use signal colors sparingly. Most screens should be neutral space surfaces with
-one dominant active signal.
+Signals are muted instrument colors, not light sources. Most screens should be
+space, slate, metal, and off-white with one intentional signal.
 
 ```jsx
-<p className="text-signal-cyan">System online</p>
+<p className="text-signal-brass">Transfer ready</p>
 <div className="border-hull-600 bg-void-800" />
 ```
 
+## Tailwind Theme
+
+The live Tailwind v4 theme lives in `src/shared/styles/tokens.css`.
+
+```css
+@theme {
+  --color-void-950: #050608;
+  --color-void-900: #0a0d12;
+  --color-hull-700: #202936;
+  --color-hull-600: #2c3644;
+  --color-starlight-50: #f2efe7;
+  --color-starlight-200: #cfc8ba;
+  --color-signal-blue: #7f99ad;
+  --color-signal-brass: #c4a96b;
+  --color-signal-sage: #91a082;
+  --color-signal-copper: #b27a5e;
+}
+
+:root {
+  --gradient-space: /* deep-space wash */;
+  --gradient-interface: /* quiet panel reflection */;
+  --gradient-archive: /* off-white, blue, brass */;
+  --metal-brush: /* subtle horizontal material texture */;
+}
+```
+
+Use `bg-nexus-space` for the global environment, `bg-nexus-interface` for
+subtle surface reflection, `bg-nexus-archive` for rare progress or separators,
+and `bg-nexus-instrument` for warm mission moments.
+
 ## Typography System
 
-| Role    | Font           | Tailwind utility | Use                                                 |
-| ------- | -------------- | ---------------- | --------------------------------------------------- |
-| Display | Orbitron       | `font-display`   | Hero titles, station names, rare interface branding |
-| Heading | Space Grotesk  | `font-heading`   | Section titles, card titles, editorial headings     |
-| Body    | Inter          | `font-sans`      | Narrative copy and long-form reading                |
-| Data    | JetBrains Mono | `font-mono`      | Labels, metadata, status, coordinates, controls     |
+| Role    | Font           | Tailwind utility | Use                                             |
+| ------- | -------------- | ---------------- | ----------------------------------------------- |
+| Display | Space Grotesk  | `font-display`   | Cinematic titles and mission identifiers        |
+| Heading | Space Grotesk  | `font-heading`   | Section titles, card titles, editorial headings |
+| Body    | Inter          | `font-sans`      | Narrative copy and long-form reading            |
+| Data    | JetBrains Mono | `font-mono`      | Labels, metadata, status, coordinates, controls |
 
-Use display type with restraint. Orbitron becomes difficult to read in long
-sentences, so paragraph text always remains Inter.
+Use tracking with discipline. Mission labels can be wide and precise; paragraphs
+should remain comfortable and editorial.
 
-### Type Scale
+## Surfaces
 
-| Utility            | Use                                  |
-| ------------------ | ------------------------------------ |
-| `text-display-2xl` | Boot title or major cinematic moment |
-| `text-display-xl`  | Homepage hero                        |
-| `text-display-lg`  | Station title                        |
-| `text-heading-xl`  | Page title                           |
-| `text-heading-lg`  | Section title                        |
-| `text-heading-md`  | Card title                           |
-| `text-body-lg`     | Introductory narrative               |
-| `text-body-md`     | Default narrative                    |
-| `text-body-sm`     | Supporting text                      |
-| `text-label`       | Interface metadata                   |
+Glass is allowed only when it communicates overlay depth or instrumentation.
+Most surfaces should feel like dark brushed metal, matte archive panels, or
+museum display cases.
 
-Tracking utilities: `tracking-display`, `tracking-interface`, and
-`tracking-data`.
+| Recipe                 | Use                                             |
+| ---------------------- | ----------------------------------------------- |
+| `nexus-glass-subtle`   | Navigation bars and quiet overlay framing       |
+| `nexus-glass`          | Standard mission panels                         |
+| `nexus-glass-elevated` | Active windows, dialogs, focused control panels |
 
-## Spacing System
+Rules:
 
-The token scale is intentionally small and repeatable.
+- Never stack more than two translucent surfaces.
+- Prefer border contrast and material texture over blur.
+- Elevated surfaces may use `shadow-instrument`; do not fake luminous energy.
+- Static documentary content should feel calm and grounded.
 
-| Utility suffix | Value     |
-| -------------- | --------- |
-| `nexus-1`      | `0.25rem` |
-| `nexus-2`      | `0.5rem`  |
-| `nexus-3`      | `0.75rem` |
-| `nexus-4`      | `1rem`    |
-| `nexus-5`      | `1.5rem`  |
-| `nexus-6`      | `2rem`    |
-| `nexus-7`      | `3rem`    |
-| `nexus-8`      | `4rem`    |
-| `nexus-9`      | `6rem`    |
-| `nexus-10`     | `8rem`    |
+## Component Redesign
 
-Use `py-section` for page sections and `px-(--spacing-gutter)` for responsive
-page gutters.
+### Buttons
 
-## Glassmorphism System
-
-Use glass surfaces to establish interface hierarchy. Avoid stacking more than
-two glass layers because each backdrop blur has a rendering cost.
-
-| Recipe                 | Use                                                |
-| ---------------------- | -------------------------------------------------- |
-| `nexus-glass-subtle`   | Navigation, low-priority overlays, canvas framing  |
-| `nexus-glass`          | Standard panels                                    |
-| `nexus-glass-elevated` | Focused dialogs, command surfaces, active overlays |
-
-Use the `GlassPanel` component when a glass surface needs rounded corners:
-
-```jsx
-<GlassPanel variant="elevated" className="p-nexus-5">
-  Mission telemetry
-</GlassPanel>
-```
-
-## Card System
-
-`Card` owns the shared panel, border, depth, and hover behavior.
-
-```jsx
-<Card className="p-nexus-5">Static museum record</Card>
-<Card interactive className="p-nexus-5">
-  Selectable station
-</Card>
-```
-
-Use interactive cards only when selecting the card causes navigation or an
-action. Static cards do not lift on hover.
-
-## Button System
-
-| Variant     | Use                                      |
-| ----------- | ---------------------------------------- |
-| `primary`   | One leading action per view              |
-| `secondary` | Alternate action or important navigation |
-| `ghost`     | Quiet action inside an existing panel    |
+Primary buttons use brass fill, deep text, and restrained depth. Secondary
+buttons use a brass border and quiet fill. Ghost buttons should remain mostly
+typographic until hover.
 
 ```jsx
 <Button>Begin sequence</Button>
-<Button variant="secondary">Open logbook</Button>
+<Button variant="secondary">Open archive</Button>
 <Button variant="ghost">Dismiss</Button>
 ```
 
-`Button` accepts an `as` prop for router links:
+### Cards
 
-```jsx
-<Button as={Link} to="/projects">
-  Explore projects
-</Button>
-```
+Cards are mission records. They should feel like museum placards or engineering
+log entries, not floating AI product tiles.
 
-## Hover System
+- Static cards do not move.
+- Interactive cards rise by `0.25rem`, reveal a faint interface reflection, and
+  strengthen the border.
+- Card titles use `font-heading`; metadata uses `font-mono`.
+- Avoid decorative corner brackets unless they encode real status or affordance.
 
-Hover states communicate capability:
+### Module Glyphs
 
-- Buttons rise by `0.125rem` and strengthen their signal.
-- Interactive cards rise by `0.375rem`, brighten their border, and reveal an
-  interface gradient.
-- Navigation links reveal a cyan hairline.
-- Static documentary content does not move.
+Glyphs are instrument labels. Use muted `steel`, `blue`, `brass`, `sage`, or
+`copper` tones. They should read as engraved controls, not glowing app icons.
+
+### System Badges
+
+Badges use a small solid status dot and label text. The dot color must be paired
+with text because color alone is not accessible.
+
+## Hover Redesign
+
+Hover states should feel tactile and expensive.
+
+- Buttons rise by `0.125rem`; fill or border becomes slightly warmer.
+- Interactive cards rise by `0.25rem`; shadow deepens and border warms.
+- Navigation links reveal a brass hairline with no glow.
+- Window controls change border and text color only.
+- Static narrative, captions, and museum records do not animate.
 - Touch interaction must never depend on hover alone.
 
-Focus rings remain visible through the global `:focus-visible` rule.
+## Animation Redesign
 
-## Animation System
+Animation should feel like documentary editing and aerospace instrumentation:
+measured, legible, and purposeful.
 
-### CSS Animations
+| Utility                 | Use                                           |
+| ----------------------- | --------------------------------------------- |
+| `animate-nexus-pulse`   | Slow status heartbeat, never decorative glow  |
+| `animate-nexus-scan`    | Rare scanner pass for boot or diagnostics     |
+| `animate-nexus-float`   | Minimal orbital movement, reduced by default  |
+| `animate-nexus-flicker` | Rare archival terminal texture                |
 
-| Utility                 | Use                                     |
-| ----------------------- | --------------------------------------- |
-| `animate-nexus-pulse`   | System beacons and loading placeholders |
-| `animate-nexus-scan`    | Rare scanner line treatment             |
-| `animate-nexus-float`   | Decorative orbital objects              |
-| `animate-nexus-flicker` | Rare terminal or boot-sequence texture  |
+Motion rules:
 
-### Framer Motion
+- Use opacity, small y-offsets, and gentle scale changes.
+- Prefer durations from `src/shared/constants/motion.js`.
+- Use Framer Motion for UI state, GSAP for directed cinematic sequences, and
+  R3F `useFrame` only for continuous 3D motion.
+- Disable nonessential particles in reduced motion.
+- Avoid looping motion unless it communicates active system state.
 
-Import shared variants from `src/shared/constants/motion.js`:
+## Good And Bad Choices
 
-```jsx
-<motion.div {...NEXUS_MOTION.panel}>Panel content</motion.div>
-```
-
-Use Framer Motion for interface state transitions. Use GSAP for directed
-cinematic timelines. Use R3F `useFrame` for continuous 3D movement. Never
-reimplement the same transition in multiple modules.
-
-The global stylesheet respects `prefers-reduced-motion` and collapses animation
-durations for users who request it.
-
-## Shadows
-
-| Utility               | Use                                |
-| --------------------- | ---------------------------------- |
-| `shadow-panel`        | Default interface depth            |
-| `shadow-panel-raised` | Elevated overlays and hover states |
-| `shadow-glow-cyan`    | Active system signal               |
-| `shadow-glow-violet`  | AI and research signal             |
-| `shadow-glow-amber`   | Achievement and caution signal     |
-
-Do not apply glow to every surface. Glow indicates active energy or focus.
-
-## Gradients
-
-| Utility               | Use                              |
-| --------------------- | -------------------------------- |
-| `bg-nexus-space`      | Global deep-space background     |
-| `bg-nexus-interface`  | Quiet panel highlight            |
-| `bg-nexus-horizon`    | Cyan-blue-violet emphasis        |
-| `bg-nexus-sunrise`    | Amber-magenta discovery emphasis |
-| `text-nexus-gradient` | Rare display-text emphasis       |
-
-Supporting texture utilities:
-
-| Utility           | Use                          |
-| ----------------- | ---------------------------- |
-| `nexus-grid`      | Engineering coordinate plane |
-| `nexus-scanlines` | Light terminal texture       |
-| `nexus-hairline`  | Gradient section separator   |
+| Good                                                         | Bad                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------- |
+| Brass focus ring on a slate control                          | Neon outline around every control                       |
+| Warm off-white body copy on deep space                       | Pure white text over saturated gradients                |
+| Subtle brushed-metal texture on panels                       | Heavy glassmorphism on every card                       |
+| One muted signal color per section                           | Multiple bright competing accent colors                 |
+| Slow documentary fade and small lift                         | Bouncy SaaS microinteractions                           |
+| Sparse starfield or archival grid texture                    | Dense particles, starbursts, or decorative energy lines |
+| Museum placard spacing and calm hierarchy                    | Generic futuristic dashboard clutter                    |
+| Material shadow and border changes for hover                 | Glow as the primary interaction feedback                |
 
 ## Accessibility And Performance
 
 - Keep body copy at `starlight-200` or brighter against space backgrounds.
 - Use signal color plus text or icon labels; never rely on color alone.
-- Preserve visible focus states for keyboard users.
-- Keep blur layers shallow and use elevated glass only where hierarchy requires
-  it.
-- Prefer CSS transitions for simple hover states and reserve JavaScript
-  animation for coordinated sequences.
+- Preserve visible focus states through the global `:focus-visible` rule.
+- Keep blur layers shallow and intentional.
+- Prefer CSS transitions for simple hover states.
+- Reserve JavaScript animation for coordinated sequences.
 - Use JS token exports for Three.js materials so scene colors remain aligned
   with the CSS system.

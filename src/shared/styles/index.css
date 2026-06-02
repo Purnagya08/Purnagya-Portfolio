@@ -26,12 +26,12 @@
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-signal-cyan) 28%, transparent);
+    background: color-mix(in srgb, var(--color-signal-brass) 32%, transparent);
     color: var(--color-starlight-50);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-signal-cyan);
+    outline: 2px solid var(--color-signal-brass);
     outline-offset: 4px;
   }
 }

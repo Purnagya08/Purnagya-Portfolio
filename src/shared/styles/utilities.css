@@ -7,24 +7,24 @@
     background: var(--gradient-interface);
   }
 
-  .bg-nexus-horizon {
-    background: var(--gradient-horizon);
+  .bg-nexus-archive {
+    background: var(--gradient-archive);
   }
 
-  .bg-nexus-sunrise {
-    background: var(--gradient-sunrise);
+  .bg-nexus-instrument {
+    background: var(--gradient-instrument);
   }
 
   .text-nexus-gradient {
-    background: var(--gradient-horizon);
+    background: var(--gradient-archive);
     background-clip: text;
     color: transparent;
   }
 
   .nexus-grid {
     background-image:
-      linear-gradient(rgb(89 243 255 / 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(89 243 255 / 0.045) 1px, transparent 1px);
+      linear-gradient(rgb(207 200 186 / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(207 200 186 / 0.035) 1px, transparent 1px);
     background-size: 3rem 3rem;
   }
 
@@ -33,13 +33,13 @@
       0deg,
       transparent,
       transparent 3px,
-      rgb(89 243 255 / 0.025) 4px
+      rgb(207 200 186 / 0.018) 4px
     );
   }
 
   .nexus-hairline {
     height: 1px;
-    background: var(--gradient-horizon);
-    opacity: 0.55;
+    background: var(--gradient-archive);
+    opacity: 0.45;
   }
 }

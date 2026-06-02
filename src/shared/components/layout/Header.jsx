@@ -4,7 +4,7 @@ import { navigationItems } from '@data/navigation'
 import { Container } from '@shared/components/ui/Container'
 
 const navLinkClassName = ({ isActive }) =>
-  `nexus-nav-link ${isActive ? 'text-signal-cyan' : 'text-starlight-300 hover:text-starlight-50'}`
+  `nexus-nav-link ${isActive ? 'text-signal-brass' : 'text-starlight-300 hover:text-starlight-50'}`
 
 export function Header() {
   const { closeNavigation, isNavigationOpen, toggleNavigation } = useAppStore()
@@ -14,7 +14,7 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between">
         <NavLink
           className="font-display text-sm font-bold tracking-display text-starlight-50 uppercase"
-          to="/"
+          to="/nexus"
         >
           NEXUS
         </NavLink>

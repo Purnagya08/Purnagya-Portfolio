@@ -1,0 +1,120 @@
+export const osModules = [
+  {
+    id: 'captains-log',
+    code: 'LOG-01',
+    label: "Captain's Log",
+    shortLabel: 'Log',
+    symbol: 'CL',
+    tone: 'steel',
+    eyebrow: 'Personal transmission',
+    title: 'The engineer behind the interface.',
+    description:
+      'A field journal of decisions, experiments, and the principles that guide the work.',
+    status: 'Synchronized',
+    route: '/nexus/about',
+    actionLabel: 'Open profile',
+    entries: [
+      ['ROLE', 'Creative engineer'],
+      ['FOCUS', 'Immersive interfaces'],
+      ['STATUS', 'Available for missions'],
+    ],
+  },
+  {
+    id: 'mission-archive',
+    code: 'ARC-02',
+    label: 'Mission Archive',
+    shortLabel: 'Archive',
+    symbol: 'MA',
+    tone: 'blue',
+    eyebrow: 'Selected operations',
+    title: 'Case studies from completed missions.',
+    description:
+      'Explore product work, technical decisions, and experiments documented as mission records.',
+    status: 'Archive online',
+    route: '/nexus/projects',
+    actionLabel: 'Browse missions',
+    entries: [
+      ['RECORDS', '02 indexed'],
+      ['CLEARANCE', 'Public'],
+      ['FORMAT', 'Engineering log'],
+    ],
+  },
+  {
+    id: 'research-labs',
+    code: 'LAB-03',
+    label: 'Research Labs',
+    shortLabel: 'Labs',
+    symbol: 'RL',
+    tone: 'brass',
+    eyebrow: 'Prototype wing',
+    title: 'Experiments in motion, systems, and space.',
+    description:
+      'A laboratory for new interaction patterns, visual systems, and engineering ideas.',
+    status: 'Experiments active',
+    entries: [
+      ['SECTOR', 'Prototype wing'],
+      ['PROJECTS', 'In calibration'],
+      ['ACCESS', 'Observation mode'],
+    ],
+  },
+  {
+    id: 'museum-archive',
+    code: 'MUS-04',
+    label: 'Museum Archive',
+    shortLabel: 'Museum',
+    symbol: 'MO',
+    tone: 'copper',
+    eyebrow: 'Origins collection',
+    title: 'Artifacts from the path to engineering.',
+    description:
+      'Browse formative projects, milestones, and the fragments that shaped the current practice.',
+    status: 'Collection restored',
+    entries: [
+      ['WING', 'Museum of origins'],
+      ['ARTIFACTS', 'Curated'],
+      ['TIMELINE', 'Chronological'],
+    ],
+  },
+  {
+    id: 'terminal',
+    code: 'COM-05',
+    label: 'Terminal',
+    shortLabel: 'Terminal',
+    symbol: '>_',
+    tone: 'sage',
+    eyebrow: 'Communication uplink',
+    title: 'Open a secure communication channel.',
+    description:
+      'Transmit a message, request a collaboration, or establish contact for the next mission.',
+    status: 'Channel available',
+    route: '/nexus/contact',
+    actionLabel: 'Open channel',
+    entries: [
+      ['UPLINK', 'Encrypted'],
+      ['LATENCY', 'Nominal'],
+      ['CHANNEL', 'Awaiting signal'],
+    ],
+  },
+  {
+    id: 'nexus-ai',
+    code: 'AI-06',
+    label: 'NEXUS AI',
+    shortLabel: 'NEXUS AI',
+    symbol: 'AI',
+    tone: 'brass',
+    eyebrow: 'Intelligence interface',
+    title: 'Query the NEXUS knowledge core.',
+    description:
+      'An AI-guided layer for navigating the portfolio and uncovering relevant logbook entries.',
+    status: 'Standby',
+    entries: [
+      ['MODEL', 'NEXUS assistant'],
+      ['MEMORY', 'Portfolio context'],
+      ['MODE', 'Standby'],
+    ],
+  },
+]
+
+export const osModuleMap = Object.fromEntries(
+  osModules.map((module) => [module.id, module]),
+)

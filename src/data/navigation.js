@@ -1,6 +1,6 @@
 export const navigationItems = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/nexus', label: 'NEXUS OS' },
+  { href: '/nexus/about', label: 'About' },
+  { href: '/nexus/projects', label: 'Projects' },
+  { href: '/nexus/contact', label: 'Contact' },
 ]

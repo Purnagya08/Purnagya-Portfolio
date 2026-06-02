@@ -1,13 +1,13 @@
 import { cn } from '@shared/utils/cn'
 
 const tones = {
-  amber: 'bg-signal-amber shadow-glow-amber',
-  cyan: 'bg-signal-cyan shadow-glow-cyan',
-  green: 'bg-signal-green',
-  violet: 'bg-signal-violet shadow-glow-violet',
+  blue: 'bg-signal-blue',
+  brass: 'bg-signal-brass',
+  sage: 'bg-signal-sage',
+  steel: 'bg-signal-steel',
 }
 
-export function SystemBadge({ children, className, tone = 'cyan' }) {
+export function SystemBadge({ children, className, tone = 'steel' }) {
   return (
     <span
       className={cn(

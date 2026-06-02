@@ -5,9 +5,9 @@ export function FloatingShape() {
     <mesh>
       <icosahedronGeometry args={[1.45, 2]} />
       <meshStandardMaterial
-        color={NEXUS_COLORS.cyan}
+        color={NEXUS_COLORS.steel}
         metalness={0.75}
-        roughness={0.2}
+        roughness={0.36}
       />
     </mesh>
   )

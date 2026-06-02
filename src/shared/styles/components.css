@@ -1,21 +1,21 @@
 @layer components {
   .nexus-glass {
     border: 1px solid var(--glass-border);
-    background: var(--glass-panel);
+    background: var(--metal-brush), var(--glass-panel);
     box-shadow: var(--shadow-panel);
     backdrop-filter: blur(var(--blur-glass));
   }
 
   .nexus-glass-subtle {
     border: 1px solid var(--glass-border);
-    background: var(--glass-subtle);
+    background: var(--metal-brush), var(--glass-subtle);
     backdrop-filter: blur(var(--blur-glass));
   }
 
   .nexus-glass-elevated {
     border: 1px solid var(--glass-border-highlight);
-    background: var(--glass-elevated);
-    box-shadow: var(--shadow-panel-raised), var(--shadow-glow-cyan);
+    background: var(--metal-brush), var(--glass-elevated);
+    box-shadow: var(--shadow-panel-raised), var(--shadow-metal-edge);
     backdrop-filter: blur(var(--blur-glass-heavy));
   }
 
@@ -24,7 +24,7 @@
     overflow: hidden;
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-nexus-lg);
-    background: var(--glass-panel);
+    background: var(--metal-brush), var(--glass-panel);
     box-shadow: var(--shadow-panel);
     backdrop-filter: blur(var(--blur-glass));
     transition:
@@ -45,8 +45,8 @@
 
   .nexus-card:hover {
     border-color: var(--glass-border-highlight);
-    box-shadow: var(--shadow-panel-raised), var(--shadow-glow-cyan);
-    transform: translateY(-0.375rem);
+    box-shadow: var(--shadow-panel-raised), var(--shadow-instrument);
+    transform: translateY(-0.25rem);
   }
 
   .nexus-card:hover::before {
@@ -90,26 +90,26 @@
   }
 
   .nexus-button-primary {
-    border: 1px solid var(--color-signal-cyan);
-    background: var(--color-signal-cyan);
+    border: 1px solid var(--color-signal-brass);
+    background: var(--color-signal-brass);
     color: var(--color-void-950);
-    box-shadow: var(--shadow-glow-cyan);
+    box-shadow: var(--shadow-instrument);
   }
 
   .nexus-button-primary:hover {
-    background: var(--color-starlight-50);
-    border-color: var(--color-starlight-50);
+    background: var(--color-starlight-100);
+    border-color: var(--color-starlight-100);
   }
 
   .nexus-button-secondary {
     border: 1px solid var(--glass-border-highlight);
-    background: rgb(89 243 255 / 0.08);
-    color: var(--color-signal-cyan);
+    background: rgb(196 169 107 / 0.08);
+    color: var(--color-starlight-100);
   }
 
   .nexus-button-secondary:hover {
-    background: rgb(89 243 255 / 0.16);
-    box-shadow: var(--shadow-glow-cyan);
+    background: rgb(196 169 107 / 0.14);
+    box-shadow: var(--shadow-instrument);
   }
 
   .nexus-button-ghost {
@@ -141,8 +141,7 @@
     left: 0;
     height: 1px;
     content: '';
-    background: var(--color-signal-cyan);
-    box-shadow: var(--shadow-glow-cyan);
+    background: var(--color-signal-brass);
     opacity: 0;
     transform: scaleX(0.4);
     transition:
@@ -162,5 +161,81 @@
     font-weight: 600;
     letter-spacing: var(--tracking-data);
     text-transform: uppercase;
+  }
+
+  .boot-terminal__wash {
+    background:
+      radial-gradient(circle at center, rgb(127 153 173 / 0.1), transparent 48%),
+      radial-gradient(
+        circle at 75% 30%,
+        rgb(196 169 107 / 0.08),
+        transparent 32%
+      );
+  }
+
+  .boot-terminal__scan {
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgb(207 200 186 / 0.055),
+      transparent
+    );
+    animation: boot-terminal-scan 3.6s linear infinite;
+  }
+
+  .boot-terminal__cursor {
+    animation: boot-terminal-cursor 0.8s steps(1, end) infinite;
+  }
+
+  .nexus-os-desktop__nebula {
+    background:
+      radial-gradient(
+        circle at 82% 70%,
+        rgb(127 153 173 / 0.14),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 68% 18%,
+        rgb(196 169 107 / 0.08),
+        transparent 24%
+      ),
+      radial-gradient(
+        circle at 16% 52%,
+        rgb(145 160 130 / 0.07),
+        transparent 32%
+      ),
+      linear-gradient(145deg, var(--color-void-950), #0b0f16 58%, #141c29);
+  }
+
+  .nexus-os-window {
+    touch-action: none;
+  }
+}
+
+@media (width < 48rem) {
+  .nexus-os-window {
+    touch-action: auto;
+  }
+}
+
+@keyframes boot-terminal-scan {
+  from {
+    transform: translateY(-8rem);
+  }
+
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes boot-terminal-cursor {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
   }
 }
