@@ -1,7 +1,11 @@
 import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { Button } from '@shared/components/ui/Button'
 import { Container } from '@shared/components/ui/Container'
+import { GlassPanel } from '@shared/components/ui/GlassPanel'
+import { SystemBadge } from '@shared/components/ui/SystemBadge'
+import { NEXUS_MOTION } from '@shared/constants/motion'
 import { useGsapReveal } from '@shared/hooks/useGsapReveal'
 
 const HeroScene = lazy(() =>
@@ -15,44 +19,39 @@ export function HomePage() {
 
   return (
     <section className="relative isolate overflow-hidden">
-      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_top_left,_rgba(8,145,178,0.18),_transparent_38%)]" />
-      <Container className="grid min-h-[calc(100vh-8rem)] items-center gap-10 py-16 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="nexus-grid absolute inset-0 -z-20 opacity-45" />
+      <div className="nexus-scanlines pointer-events-none absolute inset-0 -z-10" />
+      <Container className="grid min-h-[calc(100vh-8rem)] items-center gap-10 py-nexus-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div ref={introRef}>
-          <p className="text-sm font-semibold tracking-[0.3em] text-cyan-300 uppercase">
-            Creative developer
-          </p>
-          <h1 className="mt-5 text-5xl font-semibold tracking-tight text-white sm:text-7xl">
+          <SystemBadge>System online // Creative developer</SystemBadge>
+          <h1 className="mt-nexus-5 font-display text-display-xl font-semibold tracking-display text-starlight-50 uppercase">
             Building thoughtful digital experiences.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+          <p className="mt-nexus-5 max-w-xl text-body-lg text-starlight-300">
             A scalable React portfolio foundation for showcasing selected work,
             experiments, and the ideas behind them.
           </p>
           <motion.div
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-8 flex flex-wrap gap-4"
-            initial={{ opacity: 0, y: 12 }}
-            transition={{ delay: 0.55, duration: 0.5 }}
+            {...NEXUS_MOTION.fadeUp}
+            className="mt-nexus-6 flex flex-wrap gap-4"
+            transition={{ ...NEXUS_MOTION.fadeUp.transition, delay: 0.55 }}
           >
-            <Link
-              className="rounded-full bg-cyan-300 px-5 py-3 font-medium text-slate-950 transition hover:bg-cyan-200"
-              to="/projects"
-            >
+            <Button as={Link} to="/projects">
               Explore projects
-            </Link>
-            <Link
-              className="rounded-full border border-white/20 px-5 py-3 font-medium text-white transition hover:border-cyan-300"
-              to="/contact"
-            >
+            </Button>
+            <Button as={Link} to="/contact" variant="secondary">
               Start a conversation
-            </Link>
+            </Button>
           </motion.div>
         </div>
-        <div className="h-[22rem] overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 sm:h-[30rem]">
+        <GlassPanel
+          className="h-[22rem] overflow-hidden sm:h-[30rem]"
+          variant="subtle"
+        >
           <Suspense fallback={<SceneFallback />}>
             <HeroScene />
           </Suspense>
-        </div>
+        </GlassPanel>
       </Container>
     </section>
   )
@@ -60,6 +59,6 @@ export function HomePage() {
 
 function SceneFallback() {
   return (
-    <div className="h-full animate-pulse bg-[radial-gradient(circle,_rgba(34,211,238,0.18),_transparent_60%)]" />
+    <div className="h-full animate-nexus-pulse bg-[radial-gradient(circle,_rgb(89_243_255_/_0.18),_transparent_60%)]" />
   )
 }

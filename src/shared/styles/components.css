@@ -1,0 +1,166 @@
+@layer components {
+  .nexus-glass {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-panel);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: blur(var(--blur-glass));
+  }
+
+  .nexus-glass-subtle {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-subtle);
+    backdrop-filter: blur(var(--blur-glass));
+  }
+
+  .nexus-glass-elevated {
+    border: 1px solid var(--glass-border-highlight);
+    background: var(--glass-elevated);
+    box-shadow: var(--shadow-panel-raised), var(--shadow-glow-cyan);
+    backdrop-filter: blur(var(--blur-glass-heavy));
+  }
+
+  .nexus-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-nexus-lg);
+    background: var(--glass-panel);
+    box-shadow: var(--shadow-panel);
+    backdrop-filter: blur(var(--blur-glass));
+    transition:
+      transform 320ms var(--ease-nexus-out),
+      border-color 320ms var(--ease-nexus-out),
+      box-shadow 320ms var(--ease-nexus-out);
+  }
+
+  .nexus-card::before {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    content: '';
+    background: var(--gradient-interface);
+    opacity: 0;
+    transition: opacity 320ms var(--ease-nexus-out);
+  }
+
+  .nexus-card:hover {
+    border-color: var(--glass-border-highlight);
+    box-shadow: var(--shadow-panel-raised), var(--shadow-glow-cyan);
+    transform: translateY(-0.375rem);
+  }
+
+  .nexus-card:hover::before {
+    opacity: 1;
+  }
+
+  .nexus-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    border-radius: var(--radius-nexus-pill);
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 600;
+    letter-spacing: var(--tracking-interface);
+    line-height: 1;
+    text-transform: uppercase;
+    transition:
+      color 220ms var(--ease-nexus-out),
+      background-color 220ms var(--ease-nexus-out),
+      border-color 220ms var(--ease-nexus-out),
+      box-shadow 220ms var(--ease-nexus-out),
+      transform 220ms var(--ease-nexus-out);
+  }
+
+  .nexus-button:hover {
+    transform: translateY(-0.125rem);
+  }
+
+  .nexus-button:active {
+    transform: translateY(0);
+  }
+
+  .nexus-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+  }
+
+  .nexus-button-primary {
+    border: 1px solid var(--color-signal-cyan);
+    background: var(--color-signal-cyan);
+    color: var(--color-void-950);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .nexus-button-primary:hover {
+    background: var(--color-starlight-50);
+    border-color: var(--color-starlight-50);
+  }
+
+  .nexus-button-secondary {
+    border: 1px solid var(--glass-border-highlight);
+    background: rgb(89 243 255 / 0.08);
+    color: var(--color-signal-cyan);
+  }
+
+  .nexus-button-secondary:hover {
+    background: rgb(89 243 255 / 0.16);
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  .nexus-button-ghost {
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--color-starlight-200);
+  }
+
+  .nexus-button-ghost:hover {
+    border-color: var(--glass-border);
+    background: rgb(196 217 235 / 0.06);
+    color: var(--color-starlight-50);
+  }
+
+  .nexus-nav-link {
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 600;
+    letter-spacing: var(--tracking-interface);
+    text-transform: uppercase;
+    transition: color 220ms var(--ease-nexus-out);
+  }
+
+  .nexus-nav-link::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.5rem;
+    left: 0;
+    height: 1px;
+    content: '';
+    background: var(--color-signal-cyan);
+    box-shadow: var(--shadow-glow-cyan);
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity 220ms var(--ease-nexus-out),
+      transform 220ms var(--ease-nexus-out);
+  }
+
+  .nexus-nav-link:hover::after,
+  .nexus-nav-link[aria-current='page']::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .nexus-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 600;
+    letter-spacing: var(--tracking-data);
+    text-transform: uppercase;
+  }
+}

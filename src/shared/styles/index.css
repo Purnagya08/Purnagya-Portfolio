@@ -1,14 +1,12 @@
+@import './fonts.css';
 @import 'tailwindcss';
-
-@theme {
-  --font-sans:
-    Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji';
-}
+@import './tokens.css';
+@import './components.css';
+@import './utilities.css';
 
 @layer base {
   html {
-    background: #020617;
+    background: var(--color-void-950);
     color-scheme: dark;
     scroll-behavior: smooth;
   }
@@ -16,12 +14,35 @@
   body {
     min-width: 320px;
     min-height: 100vh;
-    background: #020617;
-    color: #e2e8f0;
+    background: var(--gradient-space);
+    color: var(--color-starlight-200);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
   }
 
   button,
   a {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-signal-cyan) 28%, transparent);
+    color: var(--color-starlight-50);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal-cyan);
+    outline-offset: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

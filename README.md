@@ -1,6 +1,16 @@
-# Purnagya Portfolio
+# NEXUS: The Logbook of an Engineer
 
-A modular, deployment-ready React portfolio foundation built with Vite.
+An immersive, modular portfolio foundation built with React and Vite.
+
+## Architecture
+
+The target application architecture, module ownership rules, loading strategy,
+and performance plan are documented in
+[`docs/NEXUS_ARCHITECTURE.md`](docs/NEXUS_ARCHITECTURE.md).
+
+The reusable visual language, Tailwind tokens, shared component recipes, and
+usage rules are documented in
+[`docs/NEXUS_DESIGN_SYSTEM.md`](docs/NEXUS_DESIGN_SYSTEM.md).
 
 ## Commands
 

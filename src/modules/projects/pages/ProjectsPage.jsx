@@ -1,4 +1,5 @@
 import { projects } from '@data/projects'
+import { Card } from '@shared/components/ui/Card'
 import { Container } from '@shared/components/ui/Container'
 import { PageIntro } from '@shared/components/ui/PageIntro'
 
@@ -11,17 +12,16 @@ export function ProjectsPage() {
           portfolio grows.
         </p>
       </PageIntro>
-      <Container className="grid gap-5 pb-20 md:grid-cols-2">
+      <Container className="grid gap-5 pb-section md:grid-cols-2">
         {projects.map((project) => (
-          <article
-            className="rounded-2xl border border-white/10 bg-white/5 p-6"
-            key={project.title}
-          >
-            <h2 className="text-xl font-semibold text-white">
+          <Card className="p-nexus-5" interactive key={project.title}>
+            <h2 className="font-heading text-heading-md font-semibold text-starlight-50">
               {project.title}
             </h2>
-            <p className="mt-3 text-slate-300">{project.description}</p>
-          </article>
+            <p className="mt-nexus-3 text-body-md text-starlight-300">
+              {project.description}
+            </p>
+          </Card>
         ))}
       </Container>
     </>
