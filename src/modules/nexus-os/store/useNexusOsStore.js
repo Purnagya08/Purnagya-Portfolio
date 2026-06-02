@@ -2,9 +2,13 @@ import { create } from 'zustand'
 
 const initialPositions = {
   'captains-log': { x: 72, y: 72 },
+  'present-station': { x: 146, y: 96 },
   'mission-archive': { x: 210, y: 116 },
-  'research-labs': { x: 340, y: 86 },
+  'training-facility': { x: 278, y: 104 },
   'museum-archive': { x: 150, y: 176 },
+  'challenge-galaxy': { x: 318, y: 142 },
+  'future-galaxy': { x: 232, y: 168 },
+  'research-labs': { x: 340, y: 86 },
   terminal: { x: 300, y: 150 },
   'nexus-ai': { x: 410, y: 124 },
 }

@@ -1,0 +1,1 @@
+export { FutureGalaxyPage } from './pages/FutureGalaxyPage'

@@ -8,6 +8,7 @@ import {
   researchRooms,
   researchSummary,
 } from '@modules/research-labs/data/researchRooms'
+import { FragmentCollectionSection } from '@shared/components/archive/FragmentCollectionSection'
 
 export function ResearchLabsPage() {
   const [activeRoomId, setActiveRoomId] = useState(researchRooms[0].id)
@@ -127,6 +128,14 @@ export function ResearchLabsPage() {
               <li>• Map failures into categories, then iterate deliberately.</li>
               <li>• Archive results so future work begins with evidence.</li>
             </ul>
+          </div>
+
+          <div className="mt-nexus-6">
+            <FragmentCollectionSection
+              location="research-labs"
+              subtitle="Collect experiment-derived fragments that connect research to implementation."
+              title="Research memory fragments"
+            />
           </div>
         </section>
       </Container>

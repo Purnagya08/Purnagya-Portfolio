@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { FragmentCollectionSection } from '@shared/components/archive/FragmentCollectionSection'
 import { Card } from '@shared/components/ui/Card'
 import { Container } from '@shared/components/ui/Container'
 import { PageIntro } from '@shared/components/ui/PageIntro'
@@ -120,6 +121,12 @@ export function ChallengeGalaxyPage() {
             </div>
           </section>
         ))}
+
+        <FragmentCollectionSection
+          location="challenge-galaxy"
+          subtitle="Fragments here are unlocked through failure analysis and repair narratives."
+          title="Challenge memory fragments"
+        />
       </Container>
 
       <Container className="pb-section">

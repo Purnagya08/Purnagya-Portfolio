@@ -1,4 +1,5 @@
 import { projects } from '@data/projects'
+import { FragmentCollectionSection } from '@shared/components/archive/FragmentCollectionSection'
 import { Card } from '@shared/components/ui/Card'
 import { Container } from '@shared/components/ui/Container'
 import { PageIntro } from '@shared/components/ui/PageIntro'
@@ -68,6 +69,14 @@ export function ProjectsPage() {
         {projects.map((mission) => (
           <MissionCard key={mission.code ?? mission.title} mission={mission} />
         ))}
+      </Container>
+
+      <Container className="pb-section">
+        <FragmentCollectionSection
+          location="mission-control"
+          subtitle="Mission Control fragments track decisions, outcomes, and reusable operating patterns."
+          title="Mission Control memory fragments"
+        />
       </Container>
     </>
   )

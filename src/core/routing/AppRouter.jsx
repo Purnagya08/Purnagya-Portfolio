@@ -8,6 +8,21 @@ const AboutPage = lazy(() =>
     default: module.AboutPage,
   })),
 )
+const PresentStationPage = lazy(() =>
+  import('@modules/present-station').then((module) => ({
+    default: module.PresentStationPage,
+  })),
+)
+const TerminalModePage = lazy(() =>
+  import('@modules/terminal-mode').then((module) => ({
+    default: module.TerminalModePage,
+  })),
+)
+const NexusAiPage = lazy(() =>
+  import('@modules/nexus-ai').then((module) => ({
+    default: module.NexusAiPage,
+  })),
+)
 const ContactPage = lazy(() =>
   import('@modules/contact/pages/ContactPage').then((module) => ({
     default: module.ContactPage,
@@ -31,6 +46,11 @@ const TrainingFacilityPage = lazy(() =>
 const ChallengeGalaxyPage = lazy(() =>
   import('@modules/challenge-galaxy/pages/ChallengeGalaxyPage').then((module) => ({
     default: module.ChallengeGalaxyPage,
+  })),
+)
+const FutureGalaxyPage = lazy(() =>
+  import('@modules/future-galaxy').then((module) => ({
+    default: module.FutureGalaxyPage,
   })),
 )
 const NotFoundPage = lazy(() =>
@@ -58,10 +78,14 @@ export function AppRouter() {
           <Route index element={<NexusOsPage />} />
           <Route element={<SiteLayout />}>
             <Route path="about" element={<AboutPage />} />
+            <Route path="present" element={<PresentStationPage />} />
+            <Route path="ai" element={<NexusAiPage />} />
+            <Route path="terminal" element={<TerminalModePage />} />
             <Route path="projects" element={<ProjectsPage />} />
             <Route path="origins" element={<MuseumOriginsPage />} />
             <Route path="training" element={<TrainingFacilityPage />} />
             <Route path="challenges" element={<ChallengeGalaxyPage />} />
+            <Route path="future" element={<FutureGalaxyPage />} />
             <Route path="research" element={<ResearchLabsPage />} />
             <Route path="contact" element={<ContactPage />} />
           </Route>

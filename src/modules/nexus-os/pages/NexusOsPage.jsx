@@ -110,7 +110,7 @@ export function NexusOsPage() {
           </h1>
           <p className="mt-nexus-2 text-body-sm text-starlight-300">
             Select a module to inspect the engineer logbook. Use arrow keys,
-            number keys 1-6, or the orbital dock to navigate.
+            quick keys, or the orbital dock to navigate.
           </p>
         </motion.div>
 
