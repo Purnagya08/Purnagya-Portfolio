@@ -43,6 +43,11 @@ const ProjectsPage = lazy(() =>
     default: module.ProjectsPage,
   })),
 )
+const ResearchLabsPage = lazy(() =>
+  import('@modules/research-labs/pages/ResearchLabsPage').then((module) => ({
+    default: module.ResearchLabsPage,
+  })),
+)
 
 export function AppRouter() {
   return (
@@ -57,6 +62,7 @@ export function AppRouter() {
             <Route path="origins" element={<MuseumOriginsPage />} />
             <Route path="training" element={<TrainingFacilityPage />} />
             <Route path="challenges" element={<ChallengeGalaxyPage />} />
+            <Route path="research" element={<ResearchLabsPage />} />
             <Route path="contact" element={<ContactPage />} />
           </Route>
         </Route>
