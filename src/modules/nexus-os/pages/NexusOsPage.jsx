@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ModuleLauncher } from '@modules/nexus-os/components/ModuleLauncher'
 import { NexusDock } from '@modules/nexus-os/components/NexusDock'
@@ -6,6 +6,12 @@ import { NexusWindow } from '@modules/nexus-os/components/NexusWindow'
 import { osModuleMap, osModules } from '@modules/nexus-os/data/osModules'
 import { useNexusOsStore } from '@modules/nexus-os/store/useNexusOsStore'
 import { SystemBadge } from '@shared/components/ui/SystemBadge'
+
+const StationHubScene = lazy(() =>
+  import('@three/scenes/StationHubScene').then((module) => ({
+    default: module.StationHubScene,
+  })),
+)
 
 export function NexusOsPage() {
   const activeWindowId = useNexusOsStore((state) => state.activeWindowId)
@@ -65,6 +71,13 @@ export function NexusOsPage() {
     >
       <div className="nexus-os-desktop__nebula absolute inset-0 -z-30" />
       <div className="nexus-grid absolute inset-0 -z-20 opacity-55" />
+      <Suspense fallback={<div className="absolute inset-0 -z-10" />}>
+        <StationHubScene
+          activeModuleId={activeWindowId}
+          modules={osModules}
+          onSelect={openWindow}
+        />
+      </Suspense>
       <div className="nexus-scanlines pointer-events-none absolute inset-0 z-60" />
 
       <header className="nexus-glass-subtle flex h-16 items-center justify-between gap-4 border-x-0 border-t-0 px-(--spacing-gutter)">

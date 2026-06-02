@@ -18,6 +18,21 @@ const NexusOsPage = lazy(() =>
     default: module.NexusOsPage,
   })),
 )
+const MuseumOriginsPage = lazy(() =>
+  import('@modules/museum-origins').then((module) => ({
+    default: module.MuseumOriginsPage,
+  })),
+)
+const TrainingFacilityPage = lazy(() =>
+  import('@modules/training-facility').then((module) => ({
+    default: module.TrainingFacilityPage,
+  })),
+)
+const ChallengeGalaxyPage = lazy(() =>
+  import('@modules/challenge-galaxy/pages/ChallengeGalaxyPage').then((module) => ({
+    default: module.ChallengeGalaxyPage,
+  })),
+)
 const NotFoundPage = lazy(() =>
   import('@modules/not-found/pages/NotFoundPage').then((module) => ({
     default: module.NotFoundPage,
@@ -39,6 +54,9 @@ export function AppRouter() {
           <Route element={<SiteLayout />}>
             <Route path="about" element={<AboutPage />} />
             <Route path="projects" element={<ProjectsPage />} />
+            <Route path="origins" element={<MuseumOriginsPage />} />
+            <Route path="training" element={<TrainingFacilityPage />} />
+            <Route path="challenges" element={<ChallengeGalaxyPage />} />
             <Route path="contact" element={<ContactPage />} />
           </Route>
         </Route>
@@ -47,6 +65,7 @@ export function AppRouter() {
     </Suspense>
   )
 }
+
 
 function RouteFallback() {
   return <div className="min-h-screen bg-slate-950" />

@@ -3,6 +3,7 @@ import { cn } from '@shared/utils/cn'
 const tones = {
   blue: 'bg-signal-blue',
   brass: 'bg-signal-brass',
+  copper: 'bg-signal-copper',
   sage: 'bg-signal-sage',
   steel: 'bg-signal-steel',
 }
