@@ -3,6 +3,44 @@ import { motion } from 'framer-motion'
 import { useNexusStore } from '../../store/nexusStore'
 import { toggleAudio, SFX } from '../../audio/audioEngine'
 
+// ─── NEXUS AI Quick-access button ─────────────────────────────
+function NexusAIButton() {
+  const { navigateTo, currentModule, triggerWarp, phase } = useNexusStore()
+  if (phase === 'entry' || phase === 'boot') return null
+
+  const isActive = currentModule === 'nexusai'
+
+  function handleClick() {
+    SFX.moduleEnter()
+    triggerWarp()
+    setTimeout(() => navigateTo(isActive ? null : 'nexusai'), 400)
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      data-cursor="hover"
+      style={{
+        fontFamily: 'JetBrains Mono', fontSize: 8,
+        letterSpacing: '0.15em',
+        color: isActive ? '#c9a84c' : 'rgba(56,184,216,0.6)',
+        background: isActive ? 'rgba(201,168,76,0.08)' : 'transparent',
+        border: `1px solid ${isActive ? 'rgba(201,168,76,0.35)' : 'rgba(56,184,216,0.2)'}`,
+        padding: '5px 12px', cursor: 'none',
+        display: 'flex', alignItems: 'center', gap: 6,
+        transition: 'all 0.2s',
+      }}
+    >
+      <motion.div
+        animate={{ opacity: [0.4, 1, 0.4] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        style={{ width: 4, height: 4, borderRadius: '50%', background: isActive ? '#c9a84c' : '#38b8d8' }}
+      />
+      NEXUS·AI
+    </button>
+  )
+}
+
 // ─── Clock that ticks ─────────────────────────────────────────
 function SystemClock() {
   const { systemTime, tickClock } = useNexusStore()
@@ -151,12 +189,13 @@ export default function HUDOverlay({ visible = true }) {
         </div>
       </div>
 
-      {/* ── Top-right: Clock + audio ── */}
+      {/* ── Top-right: AI button + Clock + audio ── */}
       <div style={{
         position: 'fixed', top: 20, right: 24,
-        display: 'flex', alignItems: 'flex-start', gap: 16,
+        display: 'flex', alignItems: 'flex-start', gap: 12,
         pointerEvents: 'all',
       }}>
+        <NexusAIButton />
         <SystemClock />
         <AudioToggle />
       </div>

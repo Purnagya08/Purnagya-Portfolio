@@ -11,38 +11,18 @@ import SpaceScene         from './components/three/SpaceScene'
 import CentralCommandHub  from './components/hub/CentralCommandHub'
 import ModuleShell        from './components/hub/ModuleShell'
 
-// ── Lazy-load all modules ─────────────────────────────────────
+// ── All 9 modules lazy loaded ─────────────────────────────────
 const MuseumOfOrigins        = lazy(() => import('./components/modules/MuseumOfOrigins'))
 const TrainingFacility       = lazy(() => import('./components/modules/TrainingFacility'))
 const ChallengeGalaxy        = lazy(() => import('./components/modules/ChallengeGalaxy'))
 const MissionControl         = lazy(() => import('./components/modules/MissionControl'))
 const ResearchLabs           = lazy(() => import('./components/modules/ResearchLabs'))
 const AchievementObservatory = lazy(() => import('./components/modules/AchievementObservatory'))
+const PresentStation         = lazy(() => import('./components/modules/PresentStation'))
+const FutureGalaxy           = lazy(() => import('./components/modules/FutureGalaxy'))
+const NexusAI                = lazy(() => import('./components/modules/NexusAI'))
 
-// ── Placeholder for Part 5 modules ───────────────────────────
-function ComingSoon({ id }) {
-  return (
-    <div style={{
-      minHeight: '80vh', display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: 16,
-    }}>
-      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.3em', color: 'rgba(56,184,216,0.5)' }}>
-        ◈ MODULE INITIALIZING ◈
-      </div>
-      <div style={{
-        fontFamily: 'Orbitron', fontSize: 'clamp(28px, 5vw, 48px)',
-        fontWeight: 700, color: '#c9a84c',
-        textShadow: '0 0 40px rgba(201,168,76,0.4)', letterSpacing: '0.1em',
-      }}>
-        {id?.toUpperCase()}
-      </div>
-      <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(176,192,216,0.4)' }}>
-        Coming in Part 5 →
-      </div>
-    </div>
-  )
-}
-
+// ── Spinner while lazy module loads ──────────────────────────
 function ModuleLoading() {
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -64,6 +44,7 @@ function ModuleLoading() {
   )
 }
 
+// ── Route id → component ──────────────────────────────────────
 function ModuleContent({ id }) {
   switch (id) {
     case 'origins':      return <MuseumOfOrigins />
@@ -72,10 +53,23 @@ function ModuleContent({ id }) {
     case 'missions':     return <MissionControl />
     case 'research':     return <ResearchLabs />
     case 'achievements': return <AchievementObservatory />
-    default:             return <ComingSoon id={id} />
+    case 'present':      return <PresentStation />
+    case 'future':       return <FutureGalaxy />
+    case 'nexusai':      return <NexusAI />
+    default:             return (
+      <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12 }}>
+        <div style={{ fontFamily: 'Orbitron', fontSize: 32, color: '#c9a84c', textShadow: '0 0 30px rgba(201,168,76,0.4)' }}>
+          {id?.toUpperCase()}
+        </div>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(56,184,216,0.4)', letterSpacing: '0.2em' }}>
+          MODULE NOT FOUND
+        </div>
+      </div>
+    )
   }
 }
 
+// ── Hub: 3D scene + grid + active module ─────────────────────
 function HubLayer() {
   const { currentModule } = useNexusStore()
   const showGrid = currentModule === null
@@ -117,6 +111,7 @@ function HubLayer() {
   )
 }
 
+// ── Root ──────────────────────────────────────────────────────
 export default function App() {
   const { phase } = useNexusStore()
 

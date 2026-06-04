@@ -8,7 +8,6 @@ export const MODULES = [
     description: 'Childhood. First code. The spark that started everything.',
     color: '#c9a84c',
     glowColor: 'rgba(201,168,76,0.4)',
-    // Grid position (col, row) for hub layout — 3×3
     col: 0, row: 0,
   },
   {
