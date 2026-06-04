@@ -9,7 +9,10 @@ import EntryGate          from './components/boot/EntryGate'
 import BootSequence       from './components/boot/BootSequence'
 import SpaceScene         from './components/three/SpaceScene'
 import CentralCommandHub  from './components/hub/CentralCommandHub'
-import ModuleShell        from './components/hub/ModuleShell'
+import ModuleShell        from './components/hub/ModuleShell';
+import TerminalMode       from './components/terminal/TerminalMode';
+import DynamicEvents      from './components/space/DynamicEvents';
+import { useZoneMusic }   from './hooks/useZoneMusic';
 
 // ── All 9 modules lazy loaded ─────────────────────────────────
 const MuseumOfOrigins        = lazy(() => import('./components/modules/MuseumOfOrigins'))
@@ -121,6 +124,8 @@ export default function App() {
     return () => document.removeEventListener('contextmenu', prevent)
   }, [])
 
+  const zoneMusic = useZoneMusic();
+
   return (
     <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#02040c' }}>
       <div className="noise-overlay" />
@@ -147,9 +152,13 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      {/* Immersive layer */}
+      <DynamicEvents />
+      <TerminalMode />
+
       <HUDOverlay visible={phase !== 'entry'} />
       <WarpTransition />
       <NexusCursor />
     </div>
-  )
+  );
 }

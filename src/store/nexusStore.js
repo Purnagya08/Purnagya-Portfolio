@@ -39,6 +39,16 @@ export const useNexusStore = create((set, get) => ({
   cursorVariant: 'default', // 'default' | 'hover' | 'click' | 'text' | 'portal'
   cursorTrail: [],
 
+  // ─── Terminal UI ───────────────────────────────────────────────
+  terminalOpen: false,
+  terminalInput: '',
+  terminalOutput: '',
+  terminalHistory: [],
+  setTerminalOpen: (v) => set({ terminalOpen: v }),
+  setTerminalInput: (v) => set({ terminalInput: v }),
+  setTerminalOutput: (v) => set({ terminalOutput: v }),
+  addTerminalHistory: (cmd) => set(state => ({ terminalHistory: [...state.terminalHistory, cmd] })),
+
   setCursorPos: (pos) => set({ cursorPos: pos }),
   setCursorVariant: (variant) => set({ cursorVariant: variant }),
   addCursorTrail: (point) => set((s) => ({
