@@ -132,53 +132,53 @@ function ExhibitCard({ number, title, description, detail, icon, color = '#c9a84
 export default function MuseumOfOrigins() {
   const timelineEvents = [
     {
-      year: '2006',
-      title: 'Born in Jaipur, Rajasthan',
-      description: 'A city of pink sandstone and old science — where curiosity was never a stranger.',
+      year: '2005',
+      title: 'Born in Asansol, West Bengal',
+      description: 'A city of brotherhood. Where it was all a place one can think off',
       color: '#c9a84c',
-      tags: ['Jaipur', 'Beginning'],
+      tags: ['Asansol', 'Beginning'],
     },
     {
-      year: '2014',
-      title: 'First Computer',
-      description: 'A second-hand Windows XP machine. The hum of the fan sounded like a rocket warming up. Paint, Notepad, and eventually — the internet.',
+      year: '2009',
+      title: 'First Schooling',
+      description: "A time began where this small kiddo doesn't even know what these machines are. He just know that he'll be awarded sweets if he attend school daily.",
       color: '#38b8d8',
-      tags: ['Windows XP', 'First PC'],
+      tags: ['Sweets', 'First Schooling'],
     },
     {
-      year: '2017',
-      title: 'First Line of Code',
-      description: 'Python in a school lab. print("Hello World") — and the screen obeyed. That was it. That was the moment.',
+      year: '2013-14',
+      title: 'Fell in love with Science & Maths',
+      description: 'Awarded as SUBJECT TOPPER in MATH & SCIENCE and it gave birth to a curiosity inside this kiddo to deep dive into the field',
       color: '#60d8a0',
       tags: ['Python', 'Hello World'],
     },
     {
-      year: '2019',
-      title: 'Fell in Love with Problem Solving',
-      description: 'Competitive programming on HackerRank. Hours disappearing. Every accepted solution felt like cracking a safe.',
+      year: '2017',
+      title: 'Fitness Journey',
+      description: 'Joined YOGA and won competitions and followed this for a long time',
       color: '#a070e0',
-      tags: ['HackerRank', 'Algorithms'],
+      tags: ['Fitness', 'YOGA'],
     },
     {
       year: '2022',
-      title: 'Engineering Admission — UEM Jaipur',
-      description: 'B.Tech Computer Science. Rank holder among 250+ students. The logbook officially opened.',
+      title: 'Secondary Examinarion',
+      description: 'Passed Class Xth with 90% marks overall',
       color: '#c9a84c',
-      tags: ['B.Tech CSE', 'UEM Jaipur', 'Rank Holder'],
+      tags: ['Secondary Examination', 'Class Xth'],
     },
     {
-      year: '2023',
-      title: 'First Real Project',
-      description: 'HackFlow AI — built from scratch, not just for marks. The shift from student to engineer happened here.',
+      year: '2024',
+      title: 'Senior Secondary Examination',
+      description: 'Passed Class XIIth with 84% marks overall',
       color: '#38b8d8',
       tags: ['Full Stack', 'Next.js', 'AI'],
     },
     {
-      year: '2024–25',
-      title: 'National & International Stages',
-      description: 'LaserHacks International Finalist. Inter-college hackathon wins. SentinelAI. The map kept expanding.',
+      year: '2024',
+      title: 'Joined UEM Jaipur as a CSE Student through IEMJEE score of AIR 5',
+      description: 'In 3rd Year persuing B.Tech in Computer Science & Engineering',
       color: '#60d8a0',
-      tags: ['LaserHacks', 'International', 'SentinelAI'],
+      tags: ['UEM Jaipur', 'B.Tech', 'CSE'],
     },
   ]
 
@@ -234,20 +234,20 @@ export default function MuseumOfOrigins() {
             color="#60d8a0"
           />
           <ExhibitCard
-            number={3}
-            icon="🏆"
-            title="The First Competition"
-            description="A school-level coding competition, 2019. Solved 3 out of 5 problems. Placed 4th. Went home and stayed up until 2am solving the ones I had missed. That stubbornness became a superpower."
-            detail="Event: School Tech Fest 2019 | Problems: 3/5 | Placement: 4th"
-            color="#38b8d8"
-          />
-          <ExhibitCard
             number={4}
             icon="🎓"
             title="The Admission"
-            description="UEM Jaipur, Computer Science Engineering, 2022. Walked in knowing Python and curiosity. Left three years later with Java, React, AI/ML, and a logbook full of real projects."
-            detail="Institute: UEM Jaipur | Branch: CSE | Batch: 2022-26 | Current GPA: 9.0"
+            description="UEM Jaipur, Computer Science Engineering, 2024. Walked in knowing Python and curiosity. Left three years later with Java, React, AI/ML, and a logbook full of real projects."
+            detail="Institute: UEM Jaipur | Branch: CSE | Batch: 2024-28 | Current GPA: 9.0"
             color="#a070e0"
+          />
+          <ExhibitCard
+            number={3}
+            icon="🏆"
+            title="The First Competition"
+            description="A college-level coding competition, 2025. Placed in top 10th. Went back hostel and stayed up until 2am solving the ones I had missed. That stubbornness became a superpower."
+            detail="Event: College Coding Competition 2025 | Problems: 3/5 | Placement: 10th"
+            color="#38b8d8"
           />
         </div>
       </Section>
@@ -260,7 +260,7 @@ export default function MuseumOfOrigins() {
           <MemoryFragment
             id="MF-02"
             quote="Engineering admission wasn't the destination. It was the launchpad. The real journey started on Day 1, Line 1 of the first Java file."
-            author="Captain's Log — 2022"
+            author="Captain's Log — 2024"
           />
         </div>
       </Section>

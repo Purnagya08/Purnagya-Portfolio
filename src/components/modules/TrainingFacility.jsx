@@ -196,10 +196,10 @@ export default function TrainingFacility() {
       <Section>
         <RevealBlock>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 16, marginBottom: 56 }}>
-            <StatCard value="365"  label="Days of Practice"    icon="📅" color="#38b8d8" />
-            <StatCard value="500"  label="Problems Solved"     icon="⚡" color="#60d8a0" />
-            <StatCard value="8"    label="Languages Learned"   icon="💻" color="#c9a84c" />
-            <StatCard value="100"  label="NPTEL Java Score"    icon="★" color="#a070e0" />
+            <StatCard value="365" label="Days of Practice" icon="📅" color="#38b8d8" />
+            <StatCard value="500" label="Problems Solved" icon="⚡" color="#60d8a0" />
+            <StatCard value="8" label="Languages Learned" icon="💻" color="#c9a84c" />
+            <StatCard value="100" label="NPTEL Java Score" icon="★" color="#a070e0" />
           </div>
         </RevealBlock>
 
@@ -233,12 +233,12 @@ export default function TrainingFacility() {
             icon="☕"
             color="#c9a84c"
             skills={[
-              { name: 'Core Java & Syntax',        level: 95 },
-              { name: 'OOP Principles',            level: 92 },
-              { name: 'Collections Framework',     level: 88 },
-              { name: 'Java Streams & Lambdas',    level: 82 },
-              { name: 'Exception Handling',        level: 90 },
-              { name: 'File I/O & Serialization',  level: 78 },
+              { name: 'Core Java & Syntax', level: 95 },
+              { name: 'OOP Principles', level: 92 },
+              { name: 'Collections Framework', level: 88 },
+              { name: 'Java Streams & Lambdas', level: 82 },
+              { name: 'Exception Handling', level: 90 },
+              { name: 'File I/O & Serialization', level: 78 },
             ]}
           >
             <CodeBlock lang="java" code={`// Day 12 — First time I understood polymorphism
@@ -270,19 +270,19 @@ s.describe(); // → Area: 78.539...`} />
             icon="⚔️"
             color="#38b8d8"
             skills={[
-              { name: 'Arrays & Strings',              level: 90 },
-              { name: 'LinkedList & Stack/Queue',      level: 85 },
-              { name: 'Trees & BST',                   level: 82 },
-              { name: 'Graphs & BFS/DFS',              level: 75 },
-              { name: 'Dynamic Programming',           level: 70 },
-              { name: 'Sorting & Searching',           level: 88 },
+              { name: 'Arrays & Strings', level: 90 },
+              { name: 'LinkedList & Stack/Queue', level: 85 },
+              { name: 'Trees & BST', level: 82 },
+              { name: 'Graphs & BFS/DFS', level: 75 },
+              { name: 'Dynamic Programming', level: 70 },
+              { name: 'Sorting & Searching', level: 88 },
             ]}
           >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {['Two Pointer', 'Sliding Window', 'Binary Search', 'Recursion', 'Memoization',
                 'BFS', 'DFS', 'Dijkstra', 'Union-Find', 'Segment Tree'].map(t => (
-                <Tag key={t} label={t} color="#38b8d8" />
-              ))}
+                  <Tag key={t} label={t} color="#38b8d8" />
+                ))}
             </div>
           </WingCard>
 
@@ -294,11 +294,11 @@ s.describe(); // → Area: 78.539...`} />
             icon="🔄"
             color="#60d8a0"
             skills={[
-              { name: 'Thread Lifecycle',          level: 80 },
-              { name: 'Synchronization',           level: 75 },
-              { name: 'ExecutorService',           level: 72 },
-              { name: 'Callable & Future',         level: 68 },
-              { name: 'volatile & atomic ops',     level: 65 },
+              { name: 'Thread Lifecycle', level: 80 },
+              { name: 'Synchronization', level: 75 },
+              { name: 'ExecutorService', level: 72 },
+              { name: 'Callable & Future', level: 68 },
+              { name: 'volatile & atomic ops', level: 65 },
             ]}
           >
             <CodeBlock lang="java" code={`// Callable + Future — when you need results back
@@ -323,20 +323,20 @@ pool.shutdown();`} />
             color="#a070e0"
             skills={[
               { name: 'React & Next.js (App Router)', level: 88 },
-              { name: 'TypeScript',                   level: 80 },
-              { name: 'Node.js & Express',            level: 82 },
-              { name: 'FastAPI & Python',             level: 78 },
-              { name: 'PostgreSQL & Prisma',          level: 75 },
-              { name: 'Redis & Pub/Sub',              level: 70 },
-              { name: 'Docker & Deployment',          level: 72 },
-              { name: 'REST API Design',              level: 85 },
+              { name: 'TypeScript', level: 80 },
+              { name: 'Node.js & Express', level: 82 },
+              { name: 'FastAPI & Python', level: 78 },
+              { name: 'PostgreSQL & Prisma', level: 75 },
+              { name: 'Redis & Pub/Sub', level: 70 },
+              { name: 'Docker & Deployment', level: 72 },
+              { name: 'REST API Design', level: 85 },
             ]}
           >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
               {['TailwindCSS', 'Framer Motion', 'Prisma ORM', 'JWT Auth', 'WebSockets',
                 'Docker Compose', 'GitHub Actions', 'Vercel', 'GCR'].map(t => (
-                <Tag key={t} label={t} color="#a070e0" />
-              ))}
+                  <Tag key={t} label={t} color="#a070e0" />
+                ))}
             </div>
           </WingCard>
 
@@ -348,11 +348,11 @@ pool.shutdown();`} />
             icon="🤖"
             color="#38b8d8"
             skills={[
-              { name: 'Scikit-learn & Classical ML',  level: 78 },
-              { name: 'PyTorch (MLP, CNN)',            level: 72 },
+              { name: 'Scikit-learn & Classical ML', level: 78 },
+              { name: 'PyTorch (MLP, CNN)', level: 72 },
               { name: 'Data Analysis (Pandas/NumPy)', level: 82 },
-              { name: 'Computer Vision (OpenCV)',      level: 68 },
-              { name: 'NLP & Text Processing',        level: 65 },
+              { name: 'Computer Vision (OpenCV)', level: 68 },
+              { name: 'NLP & Text Processing', level: 65 },
               { name: 'Redis Streams (Event-driven)', level: 70 },
             ]}
           >

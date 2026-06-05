@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNexusStore } from '../../store/nexusStore';
 import { SFX } from '../../audio/audioEngine';
 
-// ─── Command registry ─────────────────────────────────────────────────────────
 const COMMANDS = [
   'help', 'about', 'skills', 'projects', 'achievements',
   'future', 'clear', 'hub', 'mission', 'research',
@@ -46,44 +45,34 @@ const HELP_TEXT = `
 ╚══════════════════════════════════════════╝
 `.trim();
 
-// ─── Execute a command ────────────────────────────────────────────────────────
 function execCommand(cmd, store) {
   const c = cmd.trim().toLowerCase();
   if (!c) return null;
-
   if (c === 'help')  return HELP_TEXT;
   if (c === 'clear') return '__CLEAR__';
   if (c === 'hub') {
     store.navigateTo(null);
     return '> Navigating to Command Hub…';
   }
-
   if (CMD_MAP[c]) {
     store.navigateTo(CMD_MAP[c]);
     return `> Navigating to ${c.toUpperCase()}…`;
   }
-
   if (COMMANDS.includes(c)) {
     store.navigateTo(c);
     return `> Launching ${c.toUpperCase()}…`;
   }
-
   return `⚠  COMMAND NOT RECOGNIZED: "${cmd}"\n   Type 'help' for available commands.`;
 }
 
-// ─── useFocusTrap – native implementation (no external deps) ──────────────────
 function useFocusTrap(containerRef, active) {
   useEffect(() => {
     if (!active || !containerRef.current) return;
-
     const el = containerRef.current;
     const focusable = () =>
-      Array.from(
-        el.querySelectorAll(
-          'a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])'
-        )
-      );
-
+      Array.from(el.querySelectorAll(
+        'a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])'
+      ));
     const handleKeyDown = (e) => {
       if (e.key !== 'Tab') return;
       const items = focusable();
@@ -96,56 +85,44 @@ function useFocusTrap(containerRef, active) {
         if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
       }
     };
-
     el.addEventListener('keydown', handleKeyDown);
-    // Focus first focusable element
     const items = focusable();
     if (items.length) items[0].focus();
-
     return () => el.removeEventListener('keydown', handleKeyDown);
   }, [active, containerRef]);
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export default function TerminalMode() {
-  const {
-    terminalOpen,
-    setTerminalOpen,
-  } = useNexusStore();
+  const { terminalOpen, setTerminalOpen } = useNexusStore();
 
-  // local state (avoids store complexity)
-  const [input,    setInput]    = useState('');
-  const [lines,    setLines]    = useState([
+  const [input,   setInput]   = useState('');
+  const [lines,   setLines]   = useState([
     '  NEXUS OPERATING SYSTEM  v1.0.0',
     '  Type "help" to see all commands.',
     '',
   ]);
-  const [history,  setHistory]  = useState([]);
-  const [histIdx,  setHistIdx]  = useState(-1);
-  const [suggest,  setSuggest]  = useState('');
+  const [history, setHistory] = useState([]);
+  const [histIdx, setHistIdx] = useState(-1);
+  const [suggest, setSuggest] = useState('');
 
   const containerRef = useRef(null);
   const inputRef     = useRef(null);
   const outputRef    = useRef(null);
 
-  // Native focus trap
   useFocusTrap(containerRef, terminalOpen);
 
-  // Scroll to bottom whenever lines change
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [lines]);
 
-  // Focus input when terminal opens
   useEffect(() => {
     if (terminalOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [terminalOpen]);
 
-  // Global keydown – toggle on backtick / close on Escape
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === '`' && !terminalOpen) {
@@ -162,7 +139,6 @@ export default function TerminalMode() {
     return () => window.removeEventListener('keydown', onKey);
   }, [terminalOpen, setTerminalOpen]);
 
-  // Autocomplete suggestion
   const onInputChange = useCallback((e) => {
     const val = e.target.value;
     setInput(val);
@@ -175,7 +151,6 @@ export default function TerminalMode() {
     }
   }, []);
 
-  // Tab → accept suggestion
   const onKeyDown = useCallback((e) => {
     if (e.key === 'Tab' && suggest) {
       e.preventDefault();
@@ -183,11 +158,9 @@ export default function TerminalMode() {
       setSuggest('');
       return;
     }
-
     if (e.key === 'Enter') {
       e.preventDefault();
       const cmd = input.trim();
-
       const addLine = (text) =>
         setLines((prev) => [
           ...prev,
@@ -195,7 +168,6 @@ export default function TerminalMode() {
           ...(text ? text.split('\n') : []),
           '',
         ]);
-
       if (cmd) {
         const result = execCommand(cmd, useNexusStore.getState());
         if (result === '__CLEAR__') {
@@ -210,7 +182,6 @@ export default function TerminalMode() {
       setSuggest('');
       return;
     }
-
     if (e.key === 'ArrowUp') {
       e.preventDefault();
       setHistory((hist) => {
@@ -221,7 +192,6 @@ export default function TerminalMode() {
       });
       return;
     }
-
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setHistory((hist) => {
@@ -248,10 +218,7 @@ export default function TerminalMode() {
           exit={{ opacity: 0, scale: 0.97 }}
           transition={{ duration: 0.18, ease: 'easeOut' }}
         >
-          {/* Backdrop */}
           <div className="absolute inset-0 bg-black/96" />
-
-          {/* Scanlines */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -261,17 +228,10 @@ export default function TerminalMode() {
               mixBlendMode: 'overlay',
             }}
           />
-
-          {/* CRT vignette */}
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%)',
-            }}
+            style={{ background: 'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.7) 100%)' }}
           />
-
-          {/* Close hint */}
           <button
             onClick={() => setTerminalOpen(false)}
             className="absolute top-4 right-6 text-[10px] tracking-widest text-green-500/50 hover:text-green-400 transition-colors focus:outline-none focus:ring-1 focus:ring-green-500"
@@ -280,9 +240,7 @@ export default function TerminalMode() {
             [ESC] CLOSE
           </button>
 
-          {/* Terminal window */}
           <div className="absolute inset-0 flex flex-col p-4 pt-12 sm:p-8 sm:pt-14">
-            {/* Header bar */}
             <div className="flex items-center gap-2 mb-4 pb-3 border-b border-green-500/20">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
@@ -292,10 +250,9 @@ export default function TerminalMode() {
               </span>
             </div>
 
-            {/* Output area */}
             <div
               ref={outputRef}
-              className="flex-1 overflow-y-auto overflow-x-hidden text-green-400 text-[11px] sm:text-sm leading-relaxed mb-4 scrollbar-thin scrollbar-thumb-green-900 scrollbar-track-transparent"
+              className="flex-1 overflow-y-auto overflow-x-hidden text-green-400 text-[11px] sm:text-sm leading-relaxed mb-4"
               aria-live="polite"
               aria-atomic="false"
             >
@@ -303,18 +260,21 @@ export default function TerminalMode() {
                 <div
                   key={i}
                   className="whitespace-pre-wrap break-all"
-                  style={{ color: line.startsWith('NEXUS>') ? '#4ade80' : line.startsWith('⚠') ? '#f87171' : 'rgba(74,222,128,0.7)' }}
+                  style={{
+                    color: line.startsWith('NEXUS>')
+                      ? '#4ade80'
+                      : line.startsWith('⚠')
+                      ? '#f87171'
+                      : 'rgba(74,222,128,0.7)',
+                  }}
                 >
                   {line || '\u00A0'}
                 </div>
               ))}
             </div>
 
-            {/* Input row */}
             <div className="relative flex items-center border-t border-green-500/20 pt-3">
               <span className="text-green-400 mr-2 text-[11px] sm:text-sm shrink-0">NEXUS&gt;</span>
-
-              {/* Autocomplete ghost */}
               {suggest && (
                 <span
                   className="absolute left-[4.5rem] sm:left-20 top-3 text-green-500/30 text-[11px] sm:text-sm pointer-events-none select-none whitespace-pre"
@@ -323,7 +283,6 @@ export default function TerminalMode() {
                   {suggest}
                 </span>
               )}
-
               <input
                 ref={inputRef}
                 type="text"
@@ -331,31 +290,24 @@ export default function TerminalMode() {
                 autoComplete="off"
                 autoCorrect="off"
                 spellCheck={false}
-                className="flex-1 bg-transparent outline-none text-green-400 text-[11px] sm:text-sm caret-green-400 placeholder-green-900"
+                className="flex-1 bg-transparent outline-none text-green-400 text-[11px] sm:text-sm caret-green-400"
                 value={input}
                 onChange={onInputChange}
                 onKeyDown={onKeyDown}
-                aria-label="Terminal command input — type a command and press Enter"
+                aria-label="Terminal command input"
                 aria-autocomplete="list"
               />
-
-              {/* Blinking cursor */}
               <span
                 aria-hidden="true"
                 style={{
-                  display: 'inline-block',
-                  width: '0.55ch',
-                  height: '1.1em',
+                  display: 'inline-block', width: '0.55ch', height: '1.1em',
                   backgroundColor: '#4ade80',
-                  animation: 'blink 1s steps(2) infinite',
-                  verticalAlign: 'middle',
-                  marginLeft: 2,
-                  flexShrink: 0,
+                  animation: 'cursorBlink 1s steps(2) infinite',
+                  verticalAlign: 'middle', marginLeft: 2, flexShrink: 0,
                 }}
               />
             </div>
 
-            {/* Hint bar */}
             <div className="mt-3 text-[9px] sm:text-[10px] text-green-900 tracking-widest flex flex-wrap gap-x-4 gap-y-1">
               <span>↑↓ HISTORY</span>
               <span>TAB AUTOCOMPLETE</span>

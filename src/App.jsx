@@ -2,17 +2,20 @@ import { useEffect, lazy, Suspense } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useNexusStore } from './store/nexusStore'
 
-import NexusCursor        from './components/cursor/NexusCursor'
-import HUDOverlay         from './components/ui/HUDOverlay'
-import WarpTransition     from './components/ui/WarpTransition'
-import EntryGate          from './components/boot/EntryGate'
-import BootSequence       from './components/boot/BootSequence'
-import SpaceScene         from './components/three/SpaceScene'
-import CentralCommandHub  from './components/hub/CentralCommandHub'
-import ModuleShell        from './components/hub/ModuleShell';
-import TerminalMode       from './components/terminal/TerminalMode';
-import DynamicEvents      from './components/space/DynamicEvents';
-import { useZoneMusic }   from './hooks/useZoneMusic';
+import NexusCursor                from './components/cursor/NexusCursor'
+import HUDOverlay                 from './components/ui/HUDOverlay'
+import WarpTransition             from './components/ui/WarpTransition'
+import EntryGate                  from './components/boot/EntryGate'
+import BootSequence               from './components/boot/BootSequence'
+import SpaceScene                 from './components/three/SpaceScene'
+import CentralCommandHub          from './components/hub/CentralCommandHub'
+import ModuleShell                from './components/hub/ModuleShell'
+import TerminalMode               from './components/terminal/TerminalMode'
+import DynamicEvents              from './components/space/DynamicEvents'
+import AchievementUnlock          from './components/overlays/AchievementUnlock'
+import MemoryFragmentCompletion   from './components/overlays/MemoryFragmentCompletion'
+import ErrorBoundary              from './components/overlays/ErrorBoundary'
+import { useZoneMusic }           from './hooks/useZoneMusic'
 
 // ── All 9 modules lazy loaded ─────────────────────────────────
 const MuseumOfOrigins        = lazy(() => import('./components/modules/MuseumOfOrigins'))
@@ -25,7 +28,6 @@ const PresentStation         = lazy(() => import('./components/modules/PresentSt
 const FutureGalaxy           = lazy(() => import('./components/modules/FutureGalaxy'))
 const NexusAI                = lazy(() => import('./components/modules/NexusAI'))
 
-// ── Spinner while lazy module loads ──────────────────────────
 function ModuleLoading() {
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -47,7 +49,6 @@ function ModuleLoading() {
   )
 }
 
-// ── Route id → component ──────────────────────────────────────
 function ModuleContent({ id }) {
   switch (id) {
     case 'origins':      return <MuseumOfOrigins />
@@ -59,7 +60,7 @@ function ModuleContent({ id }) {
     case 'present':      return <PresentStation />
     case 'future':       return <FutureGalaxy />
     case 'nexusai':      return <NexusAI />
-    default:             return (
+    default: return (
       <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12 }}>
         <div style={{ fontFamily: 'Orbitron', fontSize: 32, color: '#c9a84c', textShadow: '0 0 30px rgba(201,168,76,0.4)' }}>
           {id?.toUpperCase()}
@@ -72,7 +73,6 @@ function ModuleContent({ id }) {
   }
 }
 
-// ── Hub: 3D scene + grid + active module ─────────────────────
 function HubLayer() {
   const { currentModule } = useNexusStore()
   const showGrid = currentModule === null
@@ -114,7 +114,12 @@ function HubLayer() {
   )
 }
 
-// ── Root ──────────────────────────────────────────────────────
+// Zone music runs as a side-effect inside the tree
+function ZoneMusicProvider() {
+  useZoneMusic()
+  return null
+}
+
 export default function App() {
   const { phase } = useNexusStore()
 
@@ -124,41 +129,49 @@ export default function App() {
     return () => document.removeEventListener('contextmenu', prevent)
   }, [])
 
-  const zoneMusic = useZoneMusic();
-
   return (
-    <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#02040c' }}>
-      <div className="noise-overlay" />
-      <div className="scanlines" />
-      <div className="vignette" />
+    <ErrorBoundary>
+      <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: '#02040c' }}>
+        <div className="noise-overlay" />
+        <div className="scanlines" />
+        <div className="vignette" />
 
-      <AnimatePresence mode="wait">
-        {phase === 'entry' && (
-          <motion.div key="entry" style={{ position: 'fixed', inset: 0, zIndex: 800 }}>
-            <EntryGate />
-          </motion.div>
-        )}
-        {phase === 'boot' && (
-          <motion.div key="boot" style={{ position: 'fixed', inset: 0, zIndex: 700 }}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <BootSequence />
-          </motion.div>
-        )}
-        {phase === 'hub' && (
-          <motion.div key="hub" style={{ position: 'fixed', inset: 0, zIndex: 10 }}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <HubLayer />
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <AnimatePresence mode="wait">
+          {phase === 'entry' && (
+            <motion.div key="entry" style={{ position: 'fixed', inset: 0, zIndex: 800 }}>
+              <EntryGate />
+            </motion.div>
+          )}
+          {phase === 'boot' && (
+            <motion.div key="boot" style={{ position: 'fixed', inset: 0, zIndex: 700 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <BootSequence />
+            </motion.div>
+          )}
+          {phase === 'hub' && (
+            <motion.div key="hub" style={{ position: 'fixed', inset: 0, zIndex: 10 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <HubLayer />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      {/* Immersive layer */}
-      <DynamicEvents />
-      <TerminalMode />
+        {/* Immersive layer */}
+        <DynamicEvents />
+        <TerminalMode />
 
-      <HUDOverlay visible={phase !== 'entry'} />
-      <WarpTransition />
-      <NexusCursor />
-    </div>
-  );
+        {/* Persistent chrome */}
+        <HUDOverlay visible={phase !== 'entry'} />
+        <WarpTransition />
+        <NexusCursor />
+
+        {/* Overlay notifications */}
+        <AchievementUnlock />
+        <MemoryFragmentCompletion />
+
+        {/* Zone music (no render output) */}
+        <ZoneMusicProvider />
+      </div>
+    </ErrorBoundary>
+  )
 }
