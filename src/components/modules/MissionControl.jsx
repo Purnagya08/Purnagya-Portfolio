@@ -314,7 +314,7 @@ const MISSIONS = [
       { value: '<50ms', label: 'RESPONSE TIME'     },
     ],
     log: 'Built at 2am, debugged at 4am, deployed at 6am. The Redis race condition that fired events 3x was the final boss. One config line fixed it. The satisfaction was disproportionate.',
-    github: 'https://github.com/Purnagya08',
+    github: 'https://github.com/Purnagya08/sentinel-ai',
     live: null,
   },
   {
@@ -330,7 +330,7 @@ const MISSIONS = [
       { value: '2',    label: 'DEPLOYMENTS'     },
     ],
     log: 'Started as a hackathon submission, evolved into a real product. The moment the ML scorer graded a project correctly for the first time — that was the mission achieved.',
-    github: 'https://github.com/Purnagya08',
+    github: 'https://github.com/Purnagya08/ACEHACK-PROJECT',
     live: null,
   },
   {
@@ -346,7 +346,7 @@ const MISSIONS = [
       { value: 'PRD', label: 'SPEC-DRIVEN'     },
     ],
     log: 'The kind of product you build because you personally needed it and couldn\'t find it. Real problem, real solution. Still flying.',
-    github: 'https://github.com/Purnagya08',
+    github: 'https://github.com/Purnagya08/warrantysafe',
     live: null,
   },
   {
@@ -362,7 +362,7 @@ const MISSIONS = [
       { value: 'Q&A', label: 'INTERACTION'   },
     ],
     log: 'Computer vision + NLP in one pipeline. The first time it answered a question about a scanned receipt correctly, I closed my laptop and went for a walk.',
-    github: 'https://github.com/Purnagya08',
+    github: 'https://github.com/Purnagya08/appforge',
     live: null,
   },
   {
@@ -378,7 +378,7 @@ const MISSIONS = [
       { value: '1st', label: 'PROJECT TYPE'    },
     ],
     log: 'My earliest real project. Rough edges everywhere. But it worked — and it solved a problem. That matters more than clean code at the beginning.',
-    github: 'https://github.com/Purnagya08',
+    github: 'https://github.com/Purnagya08/AI-Assisted-financial-advisory-engine',
     live: null,
   },
 ]

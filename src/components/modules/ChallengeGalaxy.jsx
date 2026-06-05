@@ -244,8 +244,8 @@ export default function ChallengeGalaxy() {
     {
       event: 'Inter-College Hackathon',
       result: '1st Place — Winner',
-      description: 'Competed against 40+ teams from 12 colleges across Jaipur. Built a full-stack AI platform in 24 hours. Judges praised the production quality and demo delivery.',
-      team: 'Team Ctrl+Alt+Win',
+      description: 'Competed against 60+ teams from 1st, 2nd, 3rd & 4th year. Built a full-stack AI platform in 24 hours. Judges praised the production quality and demo delivery.',
+      team: 'Team HACK SHASTRA',
       tech: ['Next.js', 'Node.js', 'PostgreSQL', 'TailwindCSS'],
       outcome: 'Winning felt less like a reward and more like proof — proof that building things properly, even under time pressure, is always the right call.',
       color: '#60d8a0',

@@ -189,10 +189,10 @@ function LinkedInStats() {
         display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
       }}>
         {[
-          { v: '2000+',  l: 'Followers' },
-          { v: '365',    l: 'Posts'     },
-          { v: '0',      l: 'Skipped'   },
-          { v: '2025',   l: 'Year'      },
+          { v: '2000+', l: 'Followers' },
+          { v: '365', l: 'Posts' },
+          { v: '35000+', l: 'Members Reached' },
+          { v: '2025', l: 'Year' },
         ].map(({ v, l }) => (
           <div key={l} style={{
             padding: '12px', textAlign: 'center',
@@ -262,7 +262,7 @@ function GPAConstellation() {
 
           {/* Area fill */}
           <motion.polygon
-            points={[...pts.map(p => `${p.x},${p.y}`), `${pts[pts.length-1].x},${h - padY}`, `${pts[0].x},${h - padY}`].join(' ')}
+            points={[...pts.map(p => `${p.x},${p.y}`), `${pts[pts.length - 1].x},${h - padY}`, `${pts[0].x},${h - padY}`].join(' ')}
             fill="rgba(201,168,76,0.05)"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -311,11 +311,11 @@ export default function AchievementObservatory() {
       rank: 'WIN',
       icon: '🏆',
       title: '2x Inter-College Hackathon Winner',
-      subtitle: 'Jaipur Region · 40+ Teams · Two Separate Events',
-      detail: 'First place in two separate inter-college hackathons across Jaipur. Competed against teams from 12+ colleges. Both wins involved full-stack AI projects built and deployed within 24 hours.',
+      subtitle: 'College Level · 60+ Teams · Two Separate Events',
+      detail: 'First place in two separate inter-college hackathons across college. Competed against teams from 1st, 2nd, 3rd & 4th year. Both wins involved full-stack AI projects built and deployed within 24 hours.',
       story: 'Winning once felt lucky. Winning twice felt like confirmation. The system works — build well, demo clearly, explain your architecture without condescension.',
       color: '#60d8a0',
-      tags: ['1st Place x2', '40+ Teams', 'Jaipur Region', '24h Builds'],
+      tags: ['1st Place x2', '60+ Teams', 'College Level', '12h Builds'],
     },
     {
       rank: 'RANK',
@@ -346,9 +346,9 @@ export default function AchievementObservatory() {
       <Section>
         <RevealBlock>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 16, marginBottom: 56 }}>
-            <StatCard value="100"  label="NPTEL Score"        icon="★" color="#c9a84c" />
-            <StatCard value="3"    label="Semester Ranks"     icon="◈" color="#a070e0" />
-            <StatCard value="500"  label="Intl Teams Beaten"  icon="🌍" color="#38b8d8" />
+            <StatCard value="100" label="NPTEL Score" icon="★" color="#c9a84c" />
+            <StatCard value="3" label="Semester Ranks" icon="◈" color="#a070e0" />
+            <StatCard value="500" label="Intl Teams Beaten" icon="🌍" color="#38b8d8" />
             <StatCard value="2000" label="LinkedIn Followers" icon="◎" color="#60d8a0" />
           </div>
         </RevealBlock>
