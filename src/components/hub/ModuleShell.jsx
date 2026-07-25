@@ -79,7 +79,7 @@ export default function ModuleShell({ children }) {
           {/* Breadcrumb */}
           <div style={{
             fontFamily: 'JetBrains Mono', fontSize: 8,
-            color: `${module.color}55`, letterSpacing: '0.2em', flexShrink: 0,
+            color: `${module.color}90`, letterSpacing: '0.2em', flexShrink: 0,
           }}>
             {module.code}
           </div>
@@ -105,7 +105,7 @@ export default function ModuleShell({ children }) {
             />
             <span style={{
               fontFamily: 'JetBrains Mono', fontSize: 8,
-              color: `${module.color}70`, letterSpacing: '0.15em',
+              color: `${module.color}95`, letterSpacing: '0.15em',
             }}>
               ACTIVE
             </span>

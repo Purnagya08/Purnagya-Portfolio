@@ -54,7 +54,7 @@ export function SectionTitle({ label, code, color = '#c9a84c', sub }) {
       {sub && (
         <div style={{
           fontFamily: 'Libre Baskerville', fontStyle: 'italic',
-          fontSize: 13, color: 'rgba(176,192,216,0.5)',
+          fontSize: 13, color: 'rgba(216,228,240,0.82)',
           marginTop: 6, marginLeft: 17,
         }}>
           {sub}
@@ -117,7 +117,7 @@ export function MemoryFragment({ id, quote, author }) {
 
       <div style={{
         fontFamily: 'JetBrains Mono', fontSize: 8,
-        letterSpacing: '0.2em', color: 'rgba(201,168,76,0.5)',
+        letterSpacing: '0.2em', color: 'rgba(201,168,76,0.80)',
         marginBottom: 10,
       }}>
         ◈ MEMORY FRAGMENT {id}
@@ -128,7 +128,7 @@ export function MemoryFragment({ id, quote, author }) {
 
       <div style={{
         fontFamily: 'Libre Baskerville', fontStyle: 'italic',
-        fontSize: 14, color: 'rgba(216,228,240,0.8)',
+        fontSize: 14, color: 'rgba(216,228,240,0.9)',
         lineHeight: 1.7, marginBottom: 8,
       }}>
         "{quote}"
@@ -148,7 +148,7 @@ export function MemoryFragment({ id, quote, author }) {
         <div style={{
           position: 'absolute', bottom: 8, right: 12,
           fontFamily: 'JetBrains Mono', fontSize: 8,
-          color: 'rgba(201,168,76,0.35)',
+          color: 'rgba(201,168,76,0.80)',
           letterSpacing: '0.1em',
         }}>
           CLICK TO COLLECT
@@ -313,7 +313,7 @@ export function StatCard({ value, label, color = '#c9a84c', icon }) {
       </div>
       <div style={{
         fontFamily: 'Space Grotesk', fontSize: 11,
-        color: 'rgba(176,192,216,0.5)',
+        color: 'rgba(216,228,240,0.82)',
         letterSpacing: '0.08em',
         marginTop: 6,
       }}>
@@ -352,7 +352,7 @@ export function CodeBlock({ code, lang = 'java' }) {
           {['#e74c3c','#f39c12','#2ecc71'].map((c, i) => (
             <div key={i} style={{ width: 7, height: 7, borderRadius: '50%', background: c, opacity: 0.6 }} />
           ))}
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(56,184,216,0.4)', marginLeft: 6, letterSpacing: '0.1em' }}>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(56,184,216,0.7)', marginLeft: 6, letterSpacing: '0.1em' }}>
             {lang}
           </span>
         </div>
@@ -361,7 +361,7 @@ export function CodeBlock({ code, lang = 'java' }) {
           data-cursor="hover"
           style={{
             fontFamily: 'JetBrains Mono', fontSize: 8,
-            color: copied ? '#60d8a0' : 'rgba(56,184,216,0.4)',
+            color: copied ? '#60d8a0' : 'rgba(56,184,216,0.7)',
             background: 'none', border: 'none', cursor: 'none',
             letterSpacing: '0.1em',
           }}
@@ -396,7 +396,7 @@ export function LoreCard({ text, accent = '#38b8d8' }) {
         <div style={{
           fontFamily: 'Libre Baskerville',
           fontSize: 'clamp(13px, 1.5vw, 15px)',
-          color: 'rgba(216,228,240,0.75)',
+          color: 'rgba(216,228,240,0.88)',
           lineHeight: 1.85,
           fontStyle: 'italic',
         }}>

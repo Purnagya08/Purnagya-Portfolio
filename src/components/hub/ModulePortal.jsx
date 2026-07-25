@@ -230,7 +230,7 @@ export default function ModulePortal({ module, index, onEnter }) {
           <div style={{
             fontFamily: 'JetBrains Mono',
             fontSize: 8,
-            color: 'rgba(176,192,216,0.5)',
+            color: 'rgba(216,228,240,0.78)',
             marginTop: 2,
             maxWidth: 200,
             whiteSpace: 'normal',
