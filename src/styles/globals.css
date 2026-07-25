@@ -19,14 +19,6 @@ body {
 }
 
 *, *::before, *::after {
-  @keyframes scanline {
-  0% { background-position-y: 0%; }
-  100% { background-position-y: 100%; }
-}
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
   cursor: none !important;
 }
 
@@ -187,9 +179,9 @@ body {
 
 .text-gold    { color: #c9a84c; }
 .text-cyan    { color: #38b8d8; }
-.text-dim     { color: #4a5a80; }
-.text-muted   { color: #7a8cb0; }
-.text-primary { color: #b0c0d8; }
+.text-dim     { color: #8a9aba; }
+.text-muted   { color: #aabcd8; }
+.text-primary { color: #d8e8f8; }
 .text-bright  { color: #d8e4f0; }
 
 /* ─── GLOW EFFECTS ───────────────────────────────────────────── */
@@ -282,7 +274,7 @@ body {
 .data-readout {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  color: rgba(56, 184, 216, 0.5);
+  color: rgba(56, 184, 216, 0.8);
   letter-spacing: 0.08em;
 }
 
@@ -333,4 +325,101 @@ body {
 /* ─── RESPONSIVE SCALE ───────────────────────────────────────── */
 @media (max-width: 768px) {
   .panel { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+/* ─── MOBILE OVERRIDES ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Restore cursor on touch devices */
+  *, *::before, *::after { cursor: auto !important; }
+  body { cursor: auto !important; overflow: hidden; }
+
+  /* Reduce noise + scanline intensity on mobile (battery) */
+  .noise-overlay  { opacity: 0.015; }
+  .scanlines      { display: none; }
+
+  /* Disable backdrop-filter on low-end (perf) */
+  .panel, .panel-gold {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(8,11,24,0.92);
+  }
+
+  /* Font scaling */
+  .glitch-text { font-size: clamp(40px, 14vw, 72px) !important; }
+
+  /* Section padding tighter on mobile */
+  .section-mobile { padding: 28px 16px !important; }
+
+  /* Touch-friendly tap targets */
+  button, a { min-height: 44px; }
+}
+
+@media (max-width: 480px) {
+  .noise-overlay { display: none; }
+}
+
+/* ─── REDUCED MOTION ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── PERFORMANCE CLASSES ────────────────────────────────────── */
+/* Applied via JS when GPU is under pressure */
+.perf-low .noise-overlay { display: none; }
+.perf-low .scanlines     { display: none; }
+.perf-low .vignette      { display: none; }
+
+/* ─── SCROLLBAR HIDDEN EVERYWHERE ───────────────────────────── */
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { display: none; }
+
+/* ─── FONT FALLBACK FOR SLOW CONNECTIONS ─────────────────────── */
+@font-face {
+  font-family: 'Orbitron';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-display: swap;
+}
+
+/* ─── KEYFRAMES USED BY INLINE STYLES ───────────────────────── */
+/* These must be in globals.css because inline style animation    */
+/* strings reference CSS keyframe names directly, not Tailwind.  */
+
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(201,168,76,0.3); }
+  50%      { box-shadow: 0 0 60px rgba(201,168,76,0.7); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@keyframes loadingShimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
 }
