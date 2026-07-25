@@ -6,7 +6,7 @@ import { SFX } from '../../audio/audioEngine';
 const COMMANDS = [
   'help', 'about', 'skills', 'projects', 'achievements',
   'future', 'clear', 'hub', 'mission', 'research',
-  'origin', 'training', 'challenge', 'present', 'ai',
+  'origin', 'training', 'challenge', 'present', 'ai', 'profile', 'reset', 'contact',
 ];
 
 const CMD_MAP = {
@@ -22,6 +22,7 @@ const CMD_MAP = {
   challenge:    'challenges',
   present:      'present',
   ai:           'nexusai',
+  profile:      'profile',
 };
 
 const HELP_TEXT = `
@@ -41,6 +42,9 @@ const HELP_TEXT = `
 ║  present     – Present Station           ║
 ║  ai          – NEXUS AI Assistant        ║
 ║  hub         – Return to Command Hub     ║
+║  profile     – Captain's Profile               ║
+║  reset       – Reset all memory fragments      ║
+║  contact     – Show contact information        ║
 ║  clear       – Clear terminal            ║
 ╚══════════════════════════════════════════╝
 `.trim();
@@ -53,6 +57,13 @@ function execCommand(cmd, store) {
   if (c === 'hub') {
     store.navigateTo(null);
     return '> Navigating to Command Hub…';
+  }
+  if (c === 'contact') {
+    return '> OPEN CHANNEL\n\n  EMAIL    → rajpurnagya3@gmail.com\n  GITHUB   → github.com/Purnagya08\n  LINKEDIN → linkedin.com/in/purnagya-raj\n  LEETCODE → leetcode.com/u/Purnagya\n\n  Click the [CONTACT] button in the top-right HUD to open links.';
+  }
+  if (c === 'reset') {
+    store.resetLogbook();
+    return '> LOGBOOK RESET COMPLETE\n  All memory fragments cleared.\n  Achievements cleared.\n  Ready for a fresh run.';
   }
   if (CMD_MAP[c]) {
     store.navigateTo(CMD_MAP[c]);
@@ -234,18 +245,18 @@ export default function TerminalMode() {
           />
           <button
             onClick={() => setTerminalOpen(false)}
-            className="absolute top-4 right-6 text-[10px] tracking-widest text-green-500/50 hover:text-green-400 transition-colors focus:outline-none focus:ring-1 focus:ring-green-500"
+            className="absolute top-4 right-6 text-[10px] tracking-widest text-green-400 hover:text-green-400 transition-colors focus:outline-none focus:ring-1 focus:ring-green-500"
             aria-label="Close terminal (Escape)"
           >
             [ESC] CLOSE
           </button>
 
           <div className="absolute inset-0 flex flex-col p-4 pt-12 sm:p-8 sm:pt-14">
-            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-green-500/20">
+            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-green-500/40">
               <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-              <span className="ml-4 text-[10px] sm:text-xs tracking-[0.3em] text-green-500/60">
+              <span className="ml-4 text-[10px] sm:text-xs tracking-[0.3em] text-green-400">
                 NEXUS TERMINAL — AUTHENTICATED
               </span>
             </div>
@@ -265,7 +276,7 @@ export default function TerminalMode() {
                       ? '#4ade80'
                       : line.startsWith('⚠')
                       ? '#f87171'
-                      : 'rgba(74,222,128,0.7)',
+                      : '#4ade80',
                   }}
                 >
                   {line || '\u00A0'}
@@ -273,11 +284,11 @@ export default function TerminalMode() {
               ))}
             </div>
 
-            <div className="relative flex items-center border-t border-green-500/20 pt-3">
+            <div className="relative flex items-center border-t border-green-500/40 pt-3">
               <span className="text-green-400 mr-2 text-[11px] sm:text-sm shrink-0">NEXUS&gt;</span>
               {suggest && (
                 <span
-                  className="absolute left-[4.5rem] sm:left-20 top-3 text-green-500/30 text-[11px] sm:text-sm pointer-events-none select-none whitespace-pre"
+                  className="absolute left-[4.5rem] sm:left-20 top-3 text-green-500/60 text-[11px] sm:text-sm pointer-events-none select-none whitespace-pre"
                   aria-hidden="true"
                 >
                   {suggest}
@@ -308,7 +319,7 @@ export default function TerminalMode() {
               />
             </div>
 
-            <div className="mt-3 text-[9px] sm:text-[10px] text-green-900 tracking-widest flex flex-wrap gap-x-4 gap-y-1">
+            <div className="mt-3 text-[9px] sm:text-[10px] text-green-700 tracking-widest flex flex-wrap gap-x-4 gap-y-1">
               <span>↑↓ HISTORY</span>
               <span>TAB AUTOCOMPLETE</span>
               <span>ENTER EXECUTE</span>

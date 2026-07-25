@@ -2,238 +2,252 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SFX } from '../../audio/audioEngine'
 
-// ─── Purnagya's knowledge base fed to the AI ─────────────────
-const SYSTEM_PROMPT = `You are NEXUS AI — the personal archive assistant embedded in Purnagya Raj's portfolio. You have deep knowledge of Purnagya's background, projects, skills, and journey. You speak with the voice of the portfolio itself: analytical, honest, and slightly poetic. You use short, precise answers. You never fabricate specifics — only speak from what you know.
+// ─── Knowledge base ───────────────────────────────────────────
+const KB = {
+  whoispurnagya: {
+    title: 'ENGINEER PROFILE',
+    lines: [
+      { label: 'Name',        value: 'Purnagya Raj' },
+      { label: 'Degree',      value: 'B.Tech CSE — UEM Jaipur (2024–28)' },
+      { label: 'GPA',         value: '8.795 / 10.0' },
+      { label: 'Rank',        value: 'Top of 250+ cohort — 3 Semesters' },
+      { label: 'Status',      value: 'Open to SWE Internships' },
+      { label: 'Location',    value: 'Jaipur, Rajasthan, India' },
+      { label: 'GitHub',      value: 'github.com/Purnagya08' },
+      { label: 'LinkedIn',    value: 'linkedin.com/in/purnagya-raj' },
+      { label: 'LeetCode',    value: 'leetcode.com/u/techXpurna' },
+    ],
+  },
 
-ABOUT PURNAGYA RAJ:
-- 3rd year B.Tech CSE student at UEM Jaipur (Batch 2024-28)
-- 9.0 GPA, 3x Semester Rank Holder in 250+ student cohort
-- HackerRank: 5-star Java badge
-- LinkedIn: linkedin.com/in/purnagya-raj | GitHub: github.com/Purnagya08
+  skills: {
+    title: 'TECHNICAL SKILLS',
+    lines: [
+      { label: 'Languages',  value: 'Java (Expert) · Python · TypeScript · JavaScript · C++' },
+      { label: 'Frontend',   value: 'React · Next.js · TailwindCSS · Framer Motion · Three.js' },
+      { label: 'Backend',    value: 'Node.js · Express · FastAPI · REST API Design' },
+      { label: 'AI / ML',    value: 'PyTorch · Scikit-learn · OpenCV · LangChain · Redis Streams' },
+      { label: 'Databases',  value: 'PostgreSQL · Prisma ORM · Redis · MongoDB' },
+      { label: 'DevOps',     value: 'Docker · GitHub Actions · Vercel · Render · Vite' },
+      { label: 'Certif.',    value: 'NPTEL Java — 100/100 · IIT Kharagpur · Top 1% National' },
+    ],
+  },
 
-KEY PROJECTS:
-1. SentinelAI — Autonomous cybersecurity simulation. 6 microservices, Redis Streams pipeline, PyTorch MLP + Random Forest ensemble (97%+ accuracy), React SOC dashboard. Built for Vultr Cloud Hackathon.
-2. HackFlow AI — AI-powered hackathon management platform. Next.js 16, TypeScript, FastAPI ML microservice, Prisma, PostgreSQL. Deployed on Vercel + Render.
-3. WarrantySafe — Consumer warranty management platform. Next.js, Node.js/Express, PostgreSQL. Currently in active development.
-4. OCR Chatbot — Document intelligence. Tesseract OCR + OpenCV + LangChain + OpenAI. Ask questions about uploaded documents.
-5. MSME Financial Platform — AI loan strategy planner for small businesses. React + FastAPI.
+  achievements: {
+    title: 'ACHIEVEMENTS',
+    lines: [
+      { label: 'NPTEL Java',    value: '100/100 · Top 1% nationally among 19,000+ candidates' },
+      { label: 'LaserHacks 25', value: 'International Finalist · Lasell Univ USA · 500+ teams' },
+      { label: 'Hackathon',     value: '2x Inter-College Winner · 2x National Finalist' },
+      { label: 'Academic',      value: '8.795 GPA · 3x Semester Rank Holder · 250+ cohort' },
+      { label: 'LinkedIn',      value: '#365DaysUpskillingMyself · 2000+ Followers' },
+      { label: 'HackerRank',    value: '5-Star Java Badge' },
+    ],
+  },
 
-ACHIEVEMENTS:
-- NPTEL Programming in Java: 100/100, Top 1% nationally, IIT Kharagpur (19,000+ candidates)
-- LaserHacks 2025: International Finalist (Lasell University, USA, 500+ global teams)
-- 2x Inter-College Hackathon Winner (Jaipur region, 40+ teams)
-- 2x National Hackathon Finalist (Top 15 from 800+ teams)
-- #365DaysOfUpskillingMyself LinkedIn challenge: 365 consecutive posts, 2000+ followers
+  projects: {
+    title: 'PROJECTS',
+    lines: [
+      { label: 'SentinelAI',   value: '6-service cyber platform · PyTorch 97%+ accuracy · Docker + Redis' },
+      { label: 'HackFlow AI',  value: 'Hackathon management · Next.js 16 · FastAPI ML · PostgreSQL' },
+      { label: 'WarrantySafe', value: 'Consumer warranty platform · Next.js + Node.js · Active build' },
+      { label: 'OCR Chatbot',  value: 'Document Q&A · Tesseract + LangChain + OpenAI' },
+      { label: 'MSME AI',      value: 'Loan strategy planner · React + FastAPI · AI-powered' },
+    ],
+  },
 
-TECHNICAL SKILLS:
-- Languages: Java (expert), Python, TypeScript, JavaScript, C++
-- Frontend: React, Next.js, TailwindCSS, Framer Motion
-- Backend: Node.js, Express, FastAPI
-- AI/ML: PyTorch, Scikit-learn, OpenCV, LangChain, Redis Streams
-- DB: PostgreSQL, Prisma, Redis
-- Tools: Docker, GitHub Actions, Vercel, Render, Vite
+  learnings: {
+    title: 'CURRENT LEARNINGS',
+    lines: [
+      { label: 'System Design', value: 'Scalable architecture · HLD / LLD patterns' },
+      { label: 'DSA',           value: 'Advanced DP · Graph algorithms · Competitive programming' },
+      { label: 'ML Research',   value: 'Transformer internals · Attention mechanism · Fine-tuning' },
+      { label: 'Building',      value: 'WarrantySafe v1 · Full-stack · Shipping soon' },
+      { label: 'Reading',       value: 'Designing Data-Intensive Apps · Clean Architecture' },
+      { label: 'Grind',         value: 'LeetCode daily · Targeting Top 500 Java on HackerRank' },
+    ],
+  },
 
-RESPONSE RULES:
-- Be concise. Max 3-4 sentences unless a technical question needs more.
-- Stay in character as NEXUS AI — the portfolio's intelligence layer.
-- For questions outside Purnagya's profile, say "That data isn't in my archive" rather than making things up.
-- Occasionally use phrases like "Captain's log shows...", "According to mission archives...", or "Station records indicate...".
-- You can answer general coding/CS questions too — just be helpful.`
+  contact: {
+    title: 'CONTACT',
+    lines: [
+      { label: 'GitHub',    value: 'github.com/Purnagya08' },
+      { label: 'LinkedIn',  value: 'linkedin.com/in/purnagya-raj' },
+      { label: 'LeetCode',  value: 'leetcode.com/u/techXpurna' },
+      { label: 'Email',     value: 'purnagya.raj26nov@gmail.com' },
+      { label: 'Open to',   value: 'SWE Internships · AI Projects · Collaborations' },
+      { label: 'Profile',   value: 'Type "profile" or click CAPTAIN in top-right HUD' },
+    ],
+  },
 
-// ─── Suggested prompts ─────────────────────────────────────────
-const SUGGESTIONS = [
-  "What is SentinelAI?",
-  "Tell me about Purnagya's NPTEL score",
-  "What stack does he use?",
-  "Explain the LaserHacks achievement",
-  "What is he building right now?",
-  "How did HackFlow AI work?",
-  "What makes SentinelAI unique?",
-  "What are his future goals?",
-]
-
-// ─── Message bubble ───────────────────────────────────────────
-function MessageBubble({ message, isLast }) {
-  const isUser = message.role === 'user'
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        display: 'flex',
-        justifyContent: isUser ? 'flex-end' : 'flex-start',
-        marginBottom: 16,
-      }}
-    >
-      {/* AI avatar dot */}
-      {!isUser && (
-        <div style={{
-          width: 28, height: 28, borderRadius: '50%',
-          border: '1px solid rgba(56,184,216,0.4)',
-          background: 'rgba(8,11,24,0.8)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexShrink: 0, marginRight: 10, marginTop: 2,
-        }}>
-          <motion.div
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            style={{ width: 6, height: 6, borderRadius: '50%', background: '#38b8d8' }}
-          />
-        </div>
-      )}
-
-      <div style={{
-        maxWidth: '78%',
-        padding: '12px 16px',
-        background: isUser
-          ? 'rgba(201,168,76,0.09)'
-          : 'rgba(8,11,24,0.85)',
-        border: isUser
-          ? '1px solid rgba(201,168,76,0.25)'
-          : '1px solid rgba(56,184,216,0.15)',
-        position: 'relative',
-        backdropFilter: 'blur(8px)',
-      }}>
-        {/* Role label */}
-        <div style={{
-          fontFamily: 'JetBrains Mono', fontSize: 8,
-          color: isUser ? 'rgba(201,168,76,0.5)' : 'rgba(56,184,216,0.4)',
-          letterSpacing: '0.15em', marginBottom: 6,
-        }}>
-          {isUser ? 'CAPTAIN' : 'NEXUS·AI'}
-        </div>
-
-        {/* Content */}
-        <div style={{
-          fontFamily: 'Space Grotesk', fontSize: 13,
-          color: 'rgba(216,228,240,0.88)', lineHeight: 1.7,
-          whiteSpace: 'pre-wrap', wordBreak: 'break-word',
-        }}>
-          {message.content}
-        </div>
-      </div>
-
-      {/* User avatar */}
-      {isUser && (
-        <div style={{
-          width: 28, height: 28, borderRadius: '50%',
-          border: '1px solid rgba(201,168,76,0.4)',
-          background: 'rgba(8,11,24,0.8)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexShrink: 0, marginLeft: 10, marginTop: 2,
-          fontFamily: 'Orbitron', fontSize: 9, color: '#c9a84c',
-        }}>
-          P
-        </div>
-      )}
-    </motion.div>
-  )
+  stack: {
+    title: 'TECH STACK DETAILS',
+    lines: [
+      { label: 'Expert',    value: 'Java · React · Next.js · Node.js · FastAPI' },
+      { label: 'Proficient',value: 'TypeScript · PostgreSQL · Docker · PyTorch' },
+      { label: 'Learning',  value: 'System Design · Advanced Algorithms · Transformers' },
+      { label: 'Deployed',  value: 'Vercel · Render · GCR · Neon Postgres' },
+    ],
+  },
 }
 
-// ─── Thinking indicator ────────────────────────────────────────
-function Thinking() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, paddingLeft: 38 }}
-    >
-      <div style={{
-        padding: '10px 14px',
-        background: 'rgba(8,11,24,0.85)',
-        border: '1px solid rgba(56,184,216,0.15)',
-        display: 'flex', alignItems: 'center', gap: 6,
-      }}>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.4)', letterSpacing: '0.15em', marginRight: 4 }}>
-          NEXUS·AI
+// ─── Command registry ─────────────────────────────────────────
+const COMMANDS = {
+  help: {
+    desc: 'Show all commands',
+    run: () => ({
+      type: 'help',
+      commands: Object.entries(COMMANDS).map(([k, v]) => ({ cmd: k, desc: v.desc })),
+    }),
+  },
+  whoispurnagya: { desc: 'Engineer profile',      run: () => ({ type: 'data', ...KB.whoispurnagya }) },
+  skills:        { desc: 'Technical skill set',   run: () => ({ type: 'data', ...KB.skills })        },
+  achievements:  { desc: 'Awards and milestones', run: () => ({ type: 'data', ...KB.achievements })  },
+  projects:      { desc: 'Project portfolio',     run: () => ({ type: 'data', ...KB.projects })      },
+  learnings:     { desc: 'Current learnings',     run: () => ({ type: 'data', ...KB.learnings })     },
+  contact:       { desc: 'Contact information',   run: () => ({ type: 'data', ...KB.contact })       },
+  stack:         { desc: 'Tech stack breakdown',  run: () => ({ type: 'data', ...KB.stack })         },
+  clear:         { desc: 'Clear the screen',      run: () => ({ type: 'clear' })                     },
+}
+
+const CMD_KEYS = Object.keys(COMMANDS)
+
+// ─── Result renderer ──────────────────────────────────────────
+function ResultBlock({ result }) {
+  if (!result) return null
+
+  if (result.type === 'help') {
+    return (
+      <div style={{ marginTop: 4 }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.2em', marginBottom: 10 }}>
+          NEXUS ARCHIVE — AVAILABLE QUERIES
         </div>
-        {[0, 1, 2].map(i => (
-          <motion.div
-            key={i}
-            animate={{ opacity: [0.2, 1, 0.2], y: [0, -3, 0] }}
-            transition={{ duration: 0.8, delay: i * 0.15, repeat: Infinity }}
-            style={{ width: 4, height: 4, borderRadius: '50%', background: '#38b8d8' }}
-          />
+        {result.commands.map(({ cmd, desc }) => (
+          <div key={cmd} style={{ display: 'flex', gap: 12, marginBottom: 5 }}>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#c9a84c', minWidth: 120, flexShrink: 0 }}>{cmd}</span>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'rgba(176,192,216,0.7)' }}>{desc}</span>
+          </div>
         ))}
       </div>
-    </motion.div>
-  )
+    )
+  }
+
+  if (result.type === 'data') {
+    return (
+      <div style={{ marginTop: 4 }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.2em', marginBottom: 10 }}>
+          {result.title}
+        </div>
+        <div style={{ height: 1, background: 'rgba(56,184,216,0.12)', marginBottom: 10 }} />
+        {result.lines.map((line, i) => (
+          <div key={i} style={{ display: 'flex', gap: 12, marginBottom: 7, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: '#c9a84c', minWidth: 110, flexShrink: 0 }}>{line.label}</span>
+            <span style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.85)', flex: 1 }}>{line.value}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (result.type === 'error') {
+    return (
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: 'rgba(231,76,60,0.8)', marginTop: 4 }}>
+        ⚠ {result.message}
+      </div>
+    )
+  }
+
+  return null
 }
 
-// ─── Main NEXUS AI module ─────────────────────────────────────
+// ─── Suggestion chips ─────────────────────────────────────────
+const SUGGESTIONS = ['whoispurnagya', 'skills', 'achievements', 'projects', 'learnings', 'contact', 'stack', 'help']
+
+// ─── Main NexusAI module ──────────────────────────────────────
 export default function NexusAI() {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: "NEXUS AI online. I am the archive intelligence of this station — connected to Purnagya's full mission log, project database, and captain's notes.\n\nAsk me anything about the engineer behind this portfolio. Or ask a technical question. I'm listening.",
-    },
-  ])
-  const [input, setInput]       = useState('')
-  const [loading, setLoading]   = useState(false)
-  const [error, setError]       = useState(null)
-  const scrollRef               = useRef()
-  const inputRef                = useRef()
+  const [history, setHistory]       = useState([])
+  const [input,   setInput]         = useState('')
+  const [suggest, setSuggest]       = useState('')
+  const [cmdHist, setCmdHist]       = useState([])
+  const [histIdx, setHistIdx]       = useState(-1)
+  const [showSuggestions, setShowSuggestions] = useState(true)
 
-  // Auto-scroll on new message
+  const scrollRef = useRef()
+  const inputRef  = useRef()
+
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }, [messages, loading])
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+  }, [history])
 
-  const sendMessage = useCallback(async (text) => {
-    const content = text || input.trim()
-    if (!content || loading) return
-
-    setInput('')
-    setError(null)
+  const runCommand = useCallback((cmd) => {
+    const c = cmd.trim().toLowerCase()
+    setShowSuggestions(false)
     SFX.click()
 
-    const userMsg = { role: 'user', content }
-    const newMessages = [...messages, userMsg]
-    setMessages(newMessages)
-    setLoading(true)
+    if (!c) return
 
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
-          messages: newMessages.map(m => ({ role: m.role, content: m.content })),
-        }),
-      })
+    const handler = COMMANDS[c]
+    let result
 
-      if (!response.ok) throw new Error(`API error: ${response.status}`)
-
-      const data = await response.json()
-      const assistantText = data.content?.find(b => b.type === 'text')?.text || 'Archive query returned no data.'
-
-      setMessages(prev => [...prev, { role: 'assistant', content: assistantText }])
-      SFX.moduleEnter()
-    } catch (err) {
-      console.error('NEXUS AI error:', err)
-      setError('Transmission failed. Archive link unstable.')
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'Station alert: transmission interrupted. The archive link is temporarily unstable. Try again in a moment.',
-      }])
-    } finally {
-      setLoading(false)
+    if (handler) {
+      result = handler.run()
+    } else {
+      // Fuzzy hint
+      const close = CMD_KEYS.find(k => k.includes(c) || c.includes(k.slice(0, 4)))
+      result = {
+        type: 'error',
+        message: `"${c}" not found.${close ? ` Did you mean: ${close}?` : ''} Type 'help' to list commands.`,
+      }
     }
-  }, [input, messages, loading])
 
-  function handleKey(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (result.type === 'clear') {
+      setHistory([])
+      return
+    }
+
+    setHistory(prev => [...prev, { cmd: c, result }])
+    setCmdHist(prev => [c, ...prev.slice(0, 49)])
+    setHistIdx(-1)
+    setInput('')
+    setSuggest('')
+  }, [])
+
+  const onKeyDown = useCallback((e) => {
+    if (e.key === 'Tab' && suggest) {
       e.preventDefault()
-      sendMessage()
+      setInput(suggest)
+      setSuggest('')
+      return
+    }
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      runCommand(input)
+      return
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      const next = Math.min(histIdx + 1, cmdHist.length - 1)
+      setHistIdx(next)
+      setInput(cmdHist[next] ?? '')
+      return
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      const next = Math.max(histIdx - 1, -1)
+      setHistIdx(next)
+      setInput(next === -1 ? '' : cmdHist[next] ?? '')
     }
     SFX.keypress()
+  }, [input, suggest, histIdx, cmdHist, runCommand])
+
+  const onInputChange = (e) => {
+    const val = e.target.value
+    setInput(val)
+    if (val) {
+      const match = CMD_KEYS.find(k => k.startsWith(val.toLowerCase()) && k !== val.toLowerCase())
+      setSuggest(match ?? '')
+    } else {
+      setSuggest('')
+    }
   }
 
   return (
@@ -241,18 +255,12 @@ export default function NexusAI() {
       display: 'flex', flexDirection: 'column',
       height: 'calc(100vh - 48px)',
       background: 'transparent',
-      position: 'relative',
     }}>
-
       {/* Header */}
-      <div style={{
-        padding: '20px 28px 0',
-        flexShrink: 0,
-      }}>
+      <div style={{ padding: '20px 28px 0', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 4 }}>
           <div style={{
-            width: 36, height: 36,
-            borderRadius: '50%',
+            width: 36, height: 36, borderRadius: '50%',
             border: '1px solid rgba(56,184,216,0.4)',
             background: 'rgba(8,11,24,0.8)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -263,162 +271,168 @@ export default function NexusAI() {
               transition={{ duration: 2, repeat: Infinity }}
               style={{ width: 8, height: 8, borderRadius: '50%', background: '#38b8d8', boxShadow: '0 0 10px #38b8d8' }}
             />
-            {/* Orbit ring */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-              style={{
-                position: 'absolute', inset: -4,
-                border: '1px dashed rgba(56,184,216,0.25)',
-                borderRadius: '50%',
-              }}
+              style={{ position: 'absolute', inset: -4, border: '1px dashed rgba(56,184,216,0.25)', borderRadius: '50%' }}
             />
           </div>
           <div>
             <div style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 700, color: '#38b8d8', letterSpacing: '0.1em' }}>
               NEXUS AI
             </div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.45)', letterSpacing: '0.15em' }}>
-              ARCHIVE INTELLIGENCE · ONLINE
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.15em' }}>
+              ARCHIVE INTELLIGENCE · QUERY SYSTEM
             </div>
           </div>
           <motion.div
             animate={{ opacity: [0.4, 1, 0.4] }}
             transition={{ duration: 2, repeat: Infinity }}
-            style={{
-              marginLeft: 'auto',
-              fontFamily: 'JetBrains Mono', fontSize: 8,
-              color: '#60d8a0', letterSpacing: '0.15em',
-              display: 'flex', alignItems: 'center', gap: 5,
-            }}
+            style={{ marginLeft: 'auto', fontFamily: 'JetBrains Mono', fontSize: 8, color: '#60d8a0', letterSpacing: '0.15em', display: 'flex', alignItems: 'center', gap: 5 }}
           >
             <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#60d8a0', boxShadow: '0 0 6px #60d8a0' }} />
-            CONNECTED
+            ONLINE
           </motion.div>
         </div>
-
-        <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(56,184,216,0.2), transparent)', margin: '16px 0 0' }} />
+        <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(56,184,216,0.2), transparent)', marginTop: 14 }} />
       </div>
 
-      {/* Suggestion chips — only show when minimal conversation */}
-      {messages.length <= 1 && (
-        <div style={{
-          padding: '16px 28px 0',
-          flexShrink: 0,
-        }}>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.35)', letterSpacing: '0.15em', marginBottom: 10 }}>
-            SUGGESTED QUERIES
+      {/* Suggestion chips — initial state */}
+      {showSuggestions && history.length === 0 && (
+        <div style={{ padding: '14px 28px 0', flexShrink: 0 }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.15em', marginBottom: 10 }}>
+            QUERY THE ARCHIVE
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {SUGGESTIONS.map(s => (
               <motion.button
                 key={s}
-                onClick={() => sendMessage(s)}
-                whileHover={{ scale: 1.03 }}
+                onClick={() => runCommand(s)}
+                whileHover={{ scale: 1.03, borderColor: 'rgba(56,184,216,0.5)' }}
                 whileTap={{ scale: 0.97 }}
                 data-cursor="hover"
                 style={{
                   fontFamily: 'Space Grotesk', fontSize: 11,
-                  color: 'rgba(56,184,216,0.7)',
+                  color: 'rgba(56,184,216,0.8)',
                   background: 'rgba(56,184,216,0.05)',
-                  border: '1px solid rgba(56,184,216,0.15)',
-                  padding: '6px 12px', cursor: 'none',
-                  transition: 'background 0.2s, border-color 0.2s',
+                  border: '1px solid rgba(56,184,216,0.18)',
+                  padding: '6px 14px', cursor: 'none',
+                  letterSpacing: '0.05em',
+                  transition: 'all 0.18s',
                 }}
               >
                 {s}
               </motion.button>
             ))}
           </div>
-          <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(56,184,216,0.1), transparent)', margin: '16px 0 0' }} />
+          <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(56,184,216,0.1), transparent)', marginTop: 14 }} />
         </div>
       )}
 
-      {/* Messages */}
+      {/* Conversation history */}
       <div
         ref={scrollRef}
-        style={{
-          flex: 1, overflowY: 'auto', overflowX: 'hidden',
-          padding: '20px 28px',
-          scrollbarWidth: 'none',
-        }}
+        style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '16px 28px', scrollbarWidth: 'none' }}
       >
-        {messages.map((msg, i) => (
-          <MessageBubble
-            key={i}
-            message={msg}
-            isLast={i === messages.length - 1}
-          />
-        ))}
-        <AnimatePresence>
-          {loading && <Thinking />}
+        <AnimatePresence initial={false}>
+          {history.map((entry, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25 }}
+              style={{ marginBottom: 24 }}
+            >
+              {/* Command echo */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <div style={{
+                  fontFamily: 'JetBrains Mono', fontSize: 9,
+                  color: '#c9a84c', letterSpacing: '0.12em',
+                }}>
+                  NEXUS›
+                </div>
+                <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#d8e4f0' }}>
+                  {entry.cmd}
+                </div>
+              </div>
+              {/* Result */}
+              <div style={{
+                padding: '14px 18px',
+                background: 'rgba(8,11,24,0.6)',
+                border: '1px solid rgba(56,184,216,0.1)',
+                backdropFilter: 'blur(8px)',
+              }}>
+                <ResultBlock result={entry.result} />
+              </div>
+            </motion.div>
+          ))}
         </AnimatePresence>
       </div>
 
-      {/* Input area */}
+      {/* Input */}
       <div style={{
         flexShrink: 0,
-        padding: '12px 28px 20px',
+        padding: '10px 28px 18px',
         borderTop: '1px solid rgba(56,184,216,0.08)',
         background: 'rgba(4,6,15,0.7)',
         backdropFilter: 'blur(16px)',
       }}>
         <div style={{
-          display: 'flex', gap: 10, alignItems: 'flex-end',
+          display: 'flex', gap: 10, alignItems: 'center',
           background: 'rgba(8,11,24,0.8)',
-          border: `1px solid ${input.length > 0 ? 'rgba(56,184,216,0.3)' : 'rgba(56,184,216,0.1)'}`,
+          border: `1px solid ${input ? 'rgba(56,184,216,0.3)' : 'rgba(56,184,216,0.1)'}`,
           padding: '10px 14px',
+          position: 'relative',
           transition: 'border-color 0.2s',
         }}>
-          <div style={{
-            fontFamily: 'JetBrains Mono', fontSize: 11,
-            color: 'rgba(56,184,216,0.4)', flexShrink: 0,
-            alignSelf: 'center',
-          }}>
-            ›
-          </div>
-          <textarea
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: 'rgba(56,184,216,0.75)', flexShrink: 0 }}>›</span>
+
+          {/* Ghost autocomplete */}
+          {suggest && (
+            <span style={{
+              position: 'absolute', left: 38, top: '50%', transform: 'translateY(-50%)',
+              fontFamily: 'JetBrains Mono', fontSize: 13,
+              color: 'rgba(56,184,216,0.75)', pointerEvents: 'none', userSelect: 'none',
+              whiteSpace: 'pre',
+            }}>
+              {suggest}
+            </span>
+          )}
+
+          <input
             ref={inputRef}
             value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKey}
-            placeholder="Ask the archive anything..."
-            rows={1}
+            onChange={onInputChange}
+            onKeyDown={onKeyDown}
+            placeholder="Type a command or press TAB..."
+            autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false}
             style={{
               flex: 1, background: 'none', border: 'none', outline: 'none',
-              fontFamily: 'Space Grotesk', fontSize: 13,
-              color: '#d8e4f0', resize: 'none',
-              scrollbarWidth: 'none',
-              lineHeight: 1.5,
-              maxHeight: 100, overflow: 'auto',
+              fontFamily: 'JetBrains Mono', fontSize: 13,
+              color: '#d8e4f0', caretColor: '#38b8d8',
             }}
           />
           <motion.button
-            onClick={() => sendMessage()}
-            disabled={!input.trim() || loading}
-            whileHover={input.trim() && !loading ? { scale: 1.05 } : {}}
-            whileTap={input.trim() && !loading ? { scale: 0.95 } : {}}
+            onClick={() => runCommand(input)}
+            disabled={!input.trim()}
+            whileHover={input.trim() ? { scale: 1.04 } : {}}
+            whileTap={input.trim() ? { scale: 0.96 } : {}}
             data-cursor="hover"
             style={{
-              fontFamily: 'JetBrains Mono', fontSize: 10,
+              fontFamily: 'JetBrains Mono', fontSize: 9,
               letterSpacing: '0.15em',
-              color: input.trim() && !loading ? '#38b8d8' : 'rgba(56,184,216,0.25)',
-              background: input.trim() && !loading ? 'rgba(56,184,216,0.08)' : 'transparent',
-              border: `1px solid ${input.trim() && !loading ? 'rgba(56,184,216,0.3)' : 'rgba(56,184,216,0.1)'}`,
-              padding: '6px 14px', cursor: 'none',
-              flexShrink: 0, alignSelf: 'center',
-              transition: 'all 0.2s',
+              color: input.trim() ? '#38b8d8' : 'rgba(56,184,216,0.75)',
+              background: input.trim() ? 'rgba(56,184,216,0.08)' : 'transparent',
+              border: `1px solid ${input.trim() ? 'rgba(56,184,216,0.3)' : 'rgba(56,184,216,0.08)'}`,
+              padding: '5px 12px', cursor: 'none', flexShrink: 0,
+              transition: 'all 0.18s',
             }}
           >
-            {loading ? '...' : 'SEND'}
+            QUERY
           </motion.button>
         </div>
-        <div style={{
-          fontFamily: 'JetBrains Mono', fontSize: 8,
-          color: 'rgba(56,184,216,0.2)', letterSpacing: '0.1em',
-          marginTop: 8, textAlign: 'center',
-        }}>
-          ENTER to send · SHIFT+ENTER for new line · Powered by Claude
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.1em', marginTop: 7, textAlign: 'center' }}>
+          TAB autocomplete · ↑↓ history · ENTER execute
         </div>
       </div>
     </div>

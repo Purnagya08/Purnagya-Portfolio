@@ -57,6 +57,13 @@ function SpaceEffects() {
 function WarpEffect() {
   const { warpActive } = useNexusStore()
   const ref = useRef()
+  const lines = useRef(
+    Array.from({ length: 40 }, (_, i) => ({
+      angle: (i / 40) * Math.PI * 2,
+      r:     1 + Math.random() * 3,
+      len:   30 + Math.random() * 20,
+    }))
+  ).current
 
   useFrame(() => {
     if (!ref.current) return
@@ -65,16 +72,15 @@ function WarpEffect() {
 
   return (
     <group ref={ref} visible={false}>
-      {Array.from({ length: 40 }, (_, i) => {
-        const angle = (i / 40) * Math.PI * 2
-        const r = 1 + Math.random() * 3
-        return (
-          <mesh key={i} position={[Math.cos(angle) * r, Math.sin(angle) * r, -5]} rotation={[0, 0, angle]}>
-            <boxGeometry args={[0.02, 0.02, 30 + Math.random() * 20]} />
-            <meshBasicMaterial color="#38b8d8" transparent opacity={0.4} />
-          </mesh>
-        )
-      })}
+      {lines.map((l, i) => (
+        <mesh key={i}
+          position={[Math.cos(l.angle) * l.r, Math.sin(l.angle) * l.r, -5]}
+          rotation={[0, 0, l.angle]}
+        >
+          <boxGeometry args={[0.02, 0.02, l.len]} />
+          <meshBasicMaterial color="#38b8d8" transparent opacity={0.4} />
+        </mesh>
+      ))}
     </group>
   )
 }

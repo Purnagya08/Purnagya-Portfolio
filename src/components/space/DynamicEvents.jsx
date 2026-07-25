@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNexusStore } from '../../store/nexusStore'
 
@@ -235,29 +235,31 @@ function EventRenderer({ type }) {
 export default function DynamicEvents() {
   const { phase, audioEnabled } = useNexusStore()
   const [activeEvent, setActiveEvent] = useState(null)
-  const timers = useRef([])
+  const timers     = useRef([])
+  const fireRef    = useRef(null)
 
-  const fireEvent = useCallback(() => {
-    const event = EVENTS[Math.floor(Math.random() * EVENTS.length)]
-    setActiveEvent(event)
-    if (audioEnabled) playEventSound(event.type)
-
-    const clearTimer = setTimeout(() => {
-      setActiveEvent(null)
-    }, event.duration)
-
-    timers.current.push(clearTimer)
-
-    // Schedule next
-    const delay = (event.minInterval + Math.random() * (event.maxInterval - event.minInterval)) * 1000
-    const nextTimer = setTimeout(fireEvent, delay)
-    timers.current.push(nextTimer)
-  }, [audioEnabled])
+  // Store audioEnabled in ref so fireEvent doesn't need it as dep
+  const audioRef = useRef(audioEnabled)
+  useEffect(() => { audioRef.current = audioEnabled }, [audioEnabled])
 
   useEffect(() => {
     if (phase !== 'hub') return
 
-    // First event after 15–30s
+    function fireEvent() {
+      const event = EVENTS[Math.floor(Math.random() * EVENTS.length)]
+      setActiveEvent(event)
+      if (audioRef.current) playEventSound(event.type)
+
+      const clearTimer = setTimeout(() => setActiveEvent(null), event.duration)
+      timers.current.push(clearTimer)
+
+      const delay = (event.minInterval + Math.random() * (event.maxInterval - event.minInterval)) * 1000
+      const nextTimer = setTimeout(fireEvent, delay)
+      timers.current.push(nextTimer)
+    }
+
+    fireRef.current = fireEvent
+
     const firstDelay = (15 + Math.random() * 15) * 1000
     const firstTimer = setTimeout(fireEvent, firstDelay)
     timers.current.push(firstTimer)
@@ -266,7 +268,7 @@ export default function DynamicEvents() {
       timers.current.forEach(clearTimeout)
       timers.current = []
     }
-  }, [phase, fireEvent])
+  }, [phase])
 
   if (phase !== 'hub') return null
 
