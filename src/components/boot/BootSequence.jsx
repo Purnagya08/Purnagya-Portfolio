@@ -9,7 +9,7 @@ const BOOT_LINES = [
   { text: 'POST: Memory integrity check..........[ OK ]',    delay: 200,  color: '#38b8d8' },
   { text: 'POST: Quantum drive spinup.............[ OK ]',   delay: 380,  color: '#38b8d8' },
   { text: 'POST: Stellar nav array calibrate.....[ OK ]',   delay: 560,  color: '#38b8d8' },
-  { text: 'Loading neural archive modules........',          delay: 750,  color: '#7a8cb0' },
+  { text: 'Loading neural archive modules........',          delay: 750,  color: 'rgba(176,192,216,0.75)' },
   { text: '  → Museum of Origins          [LOADED]',        delay: 900,  color: '#38b8d8' },
   { text: '  → Training Facility          [LOADED]',        delay: 1050, color: '#38b8d8' },
   { text: '  → Challenge Galaxy           [LOADED]',        delay: 1200, color: '#38b8d8' },
@@ -19,15 +19,15 @@ const BOOT_LINES = [
   { text: '  → Present Station           [LOADED]',        delay: 1800, color: '#38b8d8' },
   { text: '  → Future Galaxy             [LOADED]',        delay: 1950, color: '#38b8d8' },
   { text: 'Mounting captain logbook...............[ OK ]',  delay: 2150, color: '#38b8d8' },
-  { text: 'Connecting to NEXUS AI engine..........',        delay: 2350, color: '#7a8cb0' },
+  { text: 'Connecting to NEXUS AI engine..........',        delay: 2350, color: 'rgba(176,192,216,0.75)' },
   { text: '  WARNING: Consciousness protocol active',       delay: 2500, color: '#c9a84c' },
   { text: 'Calibrating spatial audio arrays......[ OK ]',  delay: 2700, color: '#38b8d8' },
-  { text: 'Rendering 3D holographic matrix.......',         delay: 2900, color: '#7a8cb0' },
+  { text: 'Rendering 3D holographic matrix.......',         delay: 2900, color: 'rgba(176,192,216,0.75)' },
   { text: '  Starfield density: 10,000 objects  [ OK ]',   delay: 3050, color: '#38b8d8' },
   { text: 'Memory fragment system armed..........[ OK ]',  delay: 3200, color: '#38b8d8' },
-  { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 3400, color: 'rgba(56,184,216,0.2)' },
+  { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 3400, color: 'rgba(56,184,216,0.75)' },
   { text: 'ALL SYSTEMS NOMINAL. WELCOME, CAPTAIN.',        delay: 3600, color: '#c9a84c', bold: true },
-  { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 3700, color: 'rgba(56,184,216,0.2)' },
+  { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 3700, color: 'rgba(56,184,216,0.75)' },
 ]
 
 // ─── Single boot line ─────────────────────────────────────────
@@ -60,7 +60,7 @@ function BootProgress({ progress }) {
       <div style={{
         display: 'flex', justifyContent: 'space-between',
         fontFamily: 'JetBrains Mono', fontSize: 9,
-        color: 'rgba(56,184,216,0.5)', marginBottom: 6,
+        color: 'rgba(56,184,216,0.75)', marginBottom: 6,
       }}>
         <span>SYSTEM BOOT</span>
         <span>{Math.round(barW)}%</span>
@@ -180,7 +180,7 @@ export default function BootSequence() {
           ))}
           <span style={{
             fontFamily: 'JetBrains Mono', fontSize: 10,
-            color: 'rgba(56,184,216,0.5)', marginLeft: 8, letterSpacing: '0.1em',
+            color: 'rgba(56,184,216,0.75)', marginLeft: 8, letterSpacing: '0.1em',
           }}>
             nexus-os — boot-sequence — 80×24
           </span>
@@ -265,7 +265,7 @@ export default function BootSequence() {
               <div style={{
                 marginTop: 12,
                 fontFamily: 'JetBrains Mono', fontSize: 9,
-                color: 'rgba(56,184,216,0.3)', letterSpacing: '0.15em',
+                color: 'rgba(56,184,216,0.75)', letterSpacing: '0.15em',
               }}>
                 PRESS TO DOCK AT CENTRAL COMMAND
               </div>

@@ -1,254 +1,311 @@
-import { useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useNexusStore } from '../../store/nexusStore'
 import { toggleAudio, SFX } from '../../audio/audioEngine'
+import ContactOverlay from '../overlays/ContactOverlay'
 
-// ─── NEXUS AI Quick-access button ─────────────────────────────
-function NexusAIButton() {
-  const { navigateTo, currentModule, triggerWarp, phase } = useNexusStore()
-  if (phase === 'entry' || phase === 'boot') return null
-
-  const isActive = currentModule === 'nexusai'
-
+// ─── Captain Profile button ───────────────────────────────────
+function ProfileButton() {
+  const { navigateTo, currentModule, triggerWarp } = useNexusStore()
+  const isActive = currentModule === 'profile'
   function handleClick() {
-    SFX.moduleEnter()
-    triggerWarp()
+    SFX.click(); triggerWarp()
+    setTimeout(() => navigateTo(isActive ? null : 'profile'), 400)
+  }
+  return (
+    <button onClick={handleClick} data-cursor="hover" title="Captain's Profile"
+      style={{
+        fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.12em',
+        color: isActive ? '#ffe080' : '#e8c96a',
+        background: isActive ? 'rgba(201,168,76,0.22)' : 'rgba(201,168,76,0.12)',
+        border: `1.5px solid ${isActive ? '#c9a84c' : 'rgba(201,168,76,0.65)'}`,
+        padding: '5px 11px', cursor: 'none',
+        display: 'flex', alignItems: 'center', gap: 5,
+        whiteSpace: 'nowrap', boxShadow: isActive ? '0 0 12px rgba(201,168,76,0.3)' : 'none',
+      }}>
+      <span>◈</span> CAPTAIN
+    </button>
+  )
+}
+
+// ─── NEXUS AI button ──────────────────────────────────────────
+function NexusAIButton() {
+  const { navigateTo, currentModule, triggerWarp } = useNexusStore()
+  const isActive = currentModule === 'nexusai'
+  function handleClick() {
+    SFX.click(); triggerWarp()
     setTimeout(() => navigateTo(isActive ? null : 'nexusai'), 400)
   }
-
   return (
-    <button
-      onClick={handleClick}
-      data-cursor="hover"
+    <button onClick={handleClick} data-cursor="hover" title="NEXUS AI"
       style={{
-        fontFamily: 'JetBrains Mono', fontSize: 8,
-        letterSpacing: '0.15em',
-        color: isActive ? '#c9a84c' : 'rgba(56,184,216,0.6)',
-        background: isActive ? 'rgba(201,168,76,0.08)' : 'transparent',
-        border: `1px solid ${isActive ? 'rgba(201,168,76,0.35)' : 'rgba(56,184,216,0.2)'}`,
-        padding: '5px 12px', cursor: 'none',
+        fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.12em',
+        color: isActive ? '#7dd8f0' : '#38b8d8',
+        background: isActive ? 'rgba(56,184,216,0.2)' : 'rgba(56,184,216,0.1)',
+        border: `1.5px solid ${isActive ? '#38b8d8' : 'rgba(56,184,216,0.6)'}`,
+        padding: '5px 11px', cursor: 'none',
         display: 'flex', alignItems: 'center', gap: 6,
-        transition: 'all 0.2s',
-      }}
-    >
-      <motion.div
-        animate={{ opacity: [0.4, 1, 0.4] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        style={{ width: 4, height: 4, borderRadius: '50%', background: isActive ? '#c9a84c' : '#38b8d8' }}
-      />
+        whiteSpace: 'nowrap', boxShadow: isActive ? '0 0 12px rgba(56,184,216,0.3)' : 'none',
+      }}>
+      <motion.div animate={{ opacity: [0.5,1,0.5] }} transition={{ duration: 2, repeat: Infinity }}
+        style={{ width: 5, height: 5, borderRadius: '50%', background: '#38b8d8', flexShrink: 0 }} />
       NEXUS·AI
     </button>
   )
 }
 
-// ─── Clock that ticks ─────────────────────────────────────────
+// ─── Clock ────────────────────────────────────────────────────
 function SystemClock() {
   const { systemTime, tickClock } = useNexusStore()
-
-  useEffect(() => {
-    const interval = setInterval(tickClock, 1000)
-    return () => clearInterval(interval)
-  }, [tickClock])
-
-  const d = new Date(systemTime)
-  const date = d.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  useEffect(() => { const t = setInterval(tickClock, 1000); return () => clearInterval(t) }, [tickClock])
+  const d    = new Date(systemTime)
   const time = d.toLocaleTimeString('en-US', { hour12: false })
-
+  const date = d.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })
   return (
-    <div className="data-readout text-right leading-relaxed">
-      <div style={{ color: 'rgba(56,184,216,0.7)', fontSize: 9 }}>SYS.CLOCK</div>
-      <div style={{ color: '#38b8d8', fontSize: 10 }}>{time}</div>
-      <div style={{ color: 'rgba(56,184,216,0.4)', fontSize: 9 }}>{date}</div>
+    <div style={{ textAlign: 'right', lineHeight: 1.65 }}>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8,  color: '#60b8d8', letterSpacing: '0.1em' }}>SYS.CLOCK</div>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, color: '#38b8d8', fontWeight: 700 }}>{time}</div>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8,  color: '#60b8d8' }}>{date}</div>
     </div>
   )
 }
 
 // ─── Audio toggle ─────────────────────────────────────────────
 function AudioToggle() {
-  const { audioEnabled, sfxEnabled, setSfxEnabled } = useNexusStore()
-
-  const handleAudio = () => {
-    toggleAudio()
-  }
-
+  const { audioEnabled } = useNexusStore()
+  const on = audioEnabled
   return (
-    <button
-      onClick={handleAudio}
-      className="data-readout flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity"
-      style={{ background: 'none', border: 'none', padding: 4 }}
-      title={audioEnabled ? 'Mute' : 'Enable Audio'}
-    >
-      <div style={{ fontSize: 9, color: 'rgba(201,168,76,0.7)' }}>AUDIO</div>
+    <button onClick={toggleAudio} data-cursor="hover"
+      title={on ? 'Mute' : 'Enable Audio'}
+      style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+        background: on ? 'rgba(201,168,76,0.12)' : 'rgba(231,76,60,0.1)',
+        border: `1.5px solid ${on ? 'rgba(201,168,76,0.7)' : 'rgba(231,76,60,0.6)'}`,
+        padding: '5px 10px', cursor: 'none', minWidth: 46,
+      }}>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: on ? '#e8c96a' : '#e74c3c', letterSpacing: '0.12em' }}>AUDIO</div>
       <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-        {audioEnabled ? (
-          <>
-            <path d="M1 4h3l4-3v10l-4-3H1V4z" stroke="#c9a84c" strokeWidth="0.8" fill="rgba(201,168,76,0.2)" />
-            <path d="M11 2.5c1.2 1.2 1.8 2.8 1.8 4.5s-.6 3.3-1.8 4.5" stroke="#c9a84c" strokeWidth="0.8" strokeLinecap="round" />
-            <path d="M13.5 0.5c2 2 3 4.6 3 6.5s-1 4.5-3 6.5" stroke="rgba(201,168,76,0.4)" strokeWidth="0.8" strokeLinecap="round" />
-          </>
-        ) : (
-          <>
-            <path d="M1 4h3l4-3v10l-4-3H1V4z" stroke="rgba(201,168,76,0.4)" strokeWidth="0.8" fill="none" />
-            <path d="M11 4l4 4m0-4l-4 4" stroke="rgba(201,168,76,0.5)" strokeWidth="0.8" strokeLinecap="round" />
-          </>
-        )}
+        {on ? <>
+          <path d="M1 4h3l4-3v10l-4-3H1V4z" stroke="#c9a84c" strokeWidth="1" fill="rgba(201,168,76,0.25)" />
+          <path d="M11 2.5c1.2 1.2 1.8 2.8 1.8 4.5s-.6 3.3-1.8 4.5" stroke="#c9a84c" strokeWidth="1" strokeLinecap="round" />
+        </> : <>
+          <path d="M1 4h3l4-3v10l-4-3H1V4z" stroke="#e74c3c" strokeWidth="1" fill="none" />
+          <path d="M11 3l4 6m0-6l-4 6" stroke="#e74c3c" strokeWidth="1" strokeLinecap="round" />
+        </>}
       </svg>
-      <div style={{ fontSize: 8, color: audioEnabled ? '#c9a84c' : 'rgba(201,168,76,0.3)' }}>
-        {audioEnabled ? 'ON' : 'OFF'}
-      </div>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: on ? '#e8c96a' : '#e74c3c', fontWeight: 700 }}>{on ? 'ON' : 'OFF'}</div>
     </button>
   )
 }
 
-// ─── Coordinates display ──────────────────────────────────────
-function CursorCoords() {
-  const { cursorPos } = useNexusStore()
-  const nx = ((cursorPos.x / window.innerWidth) * 100).toFixed(1)
-  const ny = ((cursorPos.y / window.innerHeight) * 100).toFixed(1)
-
+// ─── Bottom left ──────────────────────────────────────────────
+function BottomLeft() {
+  const { cursorPos, sessionId } = useNexusStore()
+  const nx = ((cursorPos.x / (window.innerWidth  || 1)) * 100).toFixed(1)
+  const ny = ((cursorPos.y / (window.innerHeight || 1)) * 100).toFixed(1)
   return (
-    <div className="data-readout" style={{ fontSize: 9 }}>
-      <span style={{ color: 'rgba(56,184,216,0.4)' }}>X:</span>
-      <span style={{ color: 'rgba(56,184,216,0.7)', marginLeft: 2 }}>{nx}%</span>
-      <span style={{ color: 'rgba(56,184,216,0.4)', marginLeft: 6 }}>Y:</span>
-      <span style={{ color: 'rgba(56,184,216,0.7)', marginLeft: 2 }}>{ny}%</span>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9 }}>
+        <span style={{ color: '#60b8d8' }}>X:</span>
+        <span style={{ color: '#38b8d8', marginLeft: 3, fontWeight: 700 }}>{nx}%</span>
+        <span style={{ color: '#60b8d8', marginLeft: 8 }}>Y:</span>
+        <span style={{ color: '#38b8d8', marginLeft: 3, fontWeight: 700 }}>{ny}%</span>
+      </div>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#60b8d8' }}>
+        SID·<span style={{ color: '#38b8d8', fontWeight: 700 }}>{sessionId}</span>
+      </div>
     </div>
   )
 }
 
-// ─── Fragment collector status ────────────────────────────────
+// ─── Fragment counter ─────────────────────────────────────────
 function FragmentStatus() {
   const { collectedFragments, totalFragments } = useNexusStore()
-  const pct = Math.round((collectedFragments.length / totalFragments) * 100)
+  const collected = collectedFragments.length
+  const pct = Math.min(Math.round((collected / totalFragments) * 100), 100)
 
   return (
-    <div className="data-readout" style={{ fontSize: 9 }}>
-      <div style={{ color: 'rgba(201,168,76,0.5)', marginBottom: 2 }}>MEMORY FRAGMENTS</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+    <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9 }}>
+      <div style={{ color: '#e8c96a', marginBottom: 5, fontSize: 8, fontWeight: 700, letterSpacing: '0.1em' }}>
+        MEMORY FRAGMENTS
+      </div>
+      {/* Bar and count on separate lines to prevent overlap */}
+      <div style={{ width: 80, height: 3, background: 'rgba(201,168,76,0.25)', borderRadius: 2, marginBottom: 4 }}>
         <div style={{
-          width: 60, height: 2,
-          background: 'rgba(201,168,76,0.1)',
-          position: 'relative',
-        }}>
-          <div style={{
-            width: `${pct}%`, height: '100%',
-            background: 'linear-gradient(90deg, #a07830, #c9a84c)',
-            transition: 'width 0.5s',
-          }} />
-        </div>
-        <span style={{ color: '#c9a84c' }}>{collectedFragments.length}/{totalFragments}</span>
+          width: `${pct}%`, height: '100%',
+          background: 'linear-gradient(90deg,#a07830,#e8c96a)',
+          borderRadius: 2,
+          transition: 'width 0.5s',
+        }} />
+      </div>
+      <div style={{ color: '#e8c96a', fontSize: 10, fontWeight: 700 }}>
+        {collected}/{totalFragments}
       </div>
     </div>
   )
 }
 
-// ─── Session ID ───────────────────────────────────────────────
-function SessionBadge() {
-  const { sessionId } = useNexusStore()
-  return (
-    <div className="data-readout" style={{ fontSize: 9 }}>
-      <span style={{ color: 'rgba(56,184,216,0.3)' }}>SID·</span>
-      <span style={{ color: 'rgba(56,184,216,0.6)' }}>{sessionId}</span>
-    </div>
-  )
-}
-
-// ─── Main HUD Overlay ─────────────────────────────────────────
-export default function HUDOverlay({ visible = true }) {
-  const { phase } = useNexusStore()
-
-  if (!visible || phase === 'entry') return null
-
+// ─── Side data panel ──────────────────────────────────────────
+function DataPanel({ side }) {
+  const { collectedFragments, totalFragments, sessionId } = useNexusStore()
+  const isLeft = side === 'left'
+  const items = isLeft ? [
+    { label: 'STATION', value: 'NEXUS-7G',  color: '#e8c96a' },
+    { label: 'STATUS',  value: 'NOMINAL',   color: '#60d8a0' },
+    { label: 'MODULES', value: '09 / 09',   color: '#e8c96a' },
+    { label: 'SESSION', value: sessionId,   color: '#38b8d8' },
+  ] : [
+    { label: 'FRAGMENTS', value: `${collectedFragments.length} / ${totalFragments}`, color: '#e8c96a' },
+    { label: 'ENGINEER',  value: 'PURNAGYA', color: '#ffffff' },
+    { label: 'VERSION',   value: 'v4.2.1',   color: '#e8c96a' },
+    { label: 'UPTIME',    value: '99.8%',    color: '#60d8a0' },
+  ]
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5, duration: 1 }}
-      style={{ pointerEvents: 'none', zIndex: 100 }}
-    >
-      {/* ── Top-left: NEXUS logo mark ── */}
+      initial={{ opacity: 0, x: isLeft ? -16 : 16 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 1, duration: 0.6 }}
+      style={{
+        position: 'fixed', [isLeft ? 'left' : 'right']: 14,
+        top: '50%', transform: 'translateY(-50%)',
+        display: 'flex', flexDirection: 'column', gap: 10,
+        padding: '14px 13px',
+        background: 'rgba(2,5,14,0.9)',
+        border: '1px solid rgba(56,184,216,0.3)',
+        backdropFilter: 'blur(14px)',
+        width: 126, zIndex: 25, pointerEvents: 'none',
+      }}>
+      <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: '#38b8d8', letterSpacing: '0.18em', fontWeight: 700, borderBottom: '1px solid rgba(56,184,216,0.25)', paddingBottom: 6 }}>
+        {isLeft ? '◂ SYS.STATUS' : 'CAPTAIN.LOG ▸'}
+      </div>
+      {items.map(item => (
+        <div key={item.label}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7.5, color: '#5ab4d4', letterSpacing: '0.1em', marginBottom: 2 }}>{item.label}</div>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: item.color, fontWeight: 700 }}>{item.value}</div>
+        </div>
+      ))}
+      <motion.div animate={{ opacity: [0.4,1,0.4] }} transition={{ duration: 2, repeat: Infinity }}
+        style={{ width: 5, height: 5, borderRadius: '50%', background: '#60d8a0', boxShadow: '0 0 6px #60d8a0', alignSelf: isLeft ? 'flex-start' : 'flex-end' }} />
+    </motion.div>
+  )
+}
+
+// ─── Main HUD ─────────────────────────────────────────────────
+export default function HUDOverlay({ visible = true }) {
+  const { phase, currentModule } = useNexusStore()
+  const [contactOpen, setContactOpen] = useState(false)
+  if (!visible || phase === 'entry') return null
+
+  // Side panels only visible on hub (no module open)
+  const showPanels = currentModule === null
+
+  return (
+    <>
+    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 200 }}>
+
+      {/* ── Top-left: logo ── */}
       <div style={{
-        position: 'fixed', top: 20, left: 24,
+        position: 'absolute', top: 14, left: 16,
         display: 'flex', alignItems: 'center', gap: 10,
         pointerEvents: 'all',
+        background: 'rgba(2,5,14,0.75)',
+        border: '1px solid rgba(201,168,76,0.3)',
+        padding: '6px 12px',
+        backdropFilter: 'blur(12px)',
       }}>
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="14" r="12" stroke="rgba(201,168,76,0.5)" strokeWidth="1"/>
-          <circle cx="14" cy="14" r="6"  stroke="rgba(56,184,216,0.4)"  strokeWidth="0.75"/>
-          <circle cx="14" cy="14" r="2"  fill="#c9a84c"/>
-          <line x1="14" y1="2"  x2="14" y2="26" stroke="rgba(201,168,76,0.2)" strokeWidth="0.5"/>
-          <line x1="2"  y1="14" x2="26" y2="14" stroke="rgba(201,168,76,0.2)" strokeWidth="0.5"/>
+        <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="12" stroke="#c9a84c" strokeWidth="1.2"/>
+          <circle cx="14" cy="14" r="6"  stroke="#38b8d8" strokeWidth="1"/>
+          <circle cx="14" cy="14" r="2.5" fill="#c9a84c"/>
         </svg>
         <div>
-          <div style={{ fontFamily: 'Orbitron', fontSize: 11, color: '#c9a84c', letterSpacing: '0.25em', fontWeight: 600 }}>
-            NEXUS
-          </div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.5)', letterSpacing: '0.1em' }}>
-            STATION·OS
-          </div>
+          <div style={{ fontFamily: 'Orbitron', fontSize: 11, color: '#e8c96a', letterSpacing: '0.25em', fontWeight: 700 }}>NEXUS</div>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#38b8d8', letterSpacing: '0.1em' }}>STATION·OS</div>
         </div>
       </div>
 
-      {/* ── Top-right: AI button + Clock + audio ── */}
+      {/* ── Top-right: ALL controls in one pill ── */}
       <div style={{
-        position: 'fixed', top: 20, right: 24,
-        display: 'flex', alignItems: 'flex-start', gap: 12,
+        position: 'absolute', top: 14, right: 16,
+        display: 'flex', alignItems: 'stretch', gap: 6,
         pointerEvents: 'all',
+        background: 'rgba(2,5,14,0.82)',
+        border: '1px solid rgba(56,184,216,0.3)',
+        padding: '8px 10px',
+        backdropFilter: 'blur(14px)',
       }}>
+        <ProfileButton />
+        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
         <NexusAIButton />
+        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
+        {/* Contact button */}
+        <button
+          onClick={() => { SFX.click(); setContactOpen(o => !o) }}
+          data-cursor="hover"
+          title="Open Channel — Contact"
+          style={{
+            fontFamily: 'JetBrains Mono', fontSize: 9,
+            letterSpacing: '0.12em',
+            color: contactOpen ? '#ffe080' : '#c9a84c',
+            background: contactOpen ? 'rgba(201,168,76,0.18)' : 'rgba(201,168,76,0.08)',
+            border: `1.5px solid ${contactOpen ? '#c9a84c' : 'rgba(201,168,76,0.5)'}`,
+            padding: '5px 11px', cursor: 'none',
+            display: 'flex', alignItems: 'center', gap: 6,
+            whiteSpace: 'nowrap',
+            boxShadow: contactOpen ? '0 0 14px rgba(201,168,76,0.25)' : 'none',
+            transition: 'all 0.2s',
+          }}
+        >
+          <span>✉</span> CONTACT
+        </button>
+        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
         <SystemClock />
+        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
         <AudioToggle />
       </div>
 
-      {/* ── Bottom-left: coordinates ── */}
-      <div style={{
-        position: 'fixed', bottom: 20, left: 24,
-        display: 'flex', flex: 'column', gap: 6,
-      }}>
-        <CursorCoords />
-        <SessionBadge />
+      {/* ── Side data panels — hub only ── */}
+      {showPanels && <DataPanel side="left"  />}
+      {showPanels && <DataPanel side="right" />}
+
+      {/* ── Bottom-left ── */}
+      <div style={{ position: 'absolute', bottom: 14, left: 16, pointerEvents: 'none' }}>
+        <BottomLeft />
       </div>
 
-      {/* ── Bottom-right: fragment counter ── */}
-      <div style={{
-        position: 'fixed', bottom: 20, right: 24,
-        pointerEvents: 'all',
-      }}>
+      {/* ── Bottom-right ── */}
+      <div style={{ position: 'absolute', bottom: 14, right: 16, pointerEvents: 'all' }}>
         <FragmentStatus />
       </div>
 
-      {/* ── Corner accent lines ── */}
-      {/* Top-left */}
-      <svg style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none' }} width="80" height="80" viewBox="0 0 80 80">
-        <path d="M0 40 L0 0 L40 0" stroke="rgba(56,184,216,0.15)" strokeWidth="1" fill="none" />
-        <path d="M0 20 L0 0 L20 0" stroke="rgba(56,184,216,0.3)"  strokeWidth="1" fill="none" />
+      {/* ── Corner lines ── */}
+      <svg style={{ position: 'absolute', top: 0, left: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <path d="M0 30 L0 0 L30 0" stroke="rgba(56,184,216,0.3)" strokeWidth="1"/>
+        <path d="M0 14 L0 0 L14 0" stroke="rgba(56,184,216,0.55)" strokeWidth="1"/>
       </svg>
-      {/* Top-right */}
-      <svg style={{ position: 'fixed', top: 0, right: 0, pointerEvents: 'none' }} width="80" height="80" viewBox="0 0 80 80">
-        <path d="M80 40 L80 0 L40 0" stroke="rgba(56,184,216,0.15)" strokeWidth="1" fill="none" />
-        <path d="M80 20 L80 0 L60 0" stroke="rgba(56,184,216,0.3)"  strokeWidth="1" fill="none" />
+      <svg style={{ position: 'absolute', top: 0, right: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <path d="M60 30 L60 0 L30 0" stroke="rgba(56,184,216,0.3)" strokeWidth="1"/>
+        <path d="M60 14 L60 0 L46 0" stroke="rgba(56,184,216,0.55)" strokeWidth="1"/>
       </svg>
-      {/* Bottom-left */}
-      <svg style={{ position: 'fixed', bottom: 0, left: 0, pointerEvents: 'none' }} width="80" height="80" viewBox="0 0 80 80">
-        <path d="M0 40 L0 80 L40 80" stroke="rgba(201,168,76,0.15)" strokeWidth="1" fill="none" />
-        <path d="M0 60 L0 80 L20 80" stroke="rgba(201,168,76,0.25)" strokeWidth="1" fill="none" />
+      <svg style={{ position: 'absolute', bottom: 0, left: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <path d="M0 30 L0 60 L30 60" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
+        <path d="M0 46 L0 60 L14 60" stroke="rgba(201,168,76,0.55)" strokeWidth="1"/>
       </svg>
-      {/* Bottom-right */}
-      <svg style={{ position: 'fixed', bottom: 0, right: 0, pointerEvents: 'none' }} width="80" height="80" viewBox="0 0 80 80">
-        <path d="M80 40 L80 80 L40 80" stroke="rgba(201,168,76,0.15)" strokeWidth="1" fill="none" />
-        <path d="M80 60 L80 80 L60 80" stroke="rgba(201,168,76,0.25)" strokeWidth="1" fill="none" />
+      <svg style={{ position: 'absolute', bottom: 0, right: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <path d="M60 30 L60 60 L30 60" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
+        <path d="M60 46 L60 60 L46 60" stroke="rgba(201,168,76,0.55)" strokeWidth="1"/>
       </svg>
 
-      {/* ── Horizontal scan line (subtle) ── */}
+      {/* ── Scan line ── */}
       <div style={{
-        position: 'fixed',
-        top: 0, left: 0,
-        width: '100%',
-        height: 1,
-        background: 'linear-gradient(90deg, transparent 0%, rgba(56,184,216,0.3) 50%, transparent 100%)',
+        position: 'absolute', top: 0, left: 0, width: '100%', height: 1,
+        background: 'linear-gradient(90deg, transparent, rgba(56,184,216,0.5), transparent)',
         animation: 'scanline 12s linear infinite',
-        pointerEvents: 'none',
       }} />
-    </motion.div>
+    </div>
+
+    {/* ── Contact overlay — outside pointerEvents:none wrapper ── */}
+    <ContactOverlay open={contactOpen} onClose={() => setContactOpen(false)} />
+    </>
   )
 }
