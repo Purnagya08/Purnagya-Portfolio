@@ -90,7 +90,7 @@ export default function MemoryFragmentCompletion() {
             <div style={{
               fontFamily: 'Libre Baskerville', fontStyle: 'italic',
               fontSize: 'clamp(13px, 1.5vw, 16px)',
-              color: 'rgba(176,192,216,0.65)',
+              color: 'rgba(216,228,240,0.85)',
               maxWidth: 440, margin: '0 auto 32px',
               lineHeight: 1.7,
             }}>
@@ -118,7 +118,7 @@ export default function MemoryFragmentCompletion() {
 
             <div style={{
               fontFamily: 'JetBrains Mono', fontSize: 9,
-              color: 'rgba(56,184,216,0.4)', letterSpacing: '0.2em',
+              color: 'rgba(56,184,216,0.75)', letterSpacing: '0.2em',
             }}>
               CLICK ANYWHERE TO CONTINUE
             </div>

@@ -1,82 +1,49 @@
-import { motion } from 'framer-motion';
-import { useNexusStore } from '../store/nexusStore';
+import { motion } from 'framer-motion'
+import { useNexusStore } from '../store/nexusStore'
+import { SFX } from '../audio/audioEngine'
 
 export default function NotFound() {
-  const { setPhase } = useNexusStore();
+  const { navigateTo, triggerWarp } = useNexusStore()
+
+  function handleReturn() {
+    SFX.warp()
+    triggerWarp()
+    setTimeout(() => navigateTo(null), 400)
+  }
 
   return (
-    <motion.div
-      role="main"
-      aria-label="404 – Page not found"
-      className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden"
-      style={{ background: '#02040c', fontFamily: 'JetBrains Mono, monospace' }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-    >
-      {/* Scanlines */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(0deg,rgba(56,184,216,0.03) 0px,rgba(56,184,216,0.03) 1px,transparent 1px,transparent 4px)',
-        }}
-      />
+    <div style={{
+      position: 'fixed', inset: 0, background: '#02040c',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      flexDirection: 'column', gap: 16, padding: 32,
+    }}>
+      {Array.from({ length: 80 }, (_, i) => (
+        <div key={i} style={{ position: 'absolute', left: `${Math.random()*100}%`, top: `${Math.random()*100}%`, width: 1, height: 1, borderRadius: '50%', background: 'white', opacity: 0.15 + Math.random() * 0.5 }} />
+      ))}
 
-      <div className="relative z-10 text-center px-6">
-        {/* Glitch 404 */}
-        <motion.div
-          className="text-[120px] sm:text-[180px] font-bold leading-none select-none"
-          style={{
-            fontFamily: 'Orbitron, sans-serif',
-            color: '#38b8d8',
-            textShadow: '0 0 40px rgba(56,184,216,0.5)',
-          }}
-          animate={{
-            textShadow: [
-              '0 0 40px rgba(56,184,216,0.5)',
-              '4px 0 0 rgba(255,0,80,0.6), -4px 0 0 rgba(0,255,200,0.6)',
-              '0 0 40px rgba(56,184,216,0.5)',
-            ],
-            x: [0, -3, 3, 0],
-          }}
-          transition={{ repeat: Infinity, duration: 3, repeatDelay: 2 }}
-        >
-          404
-        </motion.div>
+      <motion.div animate={{ opacity: [0.4,1,0.4] }} transition={{ duration: 3, repeat: Infinity }}
+        style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.3em', color: 'rgba(231,76,60,0.6)' }}>
+        ⚠ NAVIGATION ERROR ⚠
+      </motion.div>
 
-        <p
-          className="text-sm sm:text-base tracking-widest uppercase mt-4 mb-2"
-          style={{ color: '#c9a84c' }}
-        >
-          Signal Lost
-        </p>
-        <p
-          className="text-xs sm:text-sm text-white/40 mb-10 max-w-xs mx-auto"
-        >
-          The sector you're looking for has been swallowed by a wormhole.
-        </p>
-
-        <button
-          onClick={() => setPhase('hub')}
-          className="px-8 py-3 text-xs tracking-[0.3em] uppercase transition-all focus:outline-none focus:ring-2 focus:ring-[#38b8d8]"
-          style={{
-            border: '1px solid rgba(56,184,216,0.5)',
-            color: '#38b8d8',
-            background: 'rgba(56,184,216,0.08)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(56,184,216,0.18)';
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(56,184,216,0.3)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(56,184,216,0.08)';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
-        >
-          Return to Hub
-        </button>
+      <div style={{ fontFamily: 'Orbitron', fontSize: 'clamp(48px,10vw,96px)', fontWeight: 800, color: '#e74c3c', textShadow: '0 0 40px rgba(231,76,60,0.4)', letterSpacing: '0.1em', lineHeight: 1 }}>
+        404
       </div>
-    </motion.div>
-  );
+
+      <div style={{ fontFamily: 'Space Grotesk', fontSize: 14, color: 'rgba(176,192,216,0.5)', textAlign: 'center' }}>
+        Sector not found. This coordinate does not exist in the archive.
+      </div>
+
+      <div style={{ width: 160, height: 1, background: 'linear-gradient(90deg, transparent, rgba(231,76,60,0.3), transparent)', margin: '8px 0' }} />
+
+      <motion.button
+        onClick={handleReturn}
+        data-cursor="hover"
+        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}
+        style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.2em', color: '#38b8d8', background: 'transparent', border: '1px solid rgba(56,184,216,0.3)', padding: '10px 28px', cursor: 'pointer', marginTop: 8 }}
+      >
+        ◂ RETURN TO HUB
+      </motion.button>
+    </div>
+  )
 }

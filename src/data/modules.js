@@ -101,4 +101,28 @@ export const MODULES = [
   },
 ]
 
-export const getModule = (id) => MODULES.find(m => m.id === id)
+export const getModule = (id) => MODULES.find(m => m.id === id) || EXTRA_MODULES.find(m => m.id === id)
+
+// ─── Extra modules accessible via HUD (not on hex grid) ──────
+export const EXTRA_MODULES = [
+  {
+    id: 'nexusai',
+    label: 'NEXUS AI',
+    shortLabel: 'NEXUS AI',
+    code: 'AI',
+    icon: '◎',
+    description: 'Archive intelligence. Query the logbook.',
+    color: '#38b8d8',
+    glowColor: 'rgba(56,184,216,0.4)',
+  },
+  {
+    id: 'profile',
+    label: "Captain's Profile",
+    shortLabel: 'CAPTAIN',
+    code: 'PRF',
+    icon: '◈',
+    description: 'The human behind the code. Hobbies, interests, and the off-duty logs.',
+    color: '#c9a84c',
+    glowColor: 'rgba(201,168,76,0.4)',
+  },
+]

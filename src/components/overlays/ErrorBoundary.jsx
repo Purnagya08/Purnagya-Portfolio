@@ -44,7 +44,7 @@ export default class ErrorBoundary extends Component {
         </div>
 
         <div style={{
-          fontSize: 10, color: 'rgba(231,76,60,0.5)',
+          fontSize: 10, color: 'rgba(231,76,60,0.80)',
           letterSpacing: '0.2em', textAlign: 'center',
         }}>
           NEXUS OS ENCOUNTERED AN UNHANDLED EXCEPTION
@@ -62,7 +62,7 @@ export default class ErrorBoundary extends Component {
             wordBreak: 'break-all',
             textAlign: 'left',
           }}>
-            <div style={{ color: 'rgba(231,76,60,0.4)', marginBottom: 4 }}>ERROR LOG:</div>
+            <div style={{ color: 'rgba(231,76,60,0.80)', marginBottom: 4 }}>ERROR LOG:</div>
             {this.state.error.message}
           </div>
         )}
@@ -82,7 +82,7 @@ export default class ErrorBoundary extends Component {
           REBOOT NEXUS
         </button>
 
-        <div style={{ fontSize: 8, color: 'rgba(56,184,216,0.25)', letterSpacing: '0.15em', marginTop: 8 }}>
+        <div style={{ fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.15em', marginTop: 8 }}>
           NEXUS OS v4.2.1 · FAULT RECOVERY MODE
         </div>
       </div>
