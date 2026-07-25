@@ -46,7 +46,7 @@ function MuseumHero() {
           style={{
             fontFamily: 'Orbitron', fontSize: 'clamp(36px, 7vw, 72px)',
             fontWeight: 800, color: '#c9a84c',
-            textShadow: '0 0 60px rgba(201,168,76,0.35)',
+            textShadow: '0 0 60px rgba(201,168,76,0.7)',
             letterSpacing: '0.08em', lineHeight: 1.1, marginBottom: 16,
           }}
         >
@@ -54,7 +54,7 @@ function MuseumHero() {
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 500, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 500, margin: '0 auto' }}
         >
           A digital museum of the moments that forged an engineer.
         </motion.div>
@@ -63,8 +63,8 @@ function MuseumHero() {
           animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}
           style={{ marginTop: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
         >
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.4)', letterSpacing: '0.2em' }}>SCROLL TO EXPLORE</div>
-          <div style={{ width: 1, height: 32, background: 'linear-gradient(180deg, rgba(56,184,216,0.4), transparent)' }} />
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.7)', letterSpacing: '0.2em' }}>SCROLL TO EXPLORE</div>
+          <div style={{ width: 1, height: 32, background: 'linear-gradient(180deg, rgba(56,184,216,0.7), transparent)' }} />
         </motion.div>
       </motion.div>
     </div>
@@ -102,7 +102,7 @@ function ExhibitCard({ number, title, description, detail, icon, color = '#c9a84
           </div>
           <div style={{
             fontFamily: 'Space Grotesk', fontSize: 13,
-            color: 'rgba(176,192,216,0.75)', lineHeight: 1.7, marginBottom: 10,
+            color: 'rgba(216,228,240,0.88)', lineHeight: 1.7, marginBottom: 10,
           }}>
             {description}
           </div>
@@ -134,7 +134,7 @@ export default function MuseumOfOrigins() {
     {
       year: '2005',
       title: 'Born in Asansol, West Bengal',
-      description: 'A city of brotherhood. Where it was all a place one can think off',
+      description: "Growing up in Asansol, a city built on unity and known for its contribution to the nation through SAIL's steel plants, inspired me to value both innovation and hard work.",
       color: '#c9a84c',
       tags: ['Asansol', 'Beginning'],
     },
@@ -190,10 +190,10 @@ export default function MuseumOfOrigins() {
       <Section>
         <RevealBlock>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 16, marginBottom: 56 }}>
-            <StatCard value="9.0"  label="GPA"                icon="◈" color="#c9a84c" />
+            <StatCard value="8.795"  label="GPA"                icon="◈" color="#c9a84c" />
             <StatCard value="250"  label="Students Ranked"    icon="★" color="#38b8d8" />
             <StatCard value="3"    label="Hackathon Wins"     icon="⚡" color="#60d8a0" />
-            <StatCard value="2026" label="Graduating Year"    icon="◎" color="#a070e0" />
+            <StatCard value="2028" label="Graduating Year"    icon="◎" color="#a070e0" />
           </div>
         </RevealBlock>
 
@@ -201,7 +201,7 @@ export default function MuseumOfOrigins() {
         <SectionTitle label="The Origin Story" code="EXHIBIT·A" color="#c9a84c" />
         <LoreCard
           accent="#c9a84c"
-          text="Every engineer has a moment — not the degree, not the first job, not the first commit. The moment. A screen lighting up and doing exactly what you told it to. For me, it was a Python print statement in a dusty school computer lab in 2017. The machine obeyed. And I never looked at the world the same way again."
+          text="Every engineer has a moment — not the degree, not the first job, not the first commit. The moment. A screen lighting up and doing exactly what you told it to. For me, it was a Python print statement in a dusty school computer lab in 2022. The machine obeyed. And I never looked at the world the same way again."
         />
 
         <div style={{ marginTop: 32 }}>
@@ -234,20 +234,20 @@ export default function MuseumOfOrigins() {
             color="#60d8a0"
           />
           <ExhibitCard
-            number={4}
-            icon="🎓"
-            title="The Admission"
-            description="UEM Jaipur, Computer Science Engineering, 2024. Walked in knowing Python and curiosity. Left three years later with Java, React, AI/ML, and a logbook full of real projects."
-            detail="Institute: UEM Jaipur | Branch: CSE | Batch: 2024-28 | Current GPA: 9.0"
-            color="#a070e0"
-          />
-          <ExhibitCard
             number={3}
             icon="🏆"
             title="The First Competition"
             description="A college-level coding competition, 2025. Placed in top 10th. Went back hostel and stayed up until 2am solving the ones I had missed. That stubbornness became a superpower."
             detail="Event: College Coding Competition 2025 | Problems: 3/5 | Placement: 10th"
             color="#38b8d8"
+          />
+          <ExhibitCard
+            number={4}
+            icon="🎓"
+            title="The Admission"
+            description="UEM Jaipur, Computer Science Engineering, 2024. Walked in knowing Python and curiosity. Left three years later with Java, React, AI/ML, and a logbook full of real projects."
+            detail="Institute: UEM Jaipur | Branch: CSE | Batch: 2024-28 | Current GPA: 8.795"
+            color="#a070e0"
           />
         </div>
       </Section>
@@ -260,7 +260,7 @@ export default function MuseumOfOrigins() {
           <MemoryFragment
             id="MF-02"
             quote="Engineering admission wasn't the destination. It was the launchpad. The real journey started on Day 1, Line 1 of the first Java file."
-            author="Captain's Log — 2024"
+            author="Captain's Log — 2022"
           />
         </div>
       </Section>
@@ -285,7 +285,7 @@ export default function MuseumOfOrigins() {
                 background: 'rgba(8,11,24,0.6)',
                 border: '1px solid rgba(96,216,160,0.1)',
               }}>
-                <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(96,216,160,0.5)', letterSpacing: '0.15em', marginBottom: 4 }}>
+                <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(96,216,160,0.8)', letterSpacing: '0.15em', marginBottom: 4 }}>
                   {item.label.toUpperCase()}
                 </div>
                 <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: '#d8e4f0', fontWeight: 500 }}>

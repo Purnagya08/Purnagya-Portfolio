@@ -33,7 +33,7 @@ function PresentHero() {
             position: 'absolute',
             width: i * 180, height: i * 180,
             borderRadius: '50%',
-            border: '1px solid rgba(56,184,216,0.3)',
+            border: '1px solid rgba(56,184,216,0.6)',
             top: '50%', left: '50%',
             marginTop: -(i * 90), marginLeft: -(i * 90),
           }}
@@ -44,7 +44,7 @@ function PresentHero() {
       <div style={{
         position: 'absolute', bottom: '18%',
         fontFamily: 'JetBrains Mono', fontSize: 13,
-        color: 'rgba(56,184,216,0.4)', letterSpacing: '0.2em',
+        color: 'rgba(56,184,216,0.7)', letterSpacing: '0.2em',
       }}>
         {hh}:{mm}:{ss} · LOCAL
       </div>
@@ -59,13 +59,13 @@ function PresentHero() {
           style={{
             fontFamily: 'Orbitron', fontSize: 'clamp(34px, 7vw, 68px)',
             fontWeight: 800, color: '#38b8d8',
-            textShadow: '0 0 60px rgba(56,184,216,0.35)',
+            textShadow: '0 0 60px rgba(56,184,216,0.65)',
             letterSpacing: '0.08em', lineHeight: 1.1, marginBottom: 16,
           }}
         >LIVE STATUS<br />RIGHT NOW</motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           What is being built, studied, and shipped — right now.
         </motion.div>
@@ -81,7 +81,7 @@ function LiveStatus() {
     { label: 'Current Build',  value: 'WarrantySafe v1',         color: '#38b8d8', pulse: true },
     { label: 'Studying',       value: 'System Design + DSA',     color: '#c9a84c', pulse: false },
     { label: 'Year',           value: 'B.Tech CSE — Year 3',     color: '#a070e0', pulse: false },
-    { label: 'GPA',            value: '9.0 / 10',                color: '#c9a84c', pulse: false },
+    { label: 'GPA',            value: '8.795 / 10',                color: '#c9a84c', pulse: false },
     { label: 'Location',       value: 'Jaipur, Rajasthan',       color: '#38b8d8', pulse: false },
   ]
 
@@ -120,7 +120,7 @@ function LiveStatus() {
               }} />
             )}
             <div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(176,192,216,0.35)', letterSpacing: '0.15em', marginBottom: 2 }}>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(216,228,240,0.85)', letterSpacing: '0.15em', marginBottom: 2 }}>
                 {item.label.toUpperCase()}
               </div>
               <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, fontWeight: 500, color: item.color }}>
@@ -178,7 +178,7 @@ function ActiveProjectCard({ name, description, progress, stack, color, updated 
               {name}
             </div>
           </div>
-          <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(176,192,216,0.6)' }}>
+          <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.82)' }}>
             {description}
           </div>
         </div>
@@ -233,16 +233,16 @@ function GitHubHeatmap() {
           marginBottom: 16,
         }}>
           <div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.5)', letterSpacing: '0.2em', marginBottom: 3 }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.2em', marginBottom: 3 }}>
               GITHUB ACTIVITY — LAST 26 WEEKS
             </div>
-            <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(176,192,216,0.5)' }}>
+            <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.78)' }}>
               github.com/Purnagya08
             </div>
           </div>
           <div style={{ fontFamily: 'Orbitron', fontSize: 18, fontWeight: 700, color: '#60d8a0' }}>
-            500+
-            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(96,216,160,0.5)', marginLeft: 6, fontWeight: 400 }}>commits</span>
+            200
+            <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(96,216,160,0.8)', marginLeft: 6, fontWeight: 400 }}>commits</span>
           </div>
         </div>
 
@@ -274,11 +274,11 @@ function GitHubHeatmap() {
           display: 'flex', alignItems: 'center', gap: 6,
           marginTop: 10, justifyContent: 'flex-end',
         }}>
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(176,192,216,0.3)' }}>Less</span>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(216,228,240,0.85)' }}>Less</span>
           {colors.map((c, i) => (
             <div key={i} style={{ width: 10, height: 10, borderRadius: 2, background: c }} />
           ))}
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(176,192,216,0.3)' }}>More</span>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(216,228,240,0.85)' }}>More</span>
         </div>
       </div>
     </RevealBlock>
@@ -318,7 +318,7 @@ function ReadingList() {
               <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, fontWeight: 500, color: '#d8e4f0', marginBottom: 2 }}>
                 {book.title}
               </div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(176,192,216,0.4)', letterSpacing: '0.08em' }}>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(216,228,240,0.85)', letterSpacing: '0.08em' }}>
                 {book.author}
               </div>
             </div>
@@ -347,7 +347,7 @@ function FocusBar({ label, pct, color, note, delay }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, gap: 12 }}>
         <div>
           <span style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: '#d8e4f0', fontWeight: 500 }}>{label}</span>
-          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(176,192,216,0.4)', marginLeft: 10 }}>{note}</span>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(216,228,240,0.85)', marginLeft: 10 }}>{note}</span>
         </div>
         <span style={{ fontFamily: 'Orbitron', fontSize: 11, color, flexShrink: 0 }}>{pct}%</span>
       </div>
@@ -390,9 +390,9 @@ export default function PresentStation() {
         <RevealBlock>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 16, marginBottom: 56 }}>
             <StatCard value="3"    label="Active Projects"   icon="◉" color="#38b8d8" />
-            <StatCard value="500"  label="GitHub Commits"    icon="⌥" color="#60d8a0" />
+            <StatCard value="200"  label="GitHub Commits"    icon="⌥" color="#60d8a0" />
             <StatCard value="2026" label="Target Internship" icon="★" color="#c9a84c" />
-            <StatCard value="9.0"  label="Current GPA"       icon="◈" color="#a070e0" />
+            <StatCard value="8.795"  label="Current GPA"       icon="◈" color="#a070e0" />
           </div>
         </RevealBlock>
 

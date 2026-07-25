@@ -49,13 +49,13 @@ function MissionHero() {
           style={{
             fontFamily: 'Orbitron', fontSize: 'clamp(34px, 7vw, 68px)',
             fontWeight: 800, color: '#38b8d8',
-            textShadow: '0 0 60px rgba(56,184,216,0.35)',
+            textShadow: '0 0 60px rgba(56,184,216,0.65)',
             letterSpacing: '0.08em', lineHeight: 1.1, marginBottom: 16,
           }}
         >ENGINEERING<br />MISSIONS</motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           Every project is a mission briefing. Objectives, stack, outcome.
         </motion.div>
@@ -67,10 +67,10 @@ function MissionHero() {
 // ─── Mission status badge ─────────────────────────────────────
 function StatusBadge({ status }) {
   const map = {
-    'DEPLOYED':    { color: '#60d8a0', bg: 'rgba(96,216,160,0.08)'  },
-    'ACTIVE':      { color: '#38b8d8', bg: 'rgba(56,184,216,0.08)'  },
-    'COMPLETED':   { color: '#c9a84c', bg: 'rgba(201,168,76,0.08)'  },
-    'IN PROGRESS': { color: '#a070e0', bg: 'rgba(160,112,224,0.08)' },
+    'DEPLOYED':    { color: '#60d8a0', bg: 'rgba(96,216,160,0.80)'  },
+    'ACTIVE':      { color: '#38b8d8', bg: 'rgba(56,184,216,0.75)'  },
+    'COMPLETED':   { color: '#c9a84c', bg: 'rgba(201,168,76,0.80)'  },
+    'IN PROGRESS': { color: '#a070e0', bg: 'rgba(160,112,224,0.80)' },
   }
   const s = map[status] || map['ACTIVE']
   return (
@@ -147,7 +147,7 @@ function MissionCard({ mission, index }) {
           </div>
           <div style={{
             fontFamily: 'Space Grotesk', fontSize: 12,
-            color: 'rgba(176,192,216,0.55)', lineHeight: 1.5,
+            color: 'rgba(216,228,240,0.78)', lineHeight: 1.5,
           }}>
             {mission.tagline}
           </div>
@@ -189,7 +189,7 @@ function MissionCard({ mission, index }) {
                   </div>
                   <div style={{
                     fontFamily: 'Space Grotesk', fontSize: 13,
-                    color: 'rgba(176,192,216,0.75)', lineHeight: 1.75,
+                    color: 'rgba(216,228,240,0.88)', lineHeight: 1.75,
                   }}>
                     {mission.description}
                   </div>
@@ -281,7 +281,7 @@ function MissionCard({ mission, index }) {
                     data-cursor="hover"
                     style={{
                       fontFamily: 'JetBrains Mono', fontSize: 10,
-                      color: '#60d8a0', border: '1px solid rgba(96,216,160,0.3)',
+                      color: '#60d8a0', border: '1px solid rgba(96,216,160,0.65)',
                       background: 'rgba(96,216,160,0.06)', padding: '7px 18px',
                       letterSpacing: '0.15em', textDecoration: 'none',
                       display: 'flex', alignItems: 'center', gap: 6,
@@ -304,7 +304,7 @@ const MISSIONS = [
   {
     name: 'SentinelAI',
     tagline: 'Autonomous Cyber Defense Simulator — 6-service microservices platform',
-    status: 'DEPLOYED',
+    status: 'BUILT',
     color: '#38b8d8',
     description: 'A full-stack autonomous cybersecurity platform built for the Vultr Cloud Hackathon. Six microservices communicate through Redis Streams. A PyTorch MLP + Random Forest ensemble achieves 97%+ attack detection accuracy. The React SOC dashboard shows live attack timelines, defense responses, and system telemetry in real-time.',
     stack: ['React', 'FastAPI', 'PyTorch', 'Random Forest', 'Redis Streams', 'Docker', 'PostgreSQL', 'WebSockets', 'Vultr Cloud'],
@@ -320,7 +320,7 @@ const MISSIONS = [
   {
     name: 'HackFlow AI',
     tagline: 'AI-powered hackathon management platform — full-stack with ML microservice',
-    status: 'DEPLOYED',
+    status: 'BUILT',
     color: '#a070e0',
     description: 'An end-to-end platform for running hackathons — from team registration to project evaluation. ML microservice scores projects automatically using NLP. Judges get AI-assisted summaries. Organizers get real-time dashboards. Built with Next.js 16 App Router, TypeScript, Prisma ORM, and a FastAPI ML service.',
     stack: ['Next.js 16', 'TypeScript', 'FastAPI', 'Prisma', 'PostgreSQL', 'TailwindCSS', 'JWT Auth', 'Vercel', 'Render'],

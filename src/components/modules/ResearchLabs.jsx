@@ -58,7 +58,7 @@ function LabHero() {
         >AI & ML<br />RESEARCH</motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           Experiments, architectures, and the science behind the systems.
         </motion.div>
@@ -92,7 +92,7 @@ function SentinelArchDiagram() {
       }}>
         <div style={{
           fontFamily: 'JetBrains Mono', fontSize: 8,
-          color: 'rgba(96,216,160,0.5)', letterSpacing: '0.2em', marginBottom: 16,
+          color: 'rgba(96,216,160,0.8)', letterSpacing: '0.2em', marginBottom: 16,
         }}>
           SENTINELAI — MICROSERVICE ARCHITECTURE
         </div>
@@ -106,7 +106,7 @@ function SentinelArchDiagram() {
               <motion.line
                 key={i}
                 x1={x1} y1={y1} x2={x2} y2={y2}
-                stroke="rgba(56,184,216,0.25)"
+                stroke="rgba(56,184,216,0.5)"
                 strokeWidth={1}
                 strokeDasharray="4 6"
                 initial={{ pathLength: 0, opacity: 0 }}
@@ -187,7 +187,7 @@ function ResearchCard({ title, code, icon, color, description, experiments, chil
         <div style={{ flex: 1, textAlign: 'left' }}>
           <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: `${color}55`, letterSpacing: '0.2em', marginBottom: 3 }}>{code}</div>
           <div style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 600, color: open ? color : `${color}cc`, letterSpacing: '0.06em' }}>{title}</div>
-          <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(176,192,216,0.5)', marginTop: 3 }}>{description}</div>
+          <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.78)', marginTop: 3 }}>{description}</div>
         </div>
         {experiments && (
           <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: `${color}60`, flexShrink: 0 }}>
@@ -217,7 +217,7 @@ function AccuracyBar({ label, value, color }) {
   const inView = useInView(ref, { once: true })
   return (
     <div ref={ref} style={{ marginBottom: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'JetBrains Mono', fontSize: 10, color: 'rgba(176,192,216,0.6)', marginBottom: 4 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'JetBrains Mono', fontSize: 10, color: 'rgba(216,228,240,0.82)', marginBottom: 4 }}>
         <span>{label}</span><span style={{ color }}>{value}%</span>
       </div>
       <div style={{ height: 4, background: 'rgba(255,255,255,0.04)', borderRadius: 2, overflow: 'hidden' }}>
@@ -283,7 +283,7 @@ export default function ResearchLabs() {
             experiments={8}
           >
             <div style={{ marginBottom: 20 }}>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(96,216,160,0.5)', letterSpacing: '0.2em', marginBottom: 12 }}>MODEL ACCURACY COMPARISON</div>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(96,216,160,0.8)', letterSpacing: '0.2em', marginBottom: 12 }}>MODEL ACCURACY COMPARISON</div>
               <AccuracyBar label="Ensemble (MLP + RF)"        value={97} color="#60d8a0" />
               <AccuracyBar label="Random Forest (standalone)" value={93} color="#38b8d8" />
               <AccuracyBar label="MLP (standalone)"           value={89} color="#a070e0" />
@@ -347,7 +347,7 @@ text = pytesseract.image_to_string(preprocess('receipt.jpg'))
               ].map(item => (
                 <div key={item.title} style={{ padding: '12px 16px', background: 'rgba(201,168,76,0.04)', border: '1px solid rgba(201,168,76,0.1)' }}>
                   <div style={{ fontFamily: 'Orbitron', fontSize: 11, fontWeight: 600, color: '#c9a84c', marginBottom: 5 }}>{item.title}</div>
-                  <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(176,192,216,0.65)', lineHeight: 1.6 }}>{item.desc}</div>
+                  <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.82)', lineHeight: 1.6 }}>{item.desc}</div>
                 </div>
               ))}
             </div>
