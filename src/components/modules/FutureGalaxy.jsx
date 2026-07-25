@@ -54,7 +54,7 @@ function FutureHero() {
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.4em', color: 'rgba(160,112,224,0.6)', marginBottom: 16 }}
+          style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.4em', color: 'rgba(160,112,224,0.85)', marginBottom: 16 }}
         >◌ MOD-08 · FUTURE GALAXY ◌</motion.div>
         <motion.div
           initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
@@ -67,7 +67,7 @@ function FutureHero() {
         >WHERE THIS<br />IS HEADING</motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           The coordinates of ambition. Approximate. Expanding.
         </motion.div>
@@ -186,8 +186,8 @@ function EngineeringPrinciples() {
             border: '1px solid rgba(160,112,224,0.1)',
             height: '100%',
           }}>
-            <div style={{ fontFamily: 'Orbitron', fontSize: 22, fontWeight: 800, color: 'rgba(160,112,224,0.15)', marginBottom: 8 }}>{p.n}</div>
-            <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(176,192,216,0.7)', lineHeight: 1.7 }}>{p.text}</div>
+            <div style={{ fontFamily: 'Orbitron', fontSize: 22, fontWeight: 800, color: 'rgba(160,112,224,0.80)', marginBottom: 8 }}>{p.n}</div>
+            <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(216,228,240,0.88)', lineHeight: 1.7 }}>{p.text}</div>
           </div>
         </RevealBlock>
       ))}
@@ -200,8 +200,8 @@ function ConnectPanel() {
   const links = [
     { label: 'GitHub',   value: 'github.com/Purnagya08',           icon: '⌥', color: '#38b8d8', href: 'https://github.com/Purnagya08' },
     { label: 'LinkedIn', value: 'linkedin.com/in/purnagya-raj',    icon: '◈', color: '#c9a84c', href: 'https://linkedin.com/in/purnagya-raj' },
-    { label: 'Email',    value: 'available on request',            icon: '◎', color: '#60d8a0', href: '#' },
-    { label: 'LeetCode', value: 'leetcode.com/u/Purnagya',         icon: '⚡', color: '#a070e0', href: 'https://leetcode.com/u/Purnagya' },
+    { label: 'Email',    value: 'purnagya.raj26nov@gmail.com',     icon: '◎', color: '#60d8a0', href: 'purnagya.raj26nov@gmail.com' },
+    { label: 'LeetCode', value: 'leetcode.com/u/techXpurna',       icon: '⚡', color: '#a070e0', href: 'https://leetcode.com/u/techXpurna' },
   ]
 
   return (
@@ -217,7 +217,7 @@ function ConnectPanel() {
           background: 'radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04), transparent 70%)',
           pointerEvents: 'none',
         }} />
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.5)', letterSpacing: '0.25em', marginBottom: 20 }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.8)', letterSpacing: '0.25em', marginBottom: 20 }}>
           OPEN FOR COLLABORATION · SWE INTERNSHIPS · AI PROJECTS
         </div>
 
@@ -252,7 +252,7 @@ function ConnectPanel() {
         </div>
 
         <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid rgba(201,168,76,0.08)' }}>
-          <div style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 13, color: 'rgba(176,192,216,0.55)', lineHeight: 1.7 }}>
+          <div style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 13, color: 'rgba(216,228,240,0.78)', lineHeight: 1.7 }}>
             If you are building something interesting in AI, full-stack systems, or developer tooling — I want to hear about it. Open to internships, collaborations, and conversations that lead somewhere worth going.
           </div>
         </div>
@@ -269,7 +269,7 @@ export default function FutureGalaxy() {
       title: 'SWE Internship — Tier 1 Company',
       subtitle: 'Target: 2025–2026 Internship Season',
       description: 'The immediate target. A role at a company building real infrastructure — AI, systems, or developer tooling. Not just for the title. For the engineering environment, the mentorship density, and the exposure to systems at scale.',
-      timeline: '2025-26',
+      timeline: '2026-27',
       tags: ['Full Stack', 'AI/ML', 'Backend', 'System Design'],
       color: '#c9a84c',
       probability: 'HIGH',
@@ -295,21 +295,11 @@ export default function FutureGalaxy() {
       probability: 'IN PROGRESS',
     },
     {
-      icon: '⚡',
-      title: 'Startup — First Venture',
-      subtitle: 'Something that solves a problem I personally have',
-      description: 'WarrantySafe started as this — a product I needed that didn\'t exist. The startup path begins by solving real problems with real users. No pitch deck. Just a working product that people actually use.',
-      timeline: '2027-28',
-      tags: ['Startup', 'Product', 'Full Stack', 'AI'],
-      color: '#a070e0',
-      probability: 'PLANNED',
-    },
-    {
       icon: '🎓',
       title: 'Graduate Studies — AI / Systems',
       subtitle: 'M.Tech or MS at a top institution',
       description: 'The theory underneath the practice. Graduate research gives access to the problems that are too hard for product teams and too applied for pure math departments. That gap is where interesting engineering lives.',
-      timeline: '2027-28',
+      timeline: '2028-29',
       tags: ['M.Tech', 'MS', 'AI Research', 'Systems'],
       color: '#c9a84c',
       probability: 'LIKELY',
@@ -336,7 +326,6 @@ export default function FutureGalaxy() {
             <StatCard value="6"    label="Horizon Goals"     icon="◌" color="#a070e0" />
             <StatCard value="2028" label="Graduation Year"   icon="🎓" color="#c9a84c" />
             <StatCard value="∞"    label="Curiosity Level"   icon="◈" color="#38b8d8" />
-            <StatCard value="1st"  label="Startup Planned"   icon="⚡" color="#60d8a0" />
           </div>
         </RevealBlock>
 

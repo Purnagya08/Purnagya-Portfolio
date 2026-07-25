@@ -26,7 +26,7 @@ function TrainingHero() {
       <motion.div
         style={{
           position: 'absolute', left: 0, right: 0, height: 1,
-          background: 'linear-gradient(90deg, transparent, rgba(56,184,216,0.4), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(56,184,216,0.7), transparent)',
         }}
         animate={{ top: ['0%', '100%'] }}
         transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
@@ -44,7 +44,7 @@ function TrainingHero() {
           style={{
             fontFamily: 'Orbitron', fontSize: 'clamp(34px, 7vw, 68px)',
             fontWeight: 800, color: '#38b8d8',
-            textShadow: '0 0 60px rgba(56,184,216,0.35)',
+            textShadow: '0 0 60px rgba(56,184,216,0.65)',
             letterSpacing: '0.08em', lineHeight: 1.1, marginBottom: 16,
           }}
         >
@@ -52,7 +52,7 @@ function TrainingHero() {
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           Every wing of this facility was built one concept at a time.
         </motion.div>
@@ -70,7 +70,7 @@ function SkillBar({ name, level, color = '#38b8d8', delay = 0 }) {
       <div style={{
         display: 'flex', justifyContent: 'space-between',
         fontFamily: 'JetBrains Mono', fontSize: 10,
-        color: 'rgba(176,192,216,0.6)', marginBottom: 5,
+        color: 'rgba(216,228,240,0.82)', marginBottom: 5,
         letterSpacing: '0.08em',
       }}>
         <span>{name}</span>
@@ -151,7 +151,7 @@ function WingCard({ title, code, description, skills, color, icon, children }) {
           </div>
           <div style={{
             fontFamily: 'Space Grotesk', fontSize: 12,
-            color: 'rgba(176,192,216,0.55)', marginTop: 3,
+            color: 'rgba(216,228,240,0.78)', marginTop: 3,
           }}>
             {description}
           </div>
@@ -196,10 +196,10 @@ export default function TrainingFacility() {
       <Section>
         <RevealBlock>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 16, marginBottom: 56 }}>
-            <StatCard value="365" label="Days of Practice" icon="📅" color="#38b8d8" />
-            <StatCard value="500" label="Problems Solved" icon="⚡" color="#60d8a0" />
-            <StatCard value="8" label="Languages Learned" icon="💻" color="#c9a84c" />
-            <StatCard value="100" label="NPTEL Java Score" icon="★" color="#a070e0" />
+            <StatCard value="365"  label="Days of Practice"    icon="📅" color="#38b8d8" />
+            <StatCard value="200"  label="Problems Solved"     icon="⚡" color="#60d8a0" />
+            <StatCard value="8"    label="Languages Learned"   icon="💻" color="#c9a84c" />
+            <StatCard value="100"  label="NPTEL Java Score"    icon="★" color="#a070e0" />
           </div>
         </RevealBlock>
 
@@ -233,12 +233,12 @@ export default function TrainingFacility() {
             icon="☕"
             color="#c9a84c"
             skills={[
-              { name: 'Core Java & Syntax', level: 95 },
-              { name: 'OOP Principles', level: 92 },
-              { name: 'Collections Framework', level: 88 },
-              { name: 'Java Streams & Lambdas', level: 82 },
-              { name: 'Exception Handling', level: 90 },
-              { name: 'File I/O & Serialization', level: 78 },
+              { name: 'Core Java & Syntax',        level: 95 },
+              { name: 'OOP Principles',            level: 92 },
+              { name: 'Collections Framework',     level: 88 },
+              { name: 'Java Streams & Lambdas',    level: 82 },
+              { name: 'Exception Handling',        level: 90 },
+              { name: 'File I/O & Serialization',  level: 78 },
             ]}
           >
             <CodeBlock lang="java" code={`// Day 12 — First time I understood polymorphism
@@ -270,19 +270,19 @@ s.describe(); // → Area: 78.539...`} />
             icon="⚔️"
             color="#38b8d8"
             skills={[
-              { name: 'Arrays & Strings', level: 90 },
-              { name: 'LinkedList & Stack/Queue', level: 85 },
-              { name: 'Trees & BST', level: 82 },
-              { name: 'Graphs & BFS/DFS', level: 75 },
-              { name: 'Dynamic Programming', level: 70 },
-              { name: 'Sorting & Searching', level: 88 },
+              { name: 'Arrays & Strings',              level: 90 },
+              { name: 'LinkedList & Stack/Queue',      level: 85 },
+              { name: 'Trees & BST',                   level: 82 },
+              { name: 'Graphs & BFS/DFS',              level: 75 },
+              { name: 'Dynamic Programming',           level: 70 },
+              { name: 'Sorting & Searching',           level: 88 },
             ]}
           >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {['Two Pointer', 'Sliding Window', 'Binary Search', 'Recursion', 'Memoization',
                 'BFS', 'DFS', 'Dijkstra', 'Union-Find', 'Segment Tree'].map(t => (
-                  <Tag key={t} label={t} color="#38b8d8" />
-                ))}
+                <Tag key={t} label={t} color="#38b8d8" />
+              ))}
             </div>
           </WingCard>
 
@@ -294,11 +294,11 @@ s.describe(); // → Area: 78.539...`} />
             icon="🔄"
             color="#60d8a0"
             skills={[
-              { name: 'Thread Lifecycle', level: 80 },
-              { name: 'Synchronization', level: 75 },
-              { name: 'ExecutorService', level: 72 },
-              { name: 'Callable & Future', level: 68 },
-              { name: 'volatile & atomic ops', level: 65 },
+              { name: 'Thread Lifecycle',          level: 80 },
+              { name: 'Synchronization',           level: 75 },
+              { name: 'ExecutorService',           level: 72 },
+              { name: 'Callable & Future',         level: 68 },
+              { name: 'volatile & atomic ops',     level: 65 },
             ]}
           >
             <CodeBlock lang="java" code={`// Callable + Future — when you need results back
@@ -323,20 +323,20 @@ pool.shutdown();`} />
             color="#a070e0"
             skills={[
               { name: 'React & Next.js (App Router)', level: 88 },
-              { name: 'TypeScript', level: 80 },
-              { name: 'Node.js & Express', level: 82 },
-              { name: 'FastAPI & Python', level: 78 },
-              { name: 'PostgreSQL & Prisma', level: 75 },
-              { name: 'Redis & Pub/Sub', level: 70 },
-              { name: 'Docker & Deployment', level: 72 },
-              { name: 'REST API Design', level: 85 },
+              { name: 'TypeScript',                   level: 80 },
+              { name: 'Node.js & Express',            level: 82 },
+              { name: 'FastAPI & Python',             level: 78 },
+              { name: 'PostgreSQL & Prisma',          level: 75 },
+              { name: 'Redis & Pub/Sub',              level: 70 },
+              { name: 'Docker & Deployment',          level: 72 },
+              { name: 'REST API Design',              level: 85 },
             ]}
           >
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
               {['TailwindCSS', 'Framer Motion', 'Prisma ORM', 'JWT Auth', 'WebSockets',
                 'Docker Compose', 'GitHub Actions', 'Vercel', 'GCR'].map(t => (
-                  <Tag key={t} label={t} color="#a070e0" />
-                ))}
+                <Tag key={t} label={t} color="#a070e0" />
+              ))}
             </div>
           </WingCard>
 
@@ -348,11 +348,11 @@ pool.shutdown();`} />
             icon="🤖"
             color="#38b8d8"
             skills={[
-              { name: 'Scikit-learn & Classical ML', level: 78 },
-              { name: 'PyTorch (MLP, CNN)', level: 72 },
+              { name: 'Scikit-learn & Classical ML',  level: 78 },
+              { name: 'PyTorch (MLP, CNN)',            level: 72 },
               { name: 'Data Analysis (Pandas/NumPy)', level: 82 },
-              { name: 'Computer Vision (OpenCV)', level: 68 },
-              { name: 'NLP & Text Processing', level: 65 },
+              { name: 'Computer Vision (OpenCV)',      level: 68 },
+              { name: 'NLP & Text Processing',        level: 65 },
               { name: 'Redis Streams (Event-driven)', level: 70 },
             ]}
           >
@@ -376,13 +376,13 @@ pool.shutdown();`} />
             alignItems: 'center',
           }}>
             <div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(160,112,224,0.6)', letterSpacing: '0.2em', marginBottom: 8 }}>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(160,112,224,0.85)', letterSpacing: '0.2em', marginBottom: 8 }}>
                 NPTEL · IIT KHARAGPUR
               </div>
               <div style={{ fontFamily: 'Orbitron', fontSize: 18, fontWeight: 700, color: '#a070e0', marginBottom: 8 }}>
                 Programming in Java
               </div>
-              <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(176,192,216,0.7)', lineHeight: 1.6, marginBottom: 12 }}>
+              <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(216,228,240,0.88)', lineHeight: 1.6, marginBottom: 12 }}>
                 12-week course by Prof. Debasis Samanta, IIT Kharagpur. Covered core Java, OOP, generics, multithreading, JDBC, and GUI. Scored 100/100 — top among the cohort.
               </div>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -393,8 +393,8 @@ pool.shutdown();`} />
               </div>
             </div>
             <div style={{ textAlign: 'center', padding: '12px 20px', border: '1px solid rgba(201,168,76,0.2)', background: 'rgba(201,168,76,0.04)' }}>
-              <div style={{ fontFamily: 'Orbitron', fontSize: 36, fontWeight: 800, color: '#c9a84c', textShadow: '0 0 20px rgba(201,168,76,0.5)' }}>100</div>
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.5)', letterSpacing: '0.15em' }}>PERFECT</div>
+              <div style={{ fontFamily: 'Orbitron', fontSize: 36, fontWeight: 800, color: '#c9a84c', textShadow: '0 0 20px rgba(201,168,76,0.8)' }}>100</div>
+              <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.8)', letterSpacing: '0.15em' }}>PERFECT</div>
             </div>
           </div>
         </RevealBlock>

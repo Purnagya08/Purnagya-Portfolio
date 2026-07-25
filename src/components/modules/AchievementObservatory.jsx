@@ -49,13 +49,13 @@ function ObservatoryHero() {
           style={{
             fontFamily: 'Orbitron', fontSize: 'clamp(34px, 7vw, 68px)',
             fontWeight: 800, color: '#c9a84c',
-            textShadow: '0 0 60px rgba(201,168,76,0.35)',
+            textShadow: '0 0 60px rgba(201,168,76,0.7)',
             letterSpacing: '0.08em', lineHeight: 1.1, marginBottom: 16,
           }}
         >MILESTONES &<br />ARTIFACTS</motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           Every artifact has a story. Every number has a night behind it.
         </motion.div>
@@ -122,7 +122,7 @@ function ArtifactCard({ rank, title, subtitle, detail, story, color, icon, tags,
 
         <div style={{
           fontFamily: 'Space Grotesk', fontSize: 13,
-          color: 'rgba(176,192,216,0.7)', lineHeight: 1.65, marginBottom: 12,
+          color: 'rgba(216,228,240,0.88)', lineHeight: 1.65, marginBottom: 12,
         }}>
           {detail}
         </div>
@@ -175,13 +175,13 @@ function LinkedInStats() {
       }}
     >
       <div>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.5)', letterSpacing: '0.2em', marginBottom: 8 }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.2em', marginBottom: 8 }}>
           LINKEDIN · #365DAYSUPSKILLINGMYSELF
         </div>
         <div style={{ fontFamily: 'Orbitron', fontSize: 16, fontWeight: 700, color: '#38b8d8', marginBottom: 6 }}>
           365-Day Consistency Challenge
         </div>
-        <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(176,192,216,0.65)', lineHeight: 1.6 }}>
+        <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, color: 'rgba(216,228,240,0.82)', lineHeight: 1.6 }}>
           One post, every day, for a full year. No skips. No ghosting. Every day a new concept, a new build, a new lesson. The discipline this required changed how I approach everything.
         </div>
       </div>
@@ -189,10 +189,10 @@ function LinkedInStats() {
         display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12,
       }}>
         {[
-          { v: '2000+', l: 'Followers' },
-          { v: '365', l: 'Posts' },
-          { v: '35000+', l: 'Members Reached' },
-          { v: '2025', l: 'Year' },
+          { v: '2000+',  l: 'Followers' },
+          { v: '365',    l: 'Posts'     },
+          { v: '0',      l: 'Skipped'   },
+          { v: '2025',   l: 'Year'      },
         ].map(({ v, l }) => (
           <div key={l} style={{
             padding: '12px', textAlign: 'center',
@@ -200,7 +200,7 @@ function LinkedInStats() {
             border: '1px solid rgba(56,184,216,0.1)',
           }}>
             <div style={{ fontFamily: 'Orbitron', fontSize: 18, fontWeight: 700, color: '#38b8d8' }}>{v}</div>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.5)', letterSpacing: '0.1em', marginTop: 2 }}>{l}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(56,184,216,0.75)', letterSpacing: '0.1em', marginTop: 2 }}>{l}</div>
           </div>
         ))}
       </div>
@@ -213,10 +213,10 @@ function GPAConstellation() {
   const ref = useRef()
   const inView = useInView(ref, { once: true })
   const semesters = [
-    { sem: 'S1', gpa: 8.5 },
-    { sem: 'S2', gpa: 8.8 },
-    { sem: 'S3', gpa: 9.0 },
-    { sem: 'S4', gpa: 9.2 },
+    { sem: 'S1', gpa: 9.26 },
+    { sem: 'S2', gpa: 8.78 },
+    { sem: 'S3', gpa: 8.75 },
+    { sem: 'S4', gpa: 8.39 },
   ]
   const w = 400, h = 120
   const padX = 40, padY = 20
@@ -233,8 +233,8 @@ function GPAConstellation() {
         padding: '24px', background: 'rgba(4,6,15,0.8)',
         border: '1px solid rgba(201,168,76,0.1)',
       }}>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.5)', letterSpacing: '0.2em', marginBottom: 16 }}>
-          GPA TRAJECTORY — SEMESTER RANK HOLDER x3
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.8)', letterSpacing: '0.2em', marginBottom: 16 }}>
+          GPA TRAJECTORY — Top 10 x3
         </div>
         <svg width="100%" viewBox={`0 0 ${w} ${h}`} style={{ overflow: 'visible' }}>
           {/* Grid lines */}
@@ -243,7 +243,7 @@ function GPAConstellation() {
             return (
               <g key={v}>
                 <line x1={padX} y1={y} x2={w - padX} y2={y} stroke="rgba(201,168,76,0.06)" strokeWidth={1} />
-                <text x={padX - 6} y={y + 4} textAnchor="end" fontSize={8} fill="rgba(201,168,76,0.3)" fontFamily="JetBrains Mono">{v}</text>
+                <text x={padX - 6} y={y + 4} textAnchor="end" fontSize={8} fill="rgba(201,168,76,0.65)" fontFamily="JetBrains Mono">{v}</text>
               </g>
             )
           })}
@@ -252,7 +252,7 @@ function GPAConstellation() {
           <motion.polyline
             points={pts.map(p => `${p.x},${p.y}`).join(' ')}
             fill="none"
-            stroke="rgba(201,168,76,0.4)"
+            stroke="rgba(201,168,76,0.75)"
             strokeWidth={1.5}
             strokeDasharray="4 4"
             initial={{ pathLength: 0 }}
@@ -262,7 +262,7 @@ function GPAConstellation() {
 
           {/* Area fill */}
           <motion.polygon
-            points={[...pts.map(p => `${p.x},${p.y}`), `${pts[pts.length - 1].x},${h - padY}`, `${pts[0].x},${h - padY}`].join(' ')}
+            points={[...pts.map(p => `${p.x},${p.y}`), `${pts[pts.length-1].x},${h - padY}`, `${pts[0].x},${h - padY}`].join(' ')}
             fill="rgba(201,168,76,0.05)"
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -275,7 +275,7 @@ function GPAConstellation() {
               <circle cx={p.x} cy={p.y} r={5} fill="#02040c" stroke="#c9a84c" strokeWidth={1.5} />
               <circle cx={p.x} cy={p.y} r={2} fill="#c9a84c" />
               <text x={p.x} y={p.y - 10} textAnchor="middle" fontSize={9} fill="#c9a84c" fontFamily="JetBrains Mono">{p.gpa}</text>
-              <text x={p.x} y={h - padY + 14} textAnchor="middle" fontSize={8} fill="rgba(201,168,76,0.4)" fontFamily="JetBrains Mono">{p.sem}</text>
+              <text x={p.x} y={h - padY + 14} textAnchor="middle" fontSize={8} fill="rgba(201,168,76,0.75)" fontFamily="JetBrains Mono">{p.sem}</text>
             </motion.g>
           ))}
         </svg>
@@ -321,11 +321,11 @@ export default function AchievementObservatory() {
       rank: 'RANK',
       icon: '⭐',
       title: '3x Semester Rank Holder',
-      subtitle: 'UEM Jaipur · 250+ Student Cohort · 9.0 GPA',
-      detail: 'Ranked in the top positions of the CSE cohort (250+ students) for three consecutive semesters. Maintained a 9.0 cumulative GPA while simultaneously building projects, competing in hackathons, and running the 365-day upskilling challenge.',
+      subtitle: 'UEM Jaipur · 250+ Student Cohort · 8.795 GPA',
+      detail: 'Ranked in the top positions of the CSE cohort (250+ students) for three consecutive semesters. Maintained a 8.795 cumulative GPA while simultaneously building projects, competing in hackathons, and running the 365-day upskilling challenge.',
       story: 'The question people always ask is how I balance it all. The answer is: I don\'t balance it. I prioritize. And the classroom is never deprioritized.',
       color: '#a070e0',
-      tags: ['9.0 GPA', 'Top Rank', '250+ Cohort', '3 Semesters'],
+      tags: ['8.795 GPA', 'Top Rank', '250+ Cohort', '3 Semesters'],
     },
     {
       rank: 'NTL',
@@ -346,9 +346,9 @@ export default function AchievementObservatory() {
       <Section>
         <RevealBlock>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 16, marginBottom: 56 }}>
-            <StatCard value="100" label="NPTEL Score" icon="★" color="#c9a84c" />
-            <StatCard value="3" label="Semester Ranks" icon="◈" color="#a070e0" />
-            <StatCard value="500" label="Intl Teams Beaten" icon="🌍" color="#38b8d8" />
+            <StatCard value="100"  label="NPTEL Score"        icon="★" color="#c9a84c" />
+            <StatCard value="3"    label="Semester Ranks"     icon="◈" color="#a070e0" />
+            <StatCard value="500"  label="Intl Teams Beaten"  icon="🌍" color="#38b8d8" />
             <StatCard value="2000" label="LinkedIn Followers" icon="◎" color="#60d8a0" />
           </div>
         </RevealBlock>

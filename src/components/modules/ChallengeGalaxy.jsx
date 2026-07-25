@@ -33,7 +33,7 @@ function ChallengeHero() {
       <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.4em', color: 'rgba(160,112,224,0.6)', marginBottom: 16 }}
+          style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.4em', color: 'rgba(160,112,224,0.85)', marginBottom: 16 }}
         >
           ◈ MOD-03 · CHALLENGE GALAXY ◈
         </motion.div>
@@ -50,7 +50,7 @@ function ChallengeHero() {
         </motion.div>
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(176,192,216,0.6)', maxWidth: 480, margin: '0 auto' }}
+          style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 'clamp(13px, 1.8vw, 16px)', color: 'rgba(216,228,240,0.82)', maxWidth: 480, margin: '0 auto' }}
         >
           Every failure was a bug report. Every win was a deployment.
         </motion.div>
@@ -98,7 +98,7 @@ function HackathonCard({ event, result, description, team, tech, outcome, color 
             {event}
           </div>
           {team && (
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(176,192,216,0.4)', letterSpacing: '0.1em' }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(216,228,240,0.85)', letterSpacing: '0.1em' }}>
               TEAM: {team}
             </div>
           )}
@@ -119,7 +119,7 @@ function HackathonCard({ event, result, description, team, tech, outcome, color 
 
       <div style={{
         fontFamily: 'Space Grotesk', fontSize: 13,
-        color: 'rgba(176,192,216,0.7)', lineHeight: 1.7, marginBottom: 12,
+        color: 'rgba(216,228,240,0.88)', lineHeight: 1.7, marginBottom: 12,
       }}>
         {description}
       </div>
@@ -192,13 +192,13 @@ function DebugStory({ title, bug, fix, lesson, index }) {
           <div style={{ fontFamily: 'Space Grotesk', fontSize: 13, fontWeight: 600, color: '#d8e4f0' }}>
             {title}
           </div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(231,76,60,0.5)', letterSpacing: '0.1em', marginTop: 2 }}>
+          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(231,76,60,0.82)', letterSpacing: '0.1em', marginTop: 2 }}>
             BUG REPORT · CLICK TO EXPAND
           </div>
         </div>
         <motion.div
           animate={{ rotate: open ? 90 : 0 }}
-          style={{ color: 'rgba(231,76,60,0.4)', fontFamily: 'monospace', fontSize: 12 }}
+          style={{ color: 'rgba(231,76,60,0.75)', fontFamily: 'monospace', fontSize: 12 }}
         >
           ▶
         </motion.div>
@@ -212,15 +212,15 @@ function DebugStory({ title, bug, fix, lesson, index }) {
       >
         <div style={{ padding: '4px 20px 20px', borderTop: '1px solid rgba(231,76,60,0.1)' }}>
           <div style={{ marginBottom: 12 }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(231,76,60,0.5)', letterSpacing: '0.15em', marginBottom: 5 }}>THE BUG</div>
-            <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(176,192,216,0.7)', lineHeight: 1.6 }}>{bug}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(231,76,60,0.82)', letterSpacing: '0.15em', marginBottom: 5 }}>THE BUG</div>
+            <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.88)', lineHeight: 1.6 }}>{bug}</div>
           </div>
           <div style={{ marginBottom: 12 }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(96,216,160,0.5)', letterSpacing: '0.15em', marginBottom: 5 }}>THE FIX</div>
-            <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(176,192,216,0.7)', lineHeight: 1.6 }}>{fix}</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(96,216,160,0.8)', letterSpacing: '0.15em', marginBottom: 5 }}>THE FIX</div>
+            <div style={{ fontFamily: 'Space Grotesk', fontSize: 12, color: 'rgba(216,228,240,0.88)', lineHeight: 1.6 }}>{fix}</div>
           </div>
-          <div style={{ padding: '10px 14px', background: 'rgba(201,168,76,0.05)', borderLeft: '2px solid rgba(201,168,76,0.3)' }}>
-            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.5)', letterSpacing: '0.15em', marginBottom: 4 }}>LESSON LOGGED</div>
+          <div style={{ padding: '10px 14px', background: 'rgba(201,168,76,0.05)', borderLeft: '2px solid rgba(201,168,76,0.65)' }}>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 8, color: 'rgba(201,168,76,0.8)', letterSpacing: '0.15em', marginBottom: 4 }}>LESSON LOGGED</div>
             <div style={{ fontFamily: 'Libre Baskerville', fontStyle: 'italic', fontSize: 12, color: 'rgba(201,168,76,0.8)', lineHeight: 1.6 }}>{lesson}</div>
           </div>
         </div>
@@ -380,13 +380,13 @@ export default function ChallengeGalaxy() {
               }}>
                 <div style={{
                   fontFamily: 'Orbitron', fontSize: 22, fontWeight: 800,
-                  color: 'rgba(96,216,160,0.15)', marginBottom: 8,
+                  color: 'rgba(96,216,160,0.80)', marginBottom: 8,
                 }}>
                   {item.num}
                 </div>
                 <div style={{
                   fontFamily: 'Space Grotesk', fontSize: 13,
-                  color: 'rgba(176,192,216,0.7)', lineHeight: 1.7,
+                  color: 'rgba(216,228,240,0.88)', lineHeight: 1.7,
                 }}>
                   {item.lesson}
                 </div>
