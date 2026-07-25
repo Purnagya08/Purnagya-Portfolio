@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware'
 export const useNexusStore = create(
   persist(
     (set, get) => ({
-      // ─── Boot & Entry ────────────────────────────────────
+      // ─── Boot & Entry ─────────────────────────────────
       phase: 'entry',
       bootComplete: false,
       entryGranted: false,
@@ -13,7 +13,7 @@ export const useNexusStore = create(
       setBootComplete: (v)     => set({ bootComplete: v }),
       setEntryGranted: (v)     => set({ entryGranted: v }),
 
-      // ─── Navigation ──────────────────────────────────────
+      // ─── Navigation ───────────────────────────────────
       currentModule:   null,
       prevModule:      null,
       isTransitioning: false,
@@ -21,16 +21,21 @@ export const useNexusStore = create(
       navigateTo: (moduleId) => {
         const prev = get().currentModule
         set({ isTransitioning: true, prevModule: prev })
+
+        // Push URL
+        const path = moduleId ? `/${moduleId}` : '/'
+        window.history.pushState({}, '', path)
+
         setTimeout(() => {
           set({ currentModule: moduleId, isTransitioning: false })
         }, 800)
       },
 
-      // ─── Terminal ─────────────────────────────────────────
+      // ─── Terminal ─────────────────────────────────────
       terminalOpen: false,
       setTerminalOpen: (v) => set({ terminalOpen: v }),
 
-      // ─── Audio ────────────────────────────────────────────
+      // ─── Audio ────────────────────────────────────────
       audioEnabled:   false,
       audioVolume:    0.4,
       ambientPlaying: false,
@@ -41,10 +46,10 @@ export const useNexusStore = create(
       setAmbientPlaying: (v) => set({ ambientPlaying: v }),
       setSfxEnabled:     (v) => set({ sfxEnabled: v }),
 
-      // ─── Cursor ───────────────────────────────────────────
-      cursorPos:    { x: 0, y: 0 },
+      // ─── Cursor ───────────────────────────────────────
+      cursorPos:     { x: 0, y: 0 },
       cursorVariant: 'default',
-      cursorTrail:  [],
+      cursorTrail:   [],
 
       setCursorPos:     (pos)     => set({ cursorPos: pos }),
       setCursorVariant: (variant) => set({ cursorVariant: variant }),
@@ -52,7 +57,7 @@ export const useNexusStore = create(
         cursorTrail: [...s.cursorTrail.slice(-12), point],
       })),
 
-      // ─── 3D Scene ─────────────────────────────────────────
+      // ─── 3D Scene ─────────────────────────────────────
       sceneReady:        false,
       spacecraftVisible: true,
       warpActive:        false,
@@ -64,15 +69,24 @@ export const useNexusStore = create(
         setTimeout(() => set({ warpActive: false }), 1200)
       },
 
-      // ─── Memory Fragments ─────────────────────────────────
+      // ─── Memory Fragments ─────────────────────────────
       collectedFragments: [],
-      totalFragments:     12,
+      totalFragments:     15,
+      fragmentsCompleted: false,
 
       collectFragment: (id) => set((s) => ({
         collectedFragments: [...new Set([...s.collectedFragments, id])],
       })),
 
-      // ─── Achievements ─────────────────────────────────────
+      resetLogbook: () => set({
+        collectedFragments:   [],
+        unlockedAchievements: [],
+        fragmentsCompleted:   false,
+      }),
+
+      setFragmentsCompleted: (v) => set({ fragmentsCompleted: v }),
+
+      // ─── Achievements ─────────────────────────────────
       unlockedAchievements: [],
       pendingAchievement:   null,
 
@@ -85,7 +99,7 @@ export const useNexusStore = create(
       }),
       clearPendingAchievement: () => set({ pendingAchievement: null }),
 
-      // ─── HUD Data ─────────────────────────────────────────
+      // ─── HUD ──────────────────────────────────────────
       systemTime: new Date().toISOString(),
       sessionId:  Math.random().toString(36).slice(2, 8).toUpperCase(),
 
@@ -93,10 +107,10 @@ export const useNexusStore = create(
     }),
     {
       name: 'nexus-session',
-      // Only persist progress data — NOT transient UI state
       partialize: (state) => ({
         collectedFragments:   state.collectedFragments,
         unlockedAchievements: state.unlockedAchievements,
+        fragmentsCompleted:   state.fragmentsCompleted,
         audioEnabled:         state.audioEnabled,
         audioVolume:          state.audioVolume,
         sessionId:            state.sessionId,
