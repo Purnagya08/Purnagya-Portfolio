@@ -1,6 +1,7 @@
-import { useEffect, lazy, Suspense } from 'react'
+import { useEffect, useRef, lazy, Suspense } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useNexusStore } from './store/nexusStore'
+import { startAmbient, stopAmbient } from './audio/audioEngine'
 
 import NexusCursor                from './components/cursor/NexusCursor'
 import HUDOverlay                 from './components/ui/HUDOverlay'
@@ -14,10 +15,17 @@ import TerminalMode               from './components/terminal/TerminalMode'
 import DynamicEvents              from './components/space/DynamicEvents'
 import AchievementUnlock          from './components/overlays/AchievementUnlock'
 import MemoryFragmentCompletion   from './components/overlays/MemoryFragmentCompletion'
+import OfflineBanner              from './components/overlays/OfflineBanner'
 import ErrorBoundary              from './components/overlays/ErrorBoundary'
 import { useZoneMusic }           from './hooks/useZoneMusic'
 
-// ── All 9 modules lazy loaded ─────────────────────────────────
+// ── Valid module IDs ──────────────────────────────────────────
+const VALID_MODULES = [
+  'origins','training','challenges','missions','research',
+  'achievements','present','future','nexusai','profile',
+]
+
+// ── Lazy modules ──────────────────────────────────────────────
 const MuseumOfOrigins        = lazy(() => import('./components/modules/MuseumOfOrigins'))
 const TrainingFacility       = lazy(() => import('./components/modules/TrainingFacility'))
 const ChallengeGalaxy        = lazy(() => import('./components/modules/ChallengeGalaxy'))
@@ -27,6 +35,7 @@ const AchievementObservatory = lazy(() => import('./components/modules/Achieveme
 const PresentStation         = lazy(() => import('./components/modules/PresentStation'))
 const FutureGalaxy           = lazy(() => import('./components/modules/FutureGalaxy'))
 const NexusAI                = lazy(() => import('./components/modules/NexusAI'))
+const CaptainProfile         = lazy(() => import('./components/modules/CaptainProfile'))
 
 function ModuleLoading() {
   return (
@@ -35,13 +44,9 @@ function ModuleLoading() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-          style={{
-            width: 40, height: 40, margin: '0 auto 16px',
-            border: '1px solid rgba(56,184,216,0.3)',
-            borderTop: '1px solid #38b8d8', borderRadius: '50%',
-          }}
+          style={{ width: 40, height: 40, margin: '0 auto 16px', border: '1px solid rgba(56,184,216,0.4)', borderTop: '1px solid #38b8d8', borderRadius: '50%' }}
         />
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(56,184,216,0.5)', letterSpacing: '0.2em' }}>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#38b8d8', letterSpacing: '0.2em' }}>
           LOADING MODULE...
         </div>
       </div>
@@ -60,14 +65,11 @@ function ModuleContent({ id }) {
     case 'present':      return <PresentStation />
     case 'future':       return <FutureGalaxy />
     case 'nexusai':      return <NexusAI />
+    case 'profile':      return <CaptainProfile />
     default: return (
       <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 12 }}>
-        <div style={{ fontFamily: 'Orbitron', fontSize: 32, color: '#c9a84c', textShadow: '0 0 30px rgba(201,168,76,0.4)' }}>
-          {id?.toUpperCase()}
-        </div>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: 'rgba(56,184,216,0.4)', letterSpacing: '0.2em' }}>
-          MODULE NOT FOUND
-        </div>
+        <div style={{ fontFamily: 'Orbitron', fontSize: 32, color: '#c9a84c', textShadow: '0 0 30px rgba(201,168,76,0.4)' }}>{id?.toUpperCase()}</div>
+        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9, color: '#38b8d8', letterSpacing: '0.2em' }}>MODULE NOT FOUND</div>
       </div>
     )
   }
@@ -80,28 +82,22 @@ function HubLayer() {
   return (
     <>
       <SpaceScene />
-
       <AnimatePresence>
         {showGrid && (
-          <motion.div
-            key="hub-grid"
+          <motion.div key="hub-grid"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            style={{ position: 'fixed', inset: 0, zIndex: 20 }}
-          >
+            style={{ position: 'fixed', inset: 0, zIndex: 20 }}>
             <CentralCommandHub />
           </motion.div>
         )}
       </AnimatePresence>
-
       <AnimatePresence mode="wait">
         {currentModule && (
-          <motion.div
-            key={`module-${currentModule}`}
+          <motion.div key={`module-${currentModule}`}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            style={{ position: 'fixed', inset: 0, zIndex: 50 }}
-          >
+            style={{ position: 'fixed', inset: 0, zIndex: 50 }}>
             <ModuleShell>
               <Suspense fallback={<ModuleLoading />}>
                 <ModuleContent id={currentModule} />
@@ -114,15 +110,74 @@ function HubLayer() {
   )
 }
 
-// Zone music runs as a side-effect inside the tree
+// ── Audio persistence — fades out on navigation, fades back in ──
+// Single consolidated effect: watches currentModule + phase.
+// On change → fade out (0.5s) → wait → fade back in (handled by
+// startAmbient's own 3s ramp). Skips the very first mount so audio
+// doesn't fade before it has even started.
+function AudioPersistence() {
+  const currentModule = useNexusStore(s => s.currentModule)
+  const phase         = useNexusStore(s => s.phase)
+  const audioEnabled  = useNexusStore(s => s.audioEnabled)
+  const isFirst       = useRef(true)
+
+  useEffect(() => {
+    if (!audioEnabled) return
+
+    // Don't fade on initial mount — let initAudio's own start happen
+    if (isFirst.current) {
+      isFirst.current = false
+      return
+    }
+
+    // Fade out quickly, then fade back in once landed on new page
+    stopAmbient(0.5)
+    const t = setTimeout(() => startAmbient(), 800)
+    return () => clearTimeout(t)
+  }, [currentModule, phase, audioEnabled])
+
+  return null
+}
+
 function ZoneMusicProvider() {
   useZoneMusic()
   return null
 }
 
 export default function App() {
-  const { phase } = useNexusStore()
+  const { phase, setPhase, setCurrentModule, navigateTo } = useNexusStore()
 
+  // ── Sync URL → state on load and popstate ─────────────────
+  useEffect(() => {
+    function syncFromURL() {
+      const path   = window.location.pathname
+      const segment = path.replace('/', '').toLowerCase()
+      const moduleId = VALID_MODULES.includes(segment) ? segment : null
+
+      // Only sync if already past boot
+      if (useNexusStore.getState().phase === 'hub') {
+        useNexusStore.setState({ currentModule: moduleId })
+      }
+    }
+
+    // Sync on back/forward
+    window.addEventListener('popstate', syncFromURL)
+    return () => window.removeEventListener('popstate', syncFromURL)
+  }, [])
+
+  // ── After boot completes, sync URL ───────────────────────
+  useEffect(() => {
+    if (phase === 'hub') {
+      const path    = window.location.pathname
+      const segment = path.replace('/', '').toLowerCase()
+      const moduleId = VALID_MODULES.includes(segment) ? segment : null
+      if (moduleId) {
+        useNexusStore.setState({ currentModule: moduleId })
+      }
+    }
+  }, [phase])
+
+  // ── Prevent context menu ──────────────────────────────────
   useEffect(() => {
     const prevent = (e) => e.preventDefault()
     document.addEventListener('contextmenu', prevent)
@@ -156,21 +211,19 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        {/* Immersive layer */}
         <DynamicEvents />
         <TerminalMode />
 
-        {/* Persistent chrome */}
         <HUDOverlay visible={phase !== 'entry'} />
         <WarpTransition />
         <NexusCursor />
 
-        {/* Overlay notifications */}
+        <OfflineBanner />
         <AchievementUnlock />
         <MemoryFragmentCompletion />
 
-        {/* Zone music (no render output) */}
         <ZoneMusicProvider />
+        <AudioPersistence />
       </div>
     </ErrorBoundary>
   )
