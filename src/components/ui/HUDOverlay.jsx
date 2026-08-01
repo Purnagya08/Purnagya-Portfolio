@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useNexusStore } from '../../store/nexusStore'
 import { toggleAudio, SFX } from '../../audio/audioEngine'
 import ContactOverlay from '../overlays/ContactOverlay'
+import MessageOverlay from '../overlays/MessageOverlay'
+import NavMenu from './NavMenu'
 
 // ─── Captain Profile button ───────────────────────────────────
 function ProfileButton() {
@@ -123,19 +125,16 @@ function FragmentStatus() {
   const { collectedFragments, totalFragments } = useNexusStore()
   const collected = collectedFragments.length
   const pct = Math.min(Math.round((collected / totalFragments) * 100), 100)
-
   return (
     <div style={{ fontFamily: 'JetBrains Mono', fontSize: 9 }}>
       <div style={{ color: '#e8c96a', marginBottom: 5, fontSize: 8, fontWeight: 700, letterSpacing: '0.1em' }}>
         MEMORY FRAGMENTS
       </div>
-      {/* Bar and count on separate lines to prevent overlap */}
       <div style={{ width: 80, height: 3, background: 'rgba(201,168,76,0.25)', borderRadius: 2, marginBottom: 4 }}>
         <div style={{
           width: `${pct}%`, height: '100%',
           background: 'linear-gradient(90deg,#a07830,#e8c96a)',
-          borderRadius: 2,
-          transition: 'width 0.5s',
+          borderRadius: 2, transition: 'width 0.5s',
         }} />
       </div>
       <div style={{ color: '#e8c96a', fontSize: 10, fontWeight: 700 }}>
@@ -193,119 +192,145 @@ function DataPanel({ side }) {
 // ─── Main HUD ─────────────────────────────────────────────────
 export default function HUDOverlay({ visible = true }) {
   const { phase, currentModule } = useNexusStore()
-  const [contactOpen, setContactOpen] = useState(false)
+  const [contactOpen, setContactOpen]   = useState(false)
+  const [messageOpen, setMessageOpen]   = useState(false)
   if (!visible || phase === 'entry') return null
 
-  // Side panels only visible on hub (no module open)
   const showPanels = currentModule === null
 
   return (
     <>
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 200 }}>
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 200 }}>
 
-      {/* ── Top-left: logo ── */}
-      <div style={{
-        position: 'absolute', top: 14, left: 16,
-        display: 'flex', alignItems: 'center', gap: 10,
-        pointerEvents: 'all',
-        background: 'rgba(2,5,14,0.75)',
-        border: '1px solid rgba(201,168,76,0.3)',
-        padding: '6px 12px',
-        backdropFilter: 'blur(12px)',
-      }}>
-        <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="14" r="12" stroke="#c9a84c" strokeWidth="1.2"/>
-          <circle cx="14" cy="14" r="6"  stroke="#38b8d8" strokeWidth="1"/>
-          <circle cx="14" cy="14" r="2.5" fill="#c9a84c"/>
-        </svg>
-        <div>
-          <div style={{ fontFamily: 'Orbitron', fontSize: 11, color: '#e8c96a', letterSpacing: '0.25em', fontWeight: 700 }}>NEXUS</div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#38b8d8', letterSpacing: '0.1em' }}>STATION·OS</div>
+        {/* ── Top-left: logo ── */}
+        <div style={{
+          position: 'absolute', top: 14, left: 16,
+          display: 'flex', alignItems: 'center', gap: 10,
+          pointerEvents: 'all',
+          background: 'rgba(2,5,14,0.75)',
+          border: '1px solid rgba(201,168,76,0.3)',
+          padding: '6px 12px',
+          backdropFilter: 'blur(12px)',
+        }}>
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="12" stroke="#c9a84c" strokeWidth="1.2"/>
+            <circle cx="14" cy="14" r="6"  stroke="#38b8d8" strokeWidth="1"/>
+            <circle cx="14" cy="14" r="2.5" fill="#c9a84c"/>
+          </svg>
+          <div>
+            <div style={{ fontFamily: 'Orbitron', fontSize: 11, color: '#e8c96a', letterSpacing: '0.25em', fontWeight: 700 }}>NEXUS</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 7, color: '#38b8d8', letterSpacing: '0.1em' }}>STATION·OS</div>
+          </div>
         </div>
+
+        {/* ── Top-right: all controls ── */}
+        <div style={{
+          position: 'absolute', top: 14, right: 16,
+          display: 'flex', alignItems: 'stretch', gap: 6,
+          pointerEvents: 'all',
+          background: 'rgba(2,5,14,0.82)',
+          border: '1px solid rgba(56,184,216,0.3)',
+          padding: '8px 10px',
+          backdropFilter: 'blur(14px)',
+        }}>
+          <ProfileButton />
+          <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
+          <NexusAIButton />
+          <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
+
+          {/* CONTACT button */}
+          <button
+            onClick={() => { SFX.click(); setContactOpen(o => !o); setMessageOpen(false) }}
+            data-cursor="hover"
+            title="Open Channel — Contact Links"
+            style={{
+              fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.12em',
+              color: contactOpen ? '#ffe080' : '#c9a84c',
+              background: contactOpen ? 'rgba(201,168,76,0.18)' : 'rgba(201,168,76,0.08)',
+              border: `1.5px solid ${contactOpen ? '#c9a84c' : 'rgba(201,168,76,0.5)'}`,
+              padding: '5px 11px', cursor: 'none',
+              display: 'flex', alignItems: 'center', gap: 6,
+              whiteSpace: 'nowrap',
+              boxShadow: contactOpen ? '0 0 14px rgba(201,168,76,0.25)' : 'none',
+              transition: 'all 0.2s',
+            }}
+          >
+            <span>✉</span> CONTACT
+          </button>
+          <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
+
+          {/* MESSAGE button */}
+          <button
+            onClick={() => { SFX.click(); setMessageOpen(o => !o); setContactOpen(false) }}
+            data-cursor="hover"
+            title="Send me a message"
+            style={{
+              fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.12em',
+              color: messageOpen ? '#7dd8f0' : '#38b8d8',
+              background: messageOpen ? 'rgba(56,184,216,0.18)' : 'rgba(56,184,216,0.08)',
+              border: `1.5px solid ${messageOpen ? '#38b8d8' : 'rgba(56,184,216,0.5)'}`,
+              padding: '5px 11px', cursor: 'none',
+              display: 'flex', alignItems: 'center', gap: 6,
+              whiteSpace: 'nowrap',
+              boxShadow: messageOpen ? '0 0 14px rgba(56,184,216,0.25)' : 'none',
+              transition: 'all 0.2s',
+            }}
+          >
+            <span>⌨</span> MESSAGE
+          </button>
+          <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
+
+          <SystemClock />
+          <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
+          <AudioToggle />
+        </div>
+
+        {/* ── Side data panels — hub only ── */}
+        {showPanels && <DataPanel side="left"  />}
+        {showPanels && <DataPanel side="right" />}
+
+        {/* ── Bottom-left ── */}
+        <div style={{ position: 'absolute', bottom: 14, left: 16, pointerEvents: 'none' }}>
+          <BottomLeft />
+        </div>
+
+        {/* ── Bottom-right ── */}
+        <div style={{ position: 'absolute', bottom: 14, right: 16, pointerEvents: 'all' }}>
+          <FragmentStatus />
+        </div>
+
+        {/* ── Corner lines ── */}
+        <svg style={{ position: 'absolute', top: 0, left: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <path d="M0 30 L0 0 L30 0" stroke="rgba(56,184,216,0.3)" strokeWidth="1"/>
+          <path d="M0 14 L0 0 L14 0" stroke="rgba(56,184,216,0.55)" strokeWidth="1"/>
+        </svg>
+        <svg style={{ position: 'absolute', top: 0, right: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <path d="M60 30 L60 0 L30 0" stroke="rgba(56,184,216,0.3)" strokeWidth="1"/>
+          <path d="M60 14 L60 0 L46 0" stroke="rgba(56,184,216,0.55)" strokeWidth="1"/>
+        </svg>
+        <svg style={{ position: 'absolute', bottom: 0, left: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <path d="M0 30 L0 60 L30 60" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
+          <path d="M0 46 L0 60 L14 60" stroke="rgba(201,168,76,0.55)" strokeWidth="1"/>
+        </svg>
+        <svg style={{ position: 'absolute', bottom: 0, right: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <path d="M60 30 L60 60 L30 60" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
+          <path d="M60 46 L60 60 L46 60" stroke="rgba(201,168,76,0.55)" strokeWidth="1"/>
+        </svg>
+
+        {/* ── Module nav sidebar ── */}
+        <NavMenu />
+
+        {/* ── Scan line ── */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, width: '100%', height: 1,
+          background: 'linear-gradient(90deg, transparent, rgba(56,184,216,0.5), transparent)',
+          animation: 'scanline 12s linear infinite',
+        }} />
       </div>
 
-      {/* ── Top-right: ALL controls in one pill ── */}
-      <div style={{
-        position: 'absolute', top: 14, right: 16,
-        display: 'flex', alignItems: 'stretch', gap: 6,
-        pointerEvents: 'all',
-        background: 'rgba(2,5,14,0.82)',
-        border: '1px solid rgba(56,184,216,0.3)',
-        padding: '8px 10px',
-        backdropFilter: 'blur(14px)',
-      }}>
-        <ProfileButton />
-        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
-        <NexusAIButton />
-        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
-        {/* Contact button */}
-        <button
-          onClick={() => { SFX.click(); setContactOpen(o => !o) }}
-          data-cursor="hover"
-          title="Open Channel — Contact"
-          style={{
-            fontFamily: 'JetBrains Mono', fontSize: 9,
-            letterSpacing: '0.12em',
-            color: contactOpen ? '#ffe080' : '#c9a84c',
-            background: contactOpen ? 'rgba(201,168,76,0.18)' : 'rgba(201,168,76,0.08)',
-            border: `1.5px solid ${contactOpen ? '#c9a84c' : 'rgba(201,168,76,0.5)'}`,
-            padding: '5px 11px', cursor: 'none',
-            display: 'flex', alignItems: 'center', gap: 6,
-            whiteSpace: 'nowrap',
-            boxShadow: contactOpen ? '0 0 14px rgba(201,168,76,0.25)' : 'none',
-            transition: 'all 0.2s',
-          }}
-        >
-          <span>✉</span> CONTACT
-        </button>
-        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
-        <SystemClock />
-        <div style={{ width: 1, background: 'rgba(56,184,216,0.2)', alignSelf: 'stretch' }} />
-        <AudioToggle />
-      </div>
-
-      {/* ── Side data panels — hub only ── */}
-      {showPanels && <DataPanel side="left"  />}
-      {showPanels && <DataPanel side="right" />}
-
-      {/* ── Bottom-left ── */}
-      <div style={{ position: 'absolute', bottom: 14, left: 16, pointerEvents: 'none' }}>
-        <BottomLeft />
-      </div>
-
-      {/* ── Bottom-right ── */}
-      <div style={{ position: 'absolute', bottom: 14, right: 16, pointerEvents: 'all' }}>
-        <FragmentStatus />
-      </div>
-
-      {/* ── Corner lines ── */}
-      <svg style={{ position: 'absolute', top: 0, left: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <path d="M0 30 L0 0 L30 0" stroke="rgba(56,184,216,0.3)" strokeWidth="1"/>
-        <path d="M0 14 L0 0 L14 0" stroke="rgba(56,184,216,0.55)" strokeWidth="1"/>
-      </svg>
-      <svg style={{ position: 'absolute', top: 0, right: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <path d="M60 30 L60 0 L30 0" stroke="rgba(56,184,216,0.3)" strokeWidth="1"/>
-        <path d="M60 14 L60 0 L46 0" stroke="rgba(56,184,216,0.55)" strokeWidth="1"/>
-      </svg>
-      <svg style={{ position: 'absolute', bottom: 0, left: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <path d="M0 30 L0 60 L30 60" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
-        <path d="M0 46 L0 60 L14 60" stroke="rgba(201,168,76,0.55)" strokeWidth="1"/>
-      </svg>
-      <svg style={{ position: 'absolute', bottom: 0, right: 0 }} width="60" height="60" viewBox="0 0 60 60" fill="none">
-        <path d="M60 30 L60 60 L30 60" stroke="rgba(201,168,76,0.3)" strokeWidth="1"/>
-        <path d="M60 46 L60 60 L46 60" stroke="rgba(201,168,76,0.55)" strokeWidth="1"/>
-      </svg>
-
-      {/* ── Scan line ── */}
-      <div style={{
-        position: 'absolute', top: 0, left: 0, width: '100%', height: 1,
-        background: 'linear-gradient(90deg, transparent, rgba(56,184,216,0.5), transparent)',
-        animation: 'scanline 12s linear infinite',
-      }} />
-    </div>
-
-    {/* ── Contact overlay — outside pointerEvents:none wrapper ── */}
-    <ContactOverlay open={contactOpen} onClose={() => setContactOpen(false)} />
+      {/* ── Overlays — outside pointerEvents:none wrapper ── */}
+      <ContactOverlay open={contactOpen} onClose={() => setContactOpen(false)} />
+      <MessageOverlay open={messageOpen} onClose={() => setMessageOpen(false)} />
     </>
   )
 }
