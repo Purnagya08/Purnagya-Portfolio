@@ -22,12 +22,12 @@ It is not just a portfolio. It is a logbook.
 |---|---|
 | **Name** | Purnagya Raj |
 | **Degree** | B.Tech CSE — UEM Jaipur (2022–26) |
-| **GPA** | 9.0 / 10.0 · 3× Semester Rank Holder (250+ cohort) |
+| **GPA** | 8.795 / 10.0 · 3× Semester Rank Holder (250+ cohort) |
 | **Achievements** | NPTEL Java 100/100 · LaserHacks International Finalist · 2× Hackathon Winner |
 | **Status** | Open to SWE Internships |
 | **GitHub** | github.com/Purnagya08 |
 | **LinkedIn** | linkedin.com/in/purnagya-raj |
-| **LeetCode** | leetcode.com/u/Purnagya |
+| **LeetCode** | leetcode.com/u/techXpurna |
 
 ---
 
